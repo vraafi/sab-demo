@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Demo SAB — poin 1, 5, 6 pada data uji</title>
+<style>
+  :root { --ink:#14171a; --muted:#5b6570; --line:#e3e7ec; --bg:#fff; --soft:#f7f9fb;
+           --ok:#0b6b4f; --bad:#a3311f; --warn:#8a5a00; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:860px; margin:0 auto; padding:56px 24px 80px; }
+  h1 { font-size:32px; line-height:1.2; letter-spacing:-.02em; margin:0 0 14px; }
+  h2 { font-size:20px; margin:44px 0 10px; letter-spacing:-.01em; }
+  h3 { font-size:15px; margin:24px 0 6px; }
+  p { margin:0 0 14px; }
+  .lead { font-size:18px; color:var(--muted); }
+  .rule { height:1px; background:var(--line); margin:34px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; margin:14px 0 8px; }
+  th,td { text-align:left; padding:8px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-weight:600; color:var(--muted); font-size:11.5px; text-transform:uppercase;
+        letter-spacing:.04em; }
+  code { background:var(--soft); padding:1px 5px; border-radius:4px; font-size:12.5px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:18px 0; }
+  .card { background:var(--soft); border:1px solid var(--line); border-radius:8px; padding:14px 16px; }
+  .num { font-size:24px; font-weight:700; letter-spacing:-.02em; }
+  .num.ok { color:var(--ok); } .num.bad { color:var(--bad); }
+  .cap { font-size:13px; color:var(--muted); }
+  .note { font-size:14.5px; color:var(--muted); border-left:3px solid var(--line); padding-left:14px; }
+  .s-ok { color:var(--ok); font-weight:600; } .s-warn { color:var(--warn); font-weight:600; }
+  .s-bad { color:var(--bad); font-weight:600; }
+  ul { margin:0 0 14px; padding-left:20px; } li { margin-bottom:7px; }
+  .foot { margin-top:48px; font-size:13.5px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Demo poin 1, 5, dan 6 — dijalankan pada data uji</h1>
+<p class="lead">Halaman ini memuat hasil satu kali jalan program, bukan rancangan.
+Angka di bawah dihasilkan mesinnya sendiri dan bisa dijalankan ulang kapan saja.</p>
+
+<p>Yang perlu disepakati lebih dulu: ini <strong>bukan</strong> sambungan ke CRM SAB.
+Ini CRM tiruan berisi 200 lead sintetis dari lima kanal, dengan nomor dan nama
+sengaja dibuat tidak konsisten. Yang dibuktikan adalah perilakunya saat data masuk
+berantakan — bukan bahwa integrasi ke akun SAB sudah hidup. Sambungan ke akun asli
+dikerjakan di tahap 1, setelah demo ini Anda setujui.</p>
+
+<div class="rule"></div>
+
+<h2>Poin 1 — lima kanal masuk ke satu pipeline, dengan dedup</h2>
+<p>Yang diuji bukan "lima integrasi menyala" — itu bagian pemasangan. Yang diuji
+bagian yang paling sering gagal di lapangan: orang yang sama datang dengan nomor
+ditulis <code>0812…</code>, <code>+62812…</code>, dan <code>62812…</code>, dengan nama
+ditulis berbeda, harus tetap dikenali sebagai satu orang.</p>
+
+<div class="grid">
+<div class="card"><div class="num">200</div><div class="cap">lead mentah dari 5 kanal</div></div>
+<div class="card"><div class="num">173</div><div class="cap">identitas setelah dedup</div></div>
+<div class="card"><div class="num">27</div><div class="cap">digabung otomatis</div></div>
+<div class="card"><div class="num">23</div><div class="cap">masuk antrean manusia</div></div>
+<div class="card"><div class="num ok">0</div><div class="cap">salah gabung</div></div>
+<div class="card"><div class="num">3</div><div class="cap">orang terpecah</div></div>
+</div>
+
+<p><strong>Salah gabung: 0.</strong> Ini angka yang paling penting, dan bukan
+kebetulan. Menggabungkan dua orang berbeda tidak bisa ditarik kembali — riwayat
+percakapan dua orang sudah tercampur. Karena itu ambangnya dibuat konservatif:
+kalau ragu, jangan gabung, masukkan ke antrean. Konsekuensinya orang yang sama bisa
+tertinggal sebagai dua baris (3 kasus di uji ini), dan itu kerugian yang bisa
+diperbaiki manusia dalam hitungan detik. Salah gabung tidak bisa.</p>
+
+<p class="note">Biaya pencocokan: 264 perbandingan, bukan 19.900.
+Tanpa pemblokiran, setiap lead baru dibandingkan dengan semua lead lama — kuadratik,
+dan itu yang membuat sistem macet begitu datanya tumbuh. Pemblokiran memakai kunci
+dari nomor dan email yang sudah dinormalkan, jadi yang dibandingkan hanya kandidat
+yang masuk akal.</p>
+
+<h3>Antrean yang diputuskan manusia, bukan mesin</h3>
+<p>Ini isi antrean itu. Skor 1,00 berarti yakin; skor di bawahnya berarti mesin tahu
+ia tidak tahu, dan itulah yang diteruskan ke orang.</p>
+<table><thead><tr><th>Lead</th><th>Kanal</th><th>Nama masuk</th><th>Calon</th><th>Nama tersimpan</th><th>Skor</th><th>Kenapa tidak digabung</th></tr></thead><tbody><tr><td><code>ev-0005</code></td><td>Form website</td><td>PUTRI PRATAMA</td><td>ID011</td><td>putri pratama</td><td class="s-warn">0.75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0048</code></td><td>WhatsApp</td><td>Michael</td><td>ID031</td><td>Michael</td><td class="s-warn">0.75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0130</code></td><td>LinkedIn</td><td>Lukas Halim</td><td>ID017</td><td>Lukas H.</td><td class="s-warn">0.75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0153</code></td><td>Form website</td><td>Pak Dewi</td><td>ID004</td><td>Ibu Dewi</td><td class="s-warn">0.75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0167</code></td><td>Form website</td><td>Ibu Dewi</td><td>ID093</td><td>Ibu Dewi</td><td class="s-warn">0.75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0191</code></td><td>Google / Meta Ads</td><td>Fajar</td><td>ID054</td><td>Fajar</td><td class="s-warn">0.75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0012</code></td><td>LinkedIn</td><td>hendra halim</td><td>ID027</td><td>hendra fischer</td><td class="s-ok">0.92</td><td>nama mirip, perusahaan dan kota sama</td></tr><tr><td><code>ev-0071</code></td><td>Email</td><td>Rizky Wijaya</td><td>ID038</td><td>Rizky Wijaya</td><td class="s-ok">1.00</td><td>nama lengkap sama, perusahaan dan kota sama</td></tr><tr><td><code>ev-0072</code></td><td>LinkedIn</td><td>bayu saputra</td><td>ID040</td><td>bayu saputra</td><td class="s-ok">1.00</td><td>nama lengkap sama, perusahaan dan kota sama</td></tr><tr><td><code>ev-0091</code></td><td>Google / Meta Ads</td><td>nadia pratama</td><td>ID043</td><td>nadia pratama</td><td class="s-ok">1.00</td><td>nama lengkap sama, perusahaan dan kota sama</td></tr></tbody></table>
+
+<div class="rule"></div>
+
+<h2>Poin 5 — kiriman ulang tidak membuat data ganda</h2>
+<p>Kanal mengirim ulang pemicu kalau endpoint lambat. Kalau ini tidak ditangani,
+satu penjualan tercatat dua kali, dan yang tahu lebih dulu adalah pelanggannya.</p>
+
+<div class="grid">
+<div class="card"><div class="num">1.000</div><div class="cap">total kiriman</div></div>
+<div class="card"><div class="num ok">200</div><div class="cap">tersimpan</div></div>
+<div class="card"><div class="num">800</div><div class="cap">ditolak sebagai duplikat</div></div>
+<div class="card"><div class="num">200</div><div class="cap">event unik seharusnya</div></div>
+</div>
+
+<p>Kuncinya disimpan di basis data, bukan di variabel program. Artinya kunci itu
+tetap berlaku setelah server dinyalakan ulang — dan itu bagian yang diuji dengan
+sengaja mematikan lalu menyalakan kembali mesinnya, bukan hanya dengan mengirim dua
+kali berturut-turut.</p>
+
+<div class="rule"></div>
+
+<h2>Poin 6 — rekonsiliasi harian</h2>
+<p>Alur bisa hijau seratus persen sementara tidak ada lead yang benar-benar dibalas.
+Laporan ini membandingkan yang seharusnya dengan yang benar-benar terjadi, setiap
+pagi.</p>
+
+<div class="grid">
+<div class="card"><div class="num">173</div><div class="cap">seharusnya dibalas</div></div>
+<div class="card"><div class="num">167</div><div class="cap">benar-benar dibalas</div></div>
+<div class="card"><div class="num">6</div><div class="cap">selisih</div></div>
+</div>
+
+<p>Selisihnya 6, dan itu disengaja: beberapa lead dibuat gagal supaya
+laporannya benar-benar menunjuk sesuatu. Laporan yang selalu nol tidak bisa
+dibedakan dari laporan yang tidak jalan. Yang masuk daftar pengecualian:
+<code>ID000</code>, <code>ID028</code>, <code>ID056</code>, <code>ID084</code>, <code>ID112</code>, <code>ID140</code>.</p>
+
+<div class="rule"></div>
+
+<h2>Yang belum diuji, dan tidak saya klaim</h2>
+<ul>
+<li><strong>Kanal asli.</strong> WhatsApp Business, form website SAB, dan CRM SAB belum
+disambungkan. Yang berjalan adalah CRM tiruan. Pemasangan ke akun asli adalah
+pekerjaan tahap 1.</li>
+<li><strong>Poin 2, 3, 4.</strong> Balasan otomatis tiga bahasa, penghentian lintas
+kanal, dan sinkron dua arah belum masuk demo ini. Ketiganya ada di lingkup, bukan di
+halaman ini.</li>
+<li><strong>Beban produksi.</strong> Uji ini memakai 200 lead. Volume SAB yang
+sebenarnya belum saya ketahui, dan angka itu yang menentukan kebutuhan server.</li>
+<li><strong>Data asli.</strong> Semuanya sintetis. Tidak ada satu pun data pelanggan SAB
+yang saya pegang.</li>
+</ul>
+
+<p class="note">Halaman ini dibuat oleh skrip dari berkas hasil uji, bukan ditulis
+dengan tangan. Kalau ujinya dijalankan ulang dan hasilnya berubah, angka di halaman
+ini ikut berubah — tidak ada angka yang bisa tertinggal dari mesinnya.</p>
+
+<div class="foot">
+Demo SAB — poin 1, 5, 6. Data uji sintetis, CRM tiruan.<br>
+Dijalankan ulang: <code>python sab_demo/demo.py &amp;&amp; python sab_demo/bangun_halaman.py</code>
+</div>
+
+</div>
+</body>
+</html>
