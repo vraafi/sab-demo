@@ -123,20 +123,32 @@ def tabel_kasus(kasus: list[dict]) -> str:
 
 
 def tabel_kasus_nyata(kasus: list[dict]) -> str:
-    """Tabel kasus nyata, dengan sumbernya. Yang gagal ditandai."""
+    """Tabel kasus nyata, dengan sumbernya. Yang gagal ditandai.
+
+    Baris alias (nama panggilan / ganti nama resmi) diberi tanda "benar
+    dipisah", bukan "lulus": hasilnya memang pisah, dan itu yang diharapkan.
+    Tanpa label ini, pembaca wajar menyangka baris tersebut kegagalan.
+    """
     if not kasus:
         return '<p class="note">Uji kasus nyata belum dijalankan.</p>'
     isi = []
     for k in kasus:
+        alias = k.get("jenis") == "alias"
         kelas = "s-ok" if k.get("lulus") else "s-bad"
-        tanda = "lulus" if k.get("lulus") else "GAGAL"
+        if not k.get("lulus"):
+            tanda = "GAGAL"
+        elif alias:
+            tanda = "benar dipisah"
+        else:
+            tanda = "sesuai"
         skor = f"{k.get('skor', 0):.2f}".replace(".", ",")
+        catatan = " <span class=\"cap\">alias</span>" if alias else ""
         isi.append(
             "<tr>"
             f'<td>{html.escape(str(k.get("ket", "")))}</td>'
             f'<td><code>{html.escape(str(k.get("nama_a", "")))}</code><br>'
             f'<code>{html.escape(str(k.get("nama_b", "")))}</code></td>'
-            f'<td>{html.escape(str(k.get("dapat", "")))}</td>'
+            f'<td>{html.escape(str(k.get("dapat", "")))}{catatan}</td>'
             f'<td>{skor}</td>'
             f'<td class="cap">{html.escape(str(k.get("sumber", "")))}</td>'
             f'<td class="{kelas}">{tanda}</td>'
@@ -185,6 +197,12 @@ def halaman(d: dict) -> str:
     un = d.get("uji_kasus_nyata", {})
     nyata_total = un.get("total", 0)
     nyata_lulus = un.get("lulus", 0)
+
+    un2 = d.get("uji_kasus_nyata2", {})
+    nyata2_total = un2.get("total", 0)
+    nyata2_lulus = un2.get("lulus", 0)
+    nyata2_alias = sum(1 for k in un2.get("kasus", [])
+                       if k.get("jenis") == "alias")
 
     return f"""<!DOCTYPE html>
 <html lang="id">
@@ -366,11 +384,52 @@ masuk antrean hanya karena marganya sama — padahal satu marga Batak dipakai
 banyak orang, bahkan seisi keluarga. Nama depan kini ikut disyaratkan mirip.</li>
 </ul>
 {tabel_kasus_nyata(un.get("kasus", []))}
-<p class="note">Dua kasus sengaja disertakan sebagai batas yang diakui, bukan
-kegagalan: "Gus Dur" dan "Abdurrahman Wahid" adalah orang yang sama, begitu juga
-"Jokowi" dan "Joko Widodo" — tapi tidak ada cara mencocokkannya tanpa tabel alias.
-Sistem memilih memisahkan, dan itu keputusan yang benar: lebih baik tidak
-menggabung daripada menggabung salah.</p>
+<p class="note"><strong>Dua kasus di atas dipisah bukan karena sistem gagal,
+melainkan karena sistem benar.</strong> "Gus Dur" dan "Jokowi" adalah nama
+panggilan; "Abdurrahman Wahid" dan "Joko Widodo" adalah nama asli. Sistem ini
+wajib memakai nama asli, jadi nama panggilan tidak boleh disatukan dengan nama
+asli — menyatukannya adalah kesalahan manusia yang memasukkan julukan ke kolom
+nama, bukan kesalahan pencocokan. Memisahkan keduanya adalah perilaku yang
+diharapkan. Kalau suatu saat perlu disatukan, itu tugas tabel alias yang diisi
+manusia, bukan tebakan mesin.</p>
+
+<h3>Uji kasus nyata putaran kedua — ejaan, transliterasi, dan alias</h3>
+<p>Putaran pertama masih bisa dituduh hanya menguji hal yang sudah saya
+pikirkan. Karena itu ada {nyata2_total} kasus baru yang diambil dari peristiwa
+kebahasaan yang terdokumentasi, bukan dari tebakan: reformasi ejaan Indonesia
+1972, transliterasi Jerman, singkatan gelar, dan dua orang yang secara resmi
+mengganti nama.</p>
+<p><strong>{nyata2_lulus} dari {nyata2_total} sesuai dalam satu kali jalan.</strong>
+Sebelas di antaranya pasangan orang yang sama, {nyata2_alias} sisanya alias yang
+memang harus dipisah. Dua di antaranya menemukan cacat nyata di kode:</p>
+<ul>
+<li><strong>Huruf ß dibuang, bukan diterjemahkan.</strong> Pembersih karakter
+hanya menyisakan huruf <code>a-z</code>, sehingga ß hilang tanpa jejak dan marga
+<code>Weiß</code> tersimpan sebagai <code>wei</code> — nama Jerman kehilangan
+huruf terakhirnya. Sekarang ß dipetakan ke <code>ss</code>, seperti ø, æ, dan ł
+dipetakan ke bentuk Latinnya. Kasus ini penting karena SAB melayani klien
+Jerman.</li>
+<li><strong>Ejaan lama Indonesia tidak dikenali.</strong> <code>Soekarno</code>
+dan <code>Sukarno</code> terpisah, padahal keduanya satu orang. Wikipedia
+mencatat bahwa pada nama orang ejaan lama memang dipertahankan — dan menyebut
+<code>Megawati Soekarnoputri</code> sebagai bentuk baku, bukan
+<code>Sukarnoputri</code>. Kode kini membaca <code>oe</code>,
+<code>tj</code>, <code>dj</code>, <code>nj</code>, <code>sj</code>, dan
+<code>ch</code> sebagai sinonim tambahan.</li>
+</ul>
+<p>Ejaan lama sengaja <em>tidak</em> dijadikan normalisasi global. Di Jerman
+<code>oe</code> justru transliterasi dari <code>ö</code>
+(<code>Schroeder</code> = <code>Schröder</code>), jadi memetakan
+<code>oe</code> menjadi <code>u</code> di seluruh data akan merusak nama Jerman.
+Kode mengambil nilai tertinggi dari dua bacaan, sehingga nama Jerman tidak
+pernah dirugikan.</p>
+<p><strong>Jujur soal batasnya:</strong> kedua perbaikan ini
+<em>tidak</em> mengubah angka pada 200 lead di atas — 173 identitas, 27 digabung,
+8 antrean, tetap sama. Sebabnya generator data uji tidak pernah menghasilkan ß
+maupun ejaan 1972. Artinya perbaikan ini dibuktikan oleh kasus nyata, bukan oleh
+data demo, dan data demo tidak boleh dipakai sebagai bukti bahwa keduanya
+bekerja.</p>
+{tabel_kasus_nyata(un2.get("kasus", []))}
 
 <div class="rule"></div>
 

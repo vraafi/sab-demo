@@ -1,6 +1,6 @@
-=== LOG EKSEKUSI — 2026-11-23 11:53:36 SEAST ===
+=== generate.py (data uji sudah ada, dilewati) ===
 
---- python demo.py ---
+=== demo.py ===
 ==================================================================
 DEMO SAB — poin 1, 5, 6, dijalankan pada data uji sintetis
 ==================================================================
@@ -40,11 +40,13 @@ POIN 6 — rekonsiliasi harian
 
 UJI KASUS LAPANGAN — 22/22 lulus
 
-UJI KASUS NYATA — 12/12 lulus
+UJI KASUS NYATA — 12/12 sesuai
+
+UJI KASUS NYATA PUTARAN 2 — 14/14 sesuai
 
 Laporan disimpan: hasil_demo.json
 
---- python uji_kasus.py ---
+=== uji_kasus.py ===
 ========================================================================
 UJI KASUS LAPANGAN — 22 kasus
 ========================================================================
@@ -96,76 +98,169 @@ UJI KASUS LAPANGAN — 22 kasus
 HASIL: 22/22 lulus
 Semua kasus sesuai harapan.
 
---- python uji_kasus_nyata.py ---
+=== uji_kasus_nyata.py ===
 ============================================================================
 UJI 12 KASUS NYATA (nama tokoh publik, konvensi terdokumentasi)
 ============================================================================
 
  1. [OK   ] dua mononim berbeda: nama satu kata bukan alasan menggabung
     'Sukarno' vs 'Suharto'
-    dapat: pisah (0.846) | harusnya: pisah
+    dapat: pisah (0.846) | harusnya: pisah  [cocok]
     sumber: Wikipedia: single name, Sukarno / Suharto
 
  2. [OK   ] mononim sama di perusahaan sama: antrean, tidak digabung otomatis
     'Boediono' vs 'Boediono'
-    dapat: antrean (0.918) | harusnya: antrean
+    dapat: antrean (0.918) | harusnya: antrean  [cocok]
     sumber: Wikipedia: mononim Boediono
 
  3. [OK   ] Teuku (L) vs Cut (P) di Aceh: dua orang berbeda
     'Teuku Ahmad' vs 'Cut Ahmad'
-    dapat: pisah (0.000) | harusnya: pisah
+    dapat: pisah (0.000) | harusnya: pisah  [cocok]
     sumber: Wikipedia: Acehnese Teuku (male), Cut (female)
 
  4. [OK   ] gelar bangsawan Jawa disingkat: orang yang sama
     'Raden Ajeng Kartini' vs 'R.A. Kartini'
-    dapat: antrean (0.981) | harusnya: antrean
+    dapat: antrean (0.981) | harusnya: antrean  [cocok]
     sumber: Wikipedia: Javanese Raden Ajeng (unmarried female)
 
  5. [OK   ] inisial dua nama depan, marga Batak ditulis penuh
     'Abdul Haris Nasution' vs 'A.H. Nasution'
-    dapat: antrean (0.981) | harusnya: antrean
+    dapat: antrean (0.981) | harusnya: antrean  [cocok]
     sumber: Wikipedia: Abdul Haris Nasution, Batak marga
 
  6. [OK   ] nama Jerman dengan partikel 'von der', orang yang sama
     'Ursula von der Leyen' vs 'Ursula von der Leyen'
-    dapat: antrean (1.000) | harusnya: antrean
+    dapat: antrean (1.000) | harusnya: antrean  [cocok]
     sumber: Partikel Jerman: von der + marga
 
  7. [OK   ] umlaut ditulis dua huruf (ü -> ue), lazim di Jerman
     'Thomas Müller' vs 'Thomas Mueller'
-    dapat: antrean (0.970) | harusnya: antrean
+    dapat: antrean (0.970) | harusnya: antrean  [cocok]
     sumber: Transliterasi Jerman ü=ue
 
  8. [OK   ] nama tiga kata dipendekkan, marga terakhir hilang
     'Sri Mulyani Indrawati' vs 'Sri Mulyani'
-    dapat: antrean (0.945) | harusnya: antrean
+    dapat: antrean (0.945) | harusnya: antrean  [cocok]
     sumber: Wikipedia: Sri Mulyani Indrawati
 
  9. [OK   ] marga Batak sama tapi orang berbeda: marga bukan pengenal tunggal
     'Budi Siregar' vs 'Ani Siregar'
-    dapat: pisah (0.909) | harusnya: pisah
+    dapat: pisah (0.909) | harusnya: pisah  [cocok]
     sumber: Wikipedia: Batak marga Siregar
 
 10. [OK   ] nama Tionghoa dengan marga di depan, orang yang sama
     'Kwik Kian Gie' vs 'Kwik Kian Gie'
-    dapat: antrean (1.000) | harusnya: antrean
+    dapat: antrean (1.000) | harusnya: antrean  [cocok]
     sumber: Wikipedia: Chinese-Indonesian, surname first
 
-11. [OK   ] julukan vs nama resmi — TIDAK bisa dicocokkan tanpa tabel alias
+11. [OK   ] nama panggilan vs nama asli — BENAR dipisah, sistem memakai nama asli
     'Gus Dur' vs 'Abdurrahman Wahid'
-    dapat: pisah (0.541) | harusnya: pisah
+    dapat: pisah (0.541) | harusnya: pisah  [alias (benar dipisah)]
     sumber: Wikipedia: Gus Dur = Abdurrahman Wahid (julukan)
 
-12. [OK   ] julukan vs nama resmi — TIDAK bisa dicocokkan tanpa tabel alias
+12. [OK   ] nama panggilan vs nama asli — BENAR dipisah, sistem memakai nama asli
     'Joko Widodo' vs 'Jokowi'
-    dapat: pisah (0.886) | harusnya: pisah
+    dapat: pisah (0.886) | harusnya: pisah  [alias (benar dipisah)]
     sumber: Wikipedia: Jokowi = Joko Widodo (julukan)
 
 ============================================================================
-HASIL: 12/12 lulus
+HASIL: 12/12 sesuai (10 pasangan orang sama, 2 alias yang benar dipisah)
 Semua kasus nyata tertangani.
 
---- python bandingkan.py ---
+=== uji_kasus_nyata2.py ===
+==============================================================================
+UJI 14 KASUS NYATA — PUTARAN KEDUA (ejaan, transliterasi, alias)
+==============================================================================
+
+ 1. [OK   ] ejaan lama vs baru (oe -> u) pada nama presiden pertama
+    'Soekarno' vs 'Sukarno'
+    dapat: antrean (0.918) | harusnya: antrean  [cocok]
+    alasan sistem: ejaan lama vs ejaan baru (oe->u, tj->c, dj->j), perusahaan dan kota sama
+    sumber: id.wikipedia EYD: nama sering memakai ejaan lama, mis. Soekarno
+
+ 2. [OK   ] ejaan lama vs baru (oe -> u) pada nama presiden kedua
+    'Soeharto' vs 'Suharto'
+    dapat: antrean (0.918) | harusnya: antrean  [cocok]
+    alasan sistem: ejaan lama vs ejaan baru (oe->u, tj->c, dj->j), perusahaan dan kota sama
+    sumber: id.wikipedia EYD (Keppres 57/1972)
+
+ 3. [OK   ] ejaan lama bertahan di dalam marga majemuk
+    'Megawati Soekarnoputri' vs 'Megawati Sukarnoputri'
+    dapat: antrean (1.000) | harusnya: antrean  [cocok]
+    alasan sistem: ejaan lama vs ejaan baru (oe->u, tj->c, dj->j), perlu dilihat manusia
+    sumber: id.wikipedia EYD: 'Megawati Soekarnoputri (bukan Sukarnoputri)'
+
+ 4. [OK   ] singkatan nama depan (Moh. = Mohammad)
+    'Mohammad Hatta' vs 'Moh. Hatta'
+    dapat: antrean (0.972) | harusnya: antrean  [cocok]
+    alasan sistem: nama nyaris identik, perlu dilihat manusia
+    sumber: Wikipedia: Mohammad Hatta, lazim ditulis Moh. Hatta
+
+ 5. [OK   ] ß ditulis ss (Weiß -> Weiss)
+    'Michael Weiß' vs 'Michael Weiss'
+    dapat: antrean (1.000) | harusnya: antrean  [cocok]
+    alasan sistem: nama lengkap sama, perusahaan dan kota sama
+    sumber: Transliterasi Jerman: ß = ss
+
+ 6. [OK   ] ß di akhir marga (Strauß -> Strauss)
+    'Johann Strauß' vs 'Johann Strauss'
+    dapat: antrean (1.000) | harusnya: antrean  [cocok]
+    alasan sistem: nama lengkap sama, perusahaan dan kota sama
+    sumber: Transliterasi Jerman: ß = ss
+
+ 7. [OK   ] dua umlaut ditulis dua huruf (ü -> ue, ö -> oe)
+    'Jürgen Schröder' vs 'Juergen Schroeder'
+    dapat: antrean (0.963) | harusnya: antrean  [cocok]
+    alasan sistem: nama nyaris identik, perlu dilihat manusia
+    sumber: Transliterasi Jerman: ü = ue, ö = oe
+
+ 8. [OK   ] singkatan gelar haji laki-laki (H. = Haji)
+    'H. Ahmad Fauzi' vs 'Haji Ahmad Fauzi'
+    dapat: antrean (1.000) | harusnya: antrean  [cocok]
+    alasan sistem: nama lengkap sama, perusahaan dan kota sama
+    sumber: id.wikipedia 'Haji (gelar)': H. = Haji
+
+ 9. [OK   ] singkatan gelar haji perempuan (Hj. = Hajah), gender harus konsisten
+    'Hj. Siti Aminah' vs 'Hajah Siti Aminah'
+    dapat: antrean (1.000) | harusnya: antrean  [cocok]
+    alasan sistem: nama lengkap sama, perusahaan dan kota sama
+    sumber: id.wikipedia 'Haji (gelar)': Hj. = Hajah
+
+10. [OK   ] aksen (é) dan tanda hubung pada marga ganda
+    'Maria José Silva-Santos' vs 'Maria Jose Silva Santos'
+    dapat: antrean (1.000) | harusnya: antrean  [cocok]
+    alasan sistem: nama lengkap sama, perusahaan dan kota sama
+    sumber: Konvensi nama Iberia: marga ganda dengan tanda hubung
+
+11. [OK   ] partikel Belanda 'van der' vs 'van den'
+    'Jan van der Berg' vs 'Jan van den Berg'
+    dapat: antrean (1.000) | harusnya: antrean  [cocok]
+    alasan sistem: nama nyaris identik, perlu dilihat manusia
+    sumber: Konvensi nama Belanda: tussenvoegsel van/van der/van den
+
+12. [OK   ] ganti nama resmi — benar dipisah, butuh tabel alias
+    'Ki Hajar Dewantara' vs 'Raden Mas Soewardi Soerjaningrat'
+    dapat: pisah (0.649) | harusnya: pisah  [alias (benar dipisah)]
+    alasan sistem: tidak ada satu kata pun yang sama pada nama — tanpa tabel alias, ini dua orang berbeda
+    sumber: Jurnal UNY: lahir sebagai Raden Mas Soewardi Soerjaningrat
+
+13. [OK   ] nama Tionghoa diganti nama Indonesia — benar dipisah
+    'Liem Sioe Liong' vs 'Sudono Salim'
+    dapat: pisah (0.450) | harusnya: pisah  [alias (benar dipisah)]
+    alasan sistem: tidak ada satu kata pun yang sama pada nama — tanpa tabel alias, ini dua orang berbeda
+    sumber: IdRef: Salim, Sudono / Liem, Sioe Liong (varian satu orang)
+
+14. [OK   ] nama panggilan, bukan nama asli — benar dipisah
+    'Joko Widodo' vs 'Jokowi'
+    dapat: pisah (0.886) | harusnya: pisah  [alias (benar dipisah)]
+    alasan sistem: nama panggilan, bukan nama asli: 'jokowi' tidak ada di ['joko', 'widodo'] — sistem memakai nama asli, bukan julukan
+    sumber: Wikipedia: Jokowi adalah nama panggilan Joko Widodo
+
+==============================================================================
+HASIL: 14/14 sesuai (11 pasangan orang sama, 3 alias yang benar dipisah)
+Semua kasus nyata tertangani dalam satu kali jalan.
+
+=== bandingkan.py ===
 ======================================================================
 PERBANDINGAN DEDUP — data uji yang sama, 200 lead
 ======================================================================
@@ -238,3 +333,9 @@ REKONSILIASI 30 DUPLIKAT (pertanyaan SAB poin 4)
   Artinya: dari 30 duplikat, 27 berhasil digabung otomatis, 3 terpecah (aman, tidak salah gabung),
   dan antrean berisi pasangan yang BELUM diputuskan -- bukan duplikat
   yang sudah dihitung. Angka 173 adalah identitas SEMENTARA.
+
+=== bangun_halaman.py ===
+halaman  : C:\Users\user\otonom-penuh\n8n_factory\sab_demo\publikasi\index.html
+poin 1   : 200 lead -> 173 identitas, salah gabung 0
+poin 5   : 1000 kiriman -> 200 tersimpan
+poin 6   : selisih 6 dari 173

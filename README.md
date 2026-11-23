@@ -17,6 +17,7 @@ ujinya.
 | `demo.py` | Menjalankan uji poin 1, 5, 6 pada `data_uji.json`, menulis `hasil_demo.json` |
 | `uji_kasus.py` | 22 kasus lapangan (Indonesia + Jerman) dengan hasil yang diharapkan |
 | `uji_kasus_nyata.py` | 12 kasus dari nama orang sungguhan dan konvensi terdokumentasi (Wikipedia), lengkap dengan sumber tiap kasus |
+| `uji_kasus_nyata2.py` | 14 kasus putaran kedua: reformasi ejaan 1972, transliterasi Jerman (ß, umlaut), singkatan gelar, dan alias yang benar dipisah |
 | `bandingkan.py` | Membandingkan `dedup.py` (baru) dengan `dedup_lama.py` (versi 21 Nov) pada data yang sama |
 | `generate.py` | Membangkitkan `data_uji.json` — 170 orang, 200 lead, 30 duplikat |
 | `bangun_halaman.py` | Membangun `index.html` dari `hasil_demo.json` |
@@ -28,12 +29,13 @@ ujinya.
 ## Menjalankan ulang
 
 ```bash
-python generate.py        # opsional: bangkitkan ulang data uji
-python demo.py            # jalankan uji, tulis hasil_demo.json
-python uji_kasus.py       # 22 kasus lapangan
-python uji_kasus_nyata.py # 12 kasus nyata dari internet
-python bandingkan.py      # versi lama vs baru
-python bangun_halaman.py  # bangun index.html
+python generate.py          # opsional: bangkitkan ulang data uji
+python demo.py              # jalankan uji, tulis hasil_demo.json
+python uji_kasus.py         # 22 kasus lapangan
+python uji_kasus_nyata.py   # 12 kasus nyata dari internet
+python uji_kasus_nyata2.py  # 14 kasus nyata putaran kedua
+python bandingkan.py        # versi lama vs baru
+python bangun_halaman.py    # bangun index.html
 ```
 
 Tidak ada dependensi luar. Python 3.10+.
@@ -45,8 +47,9 @@ Tidak ada dependensi luar. Python 3.10+.
 27 digabung otomatis lewat nomor/email
 8 pasangan di antrean manusia (3 orang sama, 5 hanya mirip nama)
 0 salah gabung
-22/22 kasus lapangan lulus
-12/12 kasus nyata lulus
+22/22 kasus lapangan sesuai
+12/12 kasus nyata sesuai (10 orang sama, 2 alias benar dipisah)
+14/14 kasus nyata putaran kedua sesuai (11 orang sama, 3 alias benar dipisah)
 ```
 
 ## Uji kasus nyata
@@ -63,9 +66,56 @@ di internet, bukan kasus karangan. Sumbernya dicantumkan per kasus:
 
 Tiga kasus sempat gagal dan memaksa kode diperbaiki: gelar daerah bergender,
 nama panjang yang dipendekkan, dan marga Batak yang sama pada dua orang berbeda.
-Dua kasus disertakan sebagai batas yang diakui — julukan ("Gus Dur" ↔
-"Abdurrahman Wahid", "Jokowi" ↔ "Joko Widodo") tidak bisa dicocokkan tanpa tabel
-alias, dan sistem memilih memisahkan.
+
+Dua kasus yang **dipisah** ("Gus Dur" ↔ "Abdurrahman Wahid", "Jokowi" ↔
+"Joko Widodo") bukan kegagalan, melainkan perilaku yang diharapkan. Sistem ini
+memakai nama asli; nama panggilan tidak boleh disatukan dengan nama asli, karena
+menyatukan keduanya adalah kesalahan manusia yang memasukkan julukan ke kolom
+nama. Menyatukan nama panggilan, kalau memang perlu, adalah tugas tabel alias
+yang diisi manusia — bukan tebakan mesin.
+
+## Uji kasus nyata putaran kedua
+
+`uji_kasus_nyata2.py` menambah 14 kasus dari peristiwa kebahasaan yang
+terdokumentasi, bukan dari tebakan. Sumber per kasus ada di berkasnya:
+
+- **Ejaan 1972.** Wikipedia mencatat bahwa pada nama orang ejaan lama justru
+  dipertahankan, dan menyebut `Megawati Soekarnoputri` sebagai bentuk baku
+  (bukan `Sukarnoputri`). Kasus: Soekarno/Sukarno, Soeharto/Suharto,
+  Megawati Soekarnoputri/Sukarnoputri.
+- **Transliterasi Jerman.** ß = ss, ü = ue, ö = oe. Kasus: Weiß/Weiss,
+  Strauß/Strauss, Jürgen Schröder/Juergen Schroeder.
+- **Singkatan gelar.** H. = Haji (laki-laki), Hj. = Hajah (perempuan), dan
+  Moh. = Mohammad.
+- **Aksen dan partikel.** é, marga ganda bertanda hubung, dan *tussenvoegsel*
+  Belanda (van der / van den).
+- **Alias yang benar dipisah.** Ganti nama resmi (Ki Hajar Dewantara ↔ Raden Mas
+  Soewardi Soerjaningrat), nama Tionghoa diganti nama Indonesia (Liem Sioe Liong
+  ↔ Sudono Salim), dan nama panggilan (Joko Widodo ↔ Jokowi).
+
+Dua kasus menemukan cacat nyata di kode:
+
+1. **Huruf ß dibuang, bukan diterjemahkan.** Pembersih karakter hanya menyisakan
+   `a-z`, sehingga `Weiß` tersimpan sebagai `wei` — marga Jerman kehilangan
+   huruf terakhirnya tanpa peringatan. Sekarang ß → `ss`, dan ø/æ/ł/đ/þ ikut
+   dipetakan ke bentuk Latinnya.
+2. **Ejaan lama Indonesia tidak dikenali.** `Soekarno` dan `Sukarno` terpisah.
+   Sekarang `oe`, `tj`, `dj`, `nj`, `sj`, `ch` dibaca sebagai sinonim tambahan.
+
+Ejaan lama sengaja **tidak** dijadikan normalisasi global: di Jerman `oe` adalah
+transliterasi `ö` (Schroeder = Schröder), jadi memetakan `oe` → `u` di seluruh
+data akan merusak nama Jerman. Kode mengambil nilai tertinggi dari dua bacaan.
+
+Selain itu, pemisahan nama panggilan kini punya alasan yang dinyatakan.
+Sebelumnya `Jokowi` vs `Joko Widodo` terpisah pada skor 0,81 — seperseratus di
+bawah ambang, artinya kebetulan, bukan aturan. Sekarang aturannya eksplisit: satu
+kata yang tidak muncul di nama yang lebih panjang adalah nama panggilan, dan
+sistem memakai nama asli.
+
+**Batas yang jujur:** kedua perbaikan ini tidak mengubah angka pada 200 lead di
+atas (173 identitas, 27 digabung, 8 antrean tetap sama), karena generator data uji
+tidak pernah menghasilkan ß maupun ejaan 1972. Perbaikan ini dibuktikan oleh kasus
+nyata, bukan oleh data demo.
 
 ## Yang diperbaiki 23 November 2026
 
@@ -102,3 +152,7 @@ seluruhnya orang berbeda.
   sebagai "Ibu Siti" dan "Pak Siti". Ini tidak mungkin di dunia nyata. Logika
   pencocokan sudah menangani kasusnya dengan benar, tapi datanya perlu
   dibangkitkan ulang agar realistis.
+- **Generator tidak menghasilkan ß maupun ejaan 1972.** Karena itu angka pada 200
+  lead tidak berubah setelah kedua perbaikan di atas. Kalau data uji dibangkitkan
+  ulang dengan variasi ejaan, angkanya akan berubah — dan itu perlu diuji ulang,
+  bukan diasumsikan.

@@ -161,6 +161,26 @@ def rekonsiliasi(identitas: list[dict], gagal: int = 6) -> dict:
     }
 
 
+def jalankan_suite(modul) -> tuple[list[dict], int]:
+    """Jalankan satu berkas uji kasus, kembalikan (hasil, jumlah lulus).
+
+    `jenis` ikut dicatat supaya halaman bisa membedakan pasangan yang memang
+    orang sama dari alias (nama panggilan / ganti nama) yang justru HARUS
+    dipisah. Tanpa pemisahan itu, alias terbaca sebagai kegagalan padahal
+    perilakunya benar.
+    """
+    hasil = []
+    for k in modul.KASUS:
+        keputusan, skor, _ = dedup.putuskan(k["a"], k["b"])
+        hasil.append({
+            "ket": k["ket"], "nama_a": k["a"]["nama"], "nama_b": k["b"]["nama"],
+            "dapat": keputusan, "harap": k["harap"], "skor": skor,
+            "sumber": k.get("sumber", ""), "jenis": k.get("jenis", "cocok"),
+            "lulus": keputusan == k["harap"],
+        })
+    return hasil, sum(1 for h in hasil if h["lulus"])
+
+
 def main() -> None:
     data = muat()
     lead = data["lead"]
@@ -237,35 +257,26 @@ def main() -> None:
     # Kasus lapangan dijalankan di sini juga, supaya halaman tidak pernah
     # menampilkan hasil uji kasus yang sudah usang.
     import uji_kasus
+    import uji_kasus_nyata
+    import uji_kasus_nyata2
 
-    hasil_kasus = []
-    for k in uji_kasus.KASUS:
-        keputusan, skor, _ = dedup.putuskan(k["a"], k["b"])
-        hasil_kasus.append({
-            "ket": k["ket"], "nama_a": k["a"]["nama"], "nama_b": k["b"]["nama"],
-            "dapat": keputusan, "harap": k["harap"], "skor": skor,
-            "lulus": keputusan == k["harap"],
-        })
-    lulus_kasus = sum(1 for h in hasil_kasus if h["lulus"])
+    hasil_kasus, lulus_kasus = jalankan_suite(uji_kasus)
     print(f"\nUJI KASUS LAPANGAN — {lulus_kasus}/{len(hasil_kasus)} lulus")
     for h in hasil_kasus:
         if not h["lulus"]:
             print(f"  GAGAL {h['ket']}: dapat {h['dapat']}, harap {h['harap']}")
 
     # ---- uji kasus nyata (nama tokoh publik, konvensi terdokumentasi)
-    import uji_kasus_nyata
-
-    hasil_nyata = []
-    for k in uji_kasus_nyata.KASUS:
-        keputusan, skor, _ = dedup.putuskan(k["a"], k["b"])
-        hasil_nyata.append({
-            "ket": k["ket"], "nama_a": k["a"]["nama"], "nama_b": k["b"]["nama"],
-            "dapat": keputusan, "harap": k["harap"], "skor": skor,
-            "sumber": k["sumber"], "lulus": keputusan == k["harap"],
-        })
-    lulus_nyata = sum(1 for h in hasil_nyata if h["lulus"])
-    print(f"\nUJI KASUS NYATA — {lulus_nyata}/{len(hasil_nyata)} lulus")
+    hasil_nyata, lulus_nyata = jalankan_suite(uji_kasus_nyata)
+    print(f"\nUJI KASUS NYATA — {lulus_nyata}/{len(hasil_nyata)} sesuai")
     for h in hasil_nyata:
+        if not h["lulus"]:
+            print(f"  GAGAL {h['ket']}: dapat {h['dapat']}, harap {h['harap']}")
+
+    # ---- uji kasus nyata putaran kedua (ejaan 1972, transliterasi Jerman, alias)
+    hasil_nyata2, lulus_nyata2 = jalankan_suite(uji_kasus_nyata2)
+    print(f"\nUJI KASUS NYATA PUTARAN 2 — {lulus_nyata2}/{len(hasil_nyata2)} sesuai")
+    for h in hasil_nyata2:
         if not h["lulus"]:
             print(f"  GAGAL {h['ket']}: dapat {h['dapat']}, harap {h['harap']}")
 
@@ -289,6 +300,8 @@ def main() -> None:
                       "kasus": hasil_kasus},
         "uji_kasus_nyata": {"total": len(hasil_nyata), "lulus": lulus_nyata,
                             "kasus": hasil_nyata},
+        "uji_kasus_nyata2": {"total": len(hasil_nyata2), "lulus": lulus_nyata2,
+                             "kasus": hasil_nyata2},
         # kunci internal _orang_* tidak ikut ditulis: halaman publik tidak perlu
         # membuka kunci jawaban, dan antrean_contoh hanya untuk dilihat.
         "antrean_contoh": [{k: v for k, v in a.items()

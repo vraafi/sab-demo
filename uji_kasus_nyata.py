@@ -22,7 +22,7 @@ import dedup
 L = {"nomor": "", "email": "", "perusahaan": "", "kota": ""}
 
 
-def kasus(nama1, nama2, harap, ket, sumber, **beda):
+def kasus(nama1, nama2, harap, ket, sumber, jenis="cocok", **beda):
     a = {**L, "nama": nama1}
     b = {**L, "nama": nama2}
     for k, v in beda.items():
@@ -31,7 +31,8 @@ def kasus(nama1, nama2, harap, ket, sumber, **beda):
         else:
             a[k] = v
             b[k] = v
-    return {"a": a, "b": b, "harap": harap, "ket": ket, "sumber": sumber}
+    return {"a": a, "b": b, "harap": harap, "ket": ket, "sumber": sumber,
+            "jenis": jenis}
 
 
 KASUS = [
@@ -95,15 +96,22 @@ KASUS = [
           "Wikipedia: Chinese-Indonesian, surname first",
           kota="Jakarta", perusahaan="Universitas Tarumanagara"),
 
-    # --- batas yang diakui: tidak bisa dicocokkan tanpa tabel alias ---
+    # --- alias: nama panggilan vs nama asli ---
+    # Kedua kasus di bawah BUKAN kegagalan. Sistem ini memakai nama asli;
+    # nama panggilan tidak boleh disatukan dengan nama asli, karena menyatukan
+    # keduanya adalah kesalahan manusia yang memasukkan data julukan ke kolom
+    # nama. Memisahkan di sini adalah perilaku yang benar. Menyatukannya,
+    # kalau memang perlu, adalah tugas tabel alias yang diisi manusia.
     kasus("Gus Dur", "Abdurrahman Wahid", "pisah",
-          "julukan vs nama resmi — TIDAK bisa dicocokkan tanpa tabel alias",
+          "nama panggilan vs nama asli — BENAR dipisah, sistem memakai nama asli",
           "Wikipedia: Gus Dur = Abdurrahman Wahid (julukan)",
+          jenis="alias",
           kota="Jakarta", perusahaan="NU"),
 
     kasus("Joko Widodo", "Jokowi", "pisah",
-          "julukan vs nama resmi — TIDAK bisa dicocokkan tanpa tabel alias",
+          "nama panggilan vs nama asli — BENAR dipisah, sistem memakai nama asli",
           "Wikipedia: Jokowi = Joko Widodo (julukan)",
+          jenis="alias",
           kota="Jakarta", perusahaan="Istana Negara"),
 ]
 
@@ -118,14 +126,19 @@ def jalankan() -> int:
         ok = keputusan == k["harap"]
         if not ok:
             gagal.append((k, keputusan, skor, alasan))
-        print(f"\n{i:2d}. [{'OK   ' if ok else 'GAGAL'}] {k['ket']}")
+        tanda = "OK   " if ok else "GAGAL"
+        label = "cocok" if k["jenis"] == "cocok" else "alias (benar dipisah)"
+        print(f"\n{i:2d}. [{tanda}] {k['ket']}")
         print(f"    {k['a']['nama']!r} vs {k['b']['nama']!r}")
-        print(f"    dapat: {keputusan} ({skor:.3f}) | harusnya: {k['harap']}")
+        print(f"    dapat: {keputusan} ({skor:.3f}) | harusnya: {k['harap']}  [{label}]")
         print(f"    sumber: {k['sumber']}")
 
     lulus = len(KASUS) - len(gagal)
+    n_alias = sum(1 for k in KASUS if k["jenis"] == "alias")
     print("\n" + "=" * 76)
-    print(f"HASIL: {lulus}/{len(KASUS)} lulus")
+    print(f"HASIL: {lulus}/{len(KASUS)} sesuai "
+          f"({len(KASUS) - n_alias} pasangan orang sama, "
+          f"{n_alias} alias yang benar dipisah)")
     if gagal:
         print(f"\n{len(gagal)} GAGAL — perlu perbaikan:")
         for k, kep, skor, alasan in gagal:

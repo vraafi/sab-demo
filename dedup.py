@@ -34,6 +34,17 @@ Catatan revisi 23 Nov 2026 (menanggapi catatan SAB):
   nama depannya sama.
 - `sama_nama_lengkap` mensyaratkan marga sama, bukan sekadar himpunan kata sama.
 
+Catatan revisi 23 Nov 2026, putaran kedua (uji kasus nyata):
+- Huruf ß tidak lagi dibuang. Sebelumnya "Weiß" menjadi "wei" karena ß bukan
+  [a-z]; marga Jerman kehilangan huruf terakhirnya tanpa peringatan.
+- Ejaan lama Indonesia (oe/tj/dj/nj/sj/ch) dibaca sebagai sinonim tambahan,
+  sehingga Soekarno/Sukarno dan Megawati Soekarnoputri/Sukarnoputri bertemu.
+  Tidak diterapkan sebagai normalisasi global supaya nama Jerman
+  (Schroeder = Schröder) tidak rusak.
+- Nama panggilan yang bukan bagian dari nama asli (Jokowi vs Joko Widodo)
+  dipisah dengan alasan eksplisit, bukan karena kebetulan skornya di bawah
+  ambang. Sistem memakai nama asli; julukan adalah urusan tabel alias.
+
 Tanpa dependensi luar.
 """
 from __future__ import annotations
@@ -63,8 +74,25 @@ SAPAAN_P = {"bu", "ibu", "mbak", "mrs", "ms", "hj", "hajah", "nyonya", "nona",
 SAPAAN = SAPAAN_L | SAPAAN_P
 
 
+# Huruf yang TIDAK terurai oleh NFKD dan karena itu harus dipetakan sendiri.
+# Tanpa peta ini, "Weiß" kehilangan huruf terakhirnya: ß bukan [a-z], jadi
+# regex pembersih di bawah membuangnya dan marga "Weiß" menjadi "wei" --
+# nama Jerman berubah arti tanpa satu pun peringatan. SAB melayani klien
+# Jerman, jadi ini bukan kasus pinggiran.
+_PETA_HURUF = {
+    "ß": "ss", "ẞ": "ss",      # Weiß -> Weiss
+    "æ": "ae", "Æ": "ae",
+    "œ": "oe", "Œ": "oe",      # œ adalah oe, bukan oe-ejaan-lama Indonesia
+    "ø": "o", "Ø": "o",
+    "đ": "d", "Đ": "d", "ð": "d", "Ð": "d",
+    "ł": "l", "Ł": "l",
+    "þ": "th", "Þ": "th",
+}
+
+
 def _huruf(t: str) -> str:
     """Buang aksen: Müller -> Muller, supaya perbandingan tidak meleset."""
+    t = "".join(_PETA_HURUF.get(c, c) for c in t)
     t = unicodedata.normalize("NFKD", t)
     return "".join(c for c in t if not unicodedata.combining(c))
 
@@ -179,6 +207,40 @@ BOBOT_MARGA = 0.65
 BOBOT_DEPAN = 0.35
 
 
+# Ejaan lama -> ejaan baru. Sumber: Wikipedia, "Ejaan Van Ophuijsen"
+# (oe = u, tj = c, dj = j, nj = ny, sj = sy, ch = kh). Ejaan itu dipakai
+# sampai 1972, dan Wikipedia "Ejaan yang Disempurnakan" mencatat bahwa pada
+# NAMA orang ejaan lama sering dipertahankan: "Soekarno" dan "Megawati
+# Soekarnoputri" hidup berdampingan dengan "Sukarno" di data nyata.
+#
+# Dipakai sebagai SINONIM TAMBAHAN saat membandingkan token, bukan sebagai
+# normalisasi global. Alasannya: "oe" di Jerman adalah transliterasi "ö"
+# (Schroeder = Schröder), jadi memetakan oe->u secara global akan merusak
+# nama Jerman. Dengan mengambil nilai TERTINGGI dari dua bacaan, nama Jerman
+# tidak pernah dirugikan.
+_EJAAN_LAMA = (("oe", "u"), ("tj", "c"), ("dj", "j"),
+               ("sj", "sy"), ("nj", "ny"), ("ch", "kh"))
+
+
+def _ejaan_baru(t: str) -> str:
+    """Baca satu token dengan ejaan 1972: soekarno -> sukarno, tjoetjoe -> cucu."""
+    for lama, baru in _EJAAN_LAMA:
+        t = t.replace(lama, baru)
+    return t
+
+
+def _ejaan_sama(a: list[str], b: list[str]) -> bool:
+    """True kalau kedua nama hanya berbeda pada ejaan lama vs ejaan baru.
+
+    Dipakai untuk kalimat alasan. Menulis "nama depan sama" untuk
+    Soekarno/Sukarno akan menyesatkan: yang sama bukan nama depannya,
+    melainkan namanya setelah ejaan 1972 dibaca.
+    """
+    if len(a) != len(b) or a == b:
+        return False
+    return [_ejaan_baru(t) for t in a] == [_ejaan_baru(t) for t in b]
+
+
 def _mirip_token(x: str, y: str) -> float:
     """Kemiripan satu token nama, dengan perlakuan khusus untuk inisial.
 
@@ -191,7 +253,12 @@ def _mirip_token(x: str, y: str) -> float:
         return 1.0
     if len(x) == 1 or len(y) == 1:
         return 0.90 if x[:1] == y[:1] else 0.0
-    return jaro_winkler(x, y)
+    skor = jaro_winkler(x, y)
+    # Baca juga sebagai ejaan lama vs ejaan baru, lalu ambil yang lebih tinggi.
+    ex, ey = _ejaan_baru(x), _ejaan_baru(y)
+    if ex != x or ey != y:
+        skor = max(skor, jaro_winkler(ex, ey))
+    return skor
 
 
 def mirip_nama(a: list[str], b: list[str]) -> float:
@@ -345,6 +412,23 @@ def putuskan(lead: dict, kandidat: dict) -> tuple[str, float, str]:
     skor = 0.55 * s_nama + 0.30 * s_prsh + (0.15 if kota_sama else 0.0)
     skor = round(skor, 3)
 
+    # Nama panggilan, bukan nama asli.
+    # "Jokowi" tidak muncul sebagai kata di "Joko Widodo"; "Gus Dur" tidak
+    # muncul di "Abdurrahman Wahid". Kemiripan huruf tetap tinggi karena nama
+    # panggilan memang dipotong dari nama asli, sehingga ambang skor saja akan
+    # meloloskannya ke antrean -- atau lebih buruk, ke penggabungan.
+    #
+    # Aturan sistem ini: yang dipakai wajib nama asli. Nama panggilan karena
+    # itu TIDAK dicocokkan, sekalipun hurufnya mirip. Menyatukannya bukan tugas
+    # pencocokan nama, melainkan tugas tabel alias yang diisi manusia.
+    # Memisahkannya di sini adalah perilaku yang BENAR, bukan kegagalan.
+    if (len(na) == 1) != (len(nb) == 1):
+        pendek, panjang = (na, nb) if len(na) == 1 else (nb, na)
+        if pendek[0] not in panjang:
+            return ("pisah", skor,
+                    f"nama panggilan, bukan nama asli: {pendek[0]!r} tidak ada "
+                    f"di {panjang} — sistem memakai nama asli, bukan julukan")
+
     # Jalur nama TIDAK PERNAH menggabung otomatis, sekalipun namanya persis sama.
     # Alasannya ditemukan saat menguji data ini sendiri: dua orang berbeda bisa
     # bernama "Nadia Pratama" di perusahaan yang sama di kota yang sama. Nama
@@ -358,7 +442,11 @@ def putuskan(lead: dict, kandidat: dict) -> tuple[str, float, str]:
         return "antrean", max(skor, 0.90), "nama lengkap sama, perusahaan dan kota sama"
 
     if s_nama >= 0.92:
-        return "antrean", max(skor, 0.75), "nama nyaris identik, perlu dilihat manusia"
+        als = "nama nyaris identik, perlu dilihat manusia"
+        if _ejaan_sama(na, nb):
+            als = ("ejaan lama vs ejaan baru (oe->u, tj->c, dj->j), "
+                   "perlu dilihat manusia")
+        return "antrean", max(skor, 0.75), als
 
     # Satu pihak menuliskan nama lebih lengkap ("Sri Mulyani" vs "Sri Mulyani
     # Indrawati"). Marga tidak bisa dibandingkan karena yang satu belum
@@ -387,5 +475,16 @@ def putuskan(lead: dict, kandidat: dict) -> tuple[str, float, str]:
         # tidak ada marga yang dibandingkan, jadi jangan menulis "marga cocok".
         als = ("nama mirip, marga cocok, perusahaan dan kota sama" if dua_marga
                else "nama depan sama (tanpa marga), perusahaan dan kota sama")
+        if _ejaan_sama(na, nb):
+            als = ("ejaan lama vs ejaan baru (oe->u, tj->c, dj->j), "
+                   "perusahaan dan kota sama")
         return "antrean", max(skor, 0.70), als
+
+    # Tidak ada satu kata pun yang sama. Ini juga bentuk kasus nama panggilan
+    # yang tidak dipotong dari nama asli ("Gus Dur" vs "Abdurrahman Wahid"),
+    # dan kasus ganti nama resmi. Ketiganya hanya bisa diselesaikan tabel alias.
+    if not (set(na) & set(nb)):
+        return ("pisah", skor,
+                "tidak ada satu kata pun yang sama pada nama — tanpa tabel "
+                "alias, ini dua orang berbeda")
     return "pisah", skor, "tidak cukup bukti"

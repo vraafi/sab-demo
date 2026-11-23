@@ -44,6 +44,8 @@
     "dapat": "pisah",
     "harap": "pisah",
     "skor": 0.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -53,6 +55,8 @@
     "dapat": "pisah",
     "harap": "pisah",
     "skor": 0.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -62,6 +66,8 @@
     "dapat": "pisah",
     "harap": "pisah",
     "skor": 0.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -71,6 +77,8 @@
     "dapat": "pisah",
     "harap": "pisah",
     "skor": 0.803,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -80,6 +88,8 @@
     "dapat": "antrean",
     "harap": "antrean",
     "skor": 1.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -89,6 +99,8 @@
     "dapat": "gabung",
     "harap": "gabung",
     "skor": 1.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -98,6 +110,8 @@
     "dapat": "gabung",
     "harap": "gabung",
     "skor": 1.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -107,6 +121,8 @@
     "dapat": "gabung",
     "harap": "gabung",
     "skor": 0.95,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -116,6 +132,8 @@
     "dapat": "gabung",
     "harap": "gabung",
     "skor": 0.95,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -125,6 +143,8 @@
     "dapat": "gabung",
     "harap": "gabung",
     "skor": 1.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -134,6 +154,8 @@
     "dapat": "antrean",
     "harap": "antrean",
     "skor": 0.964,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -143,6 +165,8 @@
     "dapat": "antrean",
     "harap": "antrean",
     "skor": 0.98,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -152,6 +176,8 @@
     "dapat": "antrean",
     "harap": "antrean",
     "skor": 1.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -161,6 +187,8 @@
     "dapat": "antrean",
     "harap": "antrean",
     "skor": 1.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -170,6 +198,8 @@
     "dapat": "antrean",
     "harap": "antrean",
     "skor": 1.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -179,6 +209,8 @@
     "dapat": "pisah",
     "harap": "pisah",
     "skor": 0.898,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -188,6 +220,8 @@
     "dapat": "pisah",
     "harap": "pisah",
     "skor": 0.906,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -197,6 +231,8 @@
     "dapat": "pisah",
     "harap": "pisah",
     "skor": 0.468,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -206,6 +242,8 @@
     "dapat": "antrean",
     "harap": "antrean",
     "skor": 0.75,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -215,6 +253,8 @@
     "dapat": "pisah",
     "harap": "pisah",
     "skor": 0.642,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -224,6 +264,8 @@
     "dapat": "antrean",
     "harap": "antrean",
     "skor": 1.0,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -233,6 +275,8 @@
     "dapat": "antrean",
     "harap": "antrean",
     "skor": 0.918,
+    "sumber": "",
+    "jenis": "cocok",
     "lulus": true
    }
   ]
@@ -249,6 +293,7 @@
     "harap": "pisah",
     "skor": 0.846,
     "sumber": "Wikipedia: single name, Sukarno / Suharto",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -259,6 +304,7 @@
     "harap": "antrean",
     "skor": 0.918,
     "sumber": "Wikipedia: mononim Boediono",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -269,6 +315,7 @@
     "harap": "pisah",
     "skor": 0.0,
     "sumber": "Wikipedia: Acehnese Teuku (male), Cut (female)",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -279,6 +326,7 @@
     "harap": "antrean",
     "skor": 0.981,
     "sumber": "Wikipedia: Javanese Raden Ajeng (unmarried female)",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -289,6 +337,7 @@
     "harap": "antrean",
     "skor": 0.981,
     "sumber": "Wikipedia: Abdul Haris Nasution, Batak marga",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -299,6 +348,7 @@
     "harap": "antrean",
     "skor": 1.0,
     "sumber": "Partikel Jerman: von der + marga",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -309,6 +359,7 @@
     "harap": "antrean",
     "skor": 0.97,
     "sumber": "Transliterasi Jerman ü=ue",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -319,6 +370,7 @@
     "harap": "antrean",
     "skor": 0.945,
     "sumber": "Wikipedia: Sri Mulyani Indrawati",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -329,6 +381,7 @@
     "harap": "pisah",
     "skor": 0.909,
     "sumber": "Wikipedia: Batak marga Siregar",
+    "jenis": "cocok",
     "lulus": true
    },
    {
@@ -339,26 +392,189 @@
     "harap": "antrean",
     "skor": 1.0,
     "sumber": "Wikipedia: Chinese-Indonesian, surname first",
+    "jenis": "cocok",
     "lulus": true
    },
    {
-    "ket": "julukan vs nama resmi — TIDAK bisa dicocokkan tanpa tabel alias",
+    "ket": "nama panggilan vs nama asli — BENAR dipisah, sistem memakai nama asli",
     "nama_a": "Gus Dur",
     "nama_b": "Abdurrahman Wahid",
     "dapat": "pisah",
     "harap": "pisah",
     "skor": 0.541,
     "sumber": "Wikipedia: Gus Dur = Abdurrahman Wahid (julukan)",
+    "jenis": "alias",
     "lulus": true
    },
    {
-    "ket": "julukan vs nama resmi — TIDAK bisa dicocokkan tanpa tabel alias",
+    "ket": "nama panggilan vs nama asli — BENAR dipisah, sistem memakai nama asli",
     "nama_a": "Joko Widodo",
     "nama_b": "Jokowi",
     "dapat": "pisah",
     "harap": "pisah",
     "skor": 0.886,
     "sumber": "Wikipedia: Jokowi = Joko Widodo (julukan)",
+    "jenis": "alias",
+    "lulus": true
+   }
+  ]
+ },
+ "uji_kasus_nyata2": {
+  "total": 14,
+  "lulus": 14,
+  "kasus": [
+   {
+    "ket": "ejaan lama vs baru (oe -> u) pada nama presiden pertama",
+    "nama_a": "Soekarno",
+    "nama_b": "Sukarno",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.918,
+    "sumber": "id.wikipedia EYD: nama sering memakai ejaan lama, mis. Soekarno",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "ejaan lama vs baru (oe -> u) pada nama presiden kedua",
+    "nama_a": "Soeharto",
+    "nama_b": "Suharto",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.918,
+    "sumber": "id.wikipedia EYD (Keppres 57/1972)",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "ejaan lama bertahan di dalam marga majemuk",
+    "nama_a": "Megawati Soekarnoputri",
+    "nama_b": "Megawati Sukarnoputri",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "sumber": "id.wikipedia EYD: 'Megawati Soekarnoputri (bukan Sukarnoputri)'",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "singkatan nama depan (Moh. = Mohammad)",
+    "nama_a": "Mohammad Hatta",
+    "nama_b": "Moh. Hatta",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.972,
+    "sumber": "Wikipedia: Mohammad Hatta, lazim ditulis Moh. Hatta",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "ß ditulis ss (Weiß -> Weiss)",
+    "nama_a": "Michael Weiß",
+    "nama_b": "Michael Weiss",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "sumber": "Transliterasi Jerman: ß = ss",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "ß di akhir marga (Strauß -> Strauss)",
+    "nama_a": "Johann Strauß",
+    "nama_b": "Johann Strauss",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "sumber": "Transliterasi Jerman: ß = ss",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "dua umlaut ditulis dua huruf (ü -> ue, ö -> oe)",
+    "nama_a": "Jürgen Schröder",
+    "nama_b": "Juergen Schroeder",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.963,
+    "sumber": "Transliterasi Jerman: ü = ue, ö = oe",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "singkatan gelar haji laki-laki (H. = Haji)",
+    "nama_a": "H. Ahmad Fauzi",
+    "nama_b": "Haji Ahmad Fauzi",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "sumber": "id.wikipedia 'Haji (gelar)': H. = Haji",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "singkatan gelar haji perempuan (Hj. = Hajah), gender harus konsisten",
+    "nama_a": "Hj. Siti Aminah",
+    "nama_b": "Hajah Siti Aminah",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "sumber": "id.wikipedia 'Haji (gelar)': Hj. = Hajah",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "aksen (é) dan tanda hubung pada marga ganda",
+    "nama_a": "Maria José Silva-Santos",
+    "nama_b": "Maria Jose Silva Santos",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "sumber": "Konvensi nama Iberia: marga ganda dengan tanda hubung",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "partikel Belanda 'van der' vs 'van den'",
+    "nama_a": "Jan van der Berg",
+    "nama_b": "Jan van den Berg",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "sumber": "Konvensi nama Belanda: tussenvoegsel van/van der/van den",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "ganti nama resmi — benar dipisah, butuh tabel alias",
+    "nama_a": "Ki Hajar Dewantara",
+    "nama_b": "Raden Mas Soewardi Soerjaningrat",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.649,
+    "sumber": "Jurnal UNY: lahir sebagai Raden Mas Soewardi Soerjaningrat",
+    "jenis": "alias",
+    "lulus": true
+   },
+   {
+    "ket": "nama Tionghoa diganti nama Indonesia — benar dipisah",
+    "nama_a": "Liem Sioe Liong",
+    "nama_b": "Sudono Salim",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.45,
+    "sumber": "IdRef: Salim, Sudono / Liem, Sioe Liong (varian satu orang)",
+    "jenis": "alias",
+    "lulus": true
+   },
+   {
+    "ket": "nama panggilan, bukan nama asli — benar dipisah",
+    "nama_a": "Joko Widodo",
+    "nama_b": "Jokowi",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.886,
+    "sumber": "Wikipedia: Jokowi adalah nama panggilan Joko Widodo",
+    "jenis": "alias",
     "lulus": true
    }
   ]
