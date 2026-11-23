@@ -1,0 +1,36 @@
+==========================================================================
+UJIAN 50 LEAD SAB — enam poin
+==========================================================================
+baris masuk            : 50
+identitas setelah dedup: 36
+digabung               : 14
+kontak dipakai bersama : 2
+kemungkinan duplikat   : 1 (nama sama, tanpa kontak bersama)
+
+bahasa                 : {'DE': 2, 'EN': 5, 'ID': 29}
+opt-out                : ['SAB-008', 'SAB-025']
+spam                   : ['SAB-027']
+balasan lintas kanal   : 11 identitas
+
+terkirim               : 29
+DLQ awal               : 5
+dipulihkan dari DLQ    : 1
+DLQ akhir              : 4
+alarm saat kirim       : MENYALA (ambang 5, DLQ 5)
+alarm setelah putar    : tidak (ambang 5, DLQ 4)
+handoff manusia        : 4
+
+rekonsiliasi           : 29/33 dibalas, selisih 4
+pengecualian           : SAB-005, SAB-007, SAB-017, SAB-026
+
+Kontak dipakai bersama (tidak digabung):
+  - nomor 622155500111: L020 'Joko Susilo' vs L021 'Maria Tan'
+  - email info@sinarabadi.example: L020 'Joko Susilo' vs L021 'Maria Tan'
+
+DLQ:
+  - DLQ-001 SAB-005 'Sarah Lim': kanal menolak setelah 3 percobaan (5xx)
+  - DLQ-002 SAB-007 'Hendra Wijaya': kanal menolak setelah 3 percobaan (5xx)
+  - DLQ-003 SAB-017 'Klaus Weber': kanal menolak setelah 3 percobaan (5xx)
+  - DLQ-005 SAB-026 'Wulan Sari': kanal menolak setelah 3 percobaan (5xx)
+
+Hasil: C:\Users\user\otonom-penuh\n8n_factory\sab_demo\ujian\hasil_ujian.json

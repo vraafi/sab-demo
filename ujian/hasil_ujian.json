@@ -1,0 +1,1786 @@
+{
+ "dijalankan": "2026-11-23T13:06:03+07:00",
+ "sumber": "SAB_test_leads_50.csv",
+ "poin_1_dedup": {
+  "baris_masuk": 50,
+  "identitas": 36,
+  "digabung": 14,
+  "kontak_dipakai_bersama": 2,
+  "kemungkinan_duplikat_nama": 1,
+  "kontak_bersama": [
+   {
+    "jenis": "nomor",
+    "nilai": "622155500111",
+    "baris_a": "L020",
+    "nama_a": "Joko Susilo",
+    "baris_b": "L021",
+    "nama_b": "Maria Tan",
+    "sebab": "nomor sama tetapi nama tidak cocok — kemungkinan kontak kantor dipakai bersama"
+   },
+   {
+    "jenis": "email",
+    "nilai": "info@sinarabadi.example",
+    "baris_a": "L020",
+    "nama_a": "Joko Susilo",
+    "baris_b": "L021",
+    "nama_b": "Maria Tan",
+    "sebab": "email sama tetapi nama tidak cocok — kemungkinan kontak kantor dipakai bersama"
+   }
+  ],
+  "kemungkinan_duplikat": [
+   {
+    "nama": "fajar nugroho",
+    "baris_a": "L022",
+    "baris_b": "L023",
+    "sebab": "nama persis sama tetapi tidak ada nomor/email yang sama — tidak digabung, menunggu manusia"
+   }
+  ],
+  "daftar": [
+   {
+    "id": "SAB-001",
+    "nama": "Budi Santoso",
+    "nama_varian": [
+     "B. Santoso",
+     "Budi Santoso",
+     "budi s."
+    ],
+    "telp": "6281200001101",
+    "surel": "budi.santoso@majulogistik.example",
+    "perusahaan": "PT Maju Logistik",
+    "kanal": [
+     "website_form",
+     "whatsapp",
+     "email"
+    ],
+    "baris": [
+     "L001",
+     "L002",
+     "L003"
+    ],
+    "pesan": [
+     "Kami butuh leads B2B untuk layanan logistik antarkota. Bisa minta info paket?",
+     "Halo, tadi saya sudah isi form di website. Kapan bisa dihubungi?",
+     "Mengikuti form kemarin, ini profil perusahaan kami."
+    ],
+    "pesan_pertama": "Kami butuh leads B2B untuk layanan logistik antarkota. Bisa minta info paket?",
+    "waktu_pertama": "2026-11-16 10:12:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 3,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-002",
+    "nama": "Rina Kartika",
+    "nama_varian": [
+     "Rina Kartika",
+     "rina kartika"
+    ],
+    "telp": "6281300002202",
+    "surel": "rina.kartika@griyaprop.example",
+    "perusahaan": "Griya Properti",
+    "kanal": [
+     "website_form",
+     "google_ads_form"
+    ],
+    "baris": [
+     "L004",
+     "L005"
+    ],
+    "pesan": [
+     "Mau tanya biaya iklan Google untuk properti.",
+     "Minta dihubungi untuk konsultasi."
+    ],
+    "pesan_pertama": "Mau tanya biaya iklan Google untuk properti.",
+    "waktu_pertama": "2026-11-16 11:30:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 2,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-003",
+    "nama": "Rina Kurniawati",
+    "nama_varian": [
+     "Rina Kurniawati"
+    ],
+    "telp": "6281300002203",
+    "surel": "rina.kurniawati@klinikasih.example",
+    "perusahaan": "Klinik Kasih",
+    "kanal": [
+     "meta_ads_form"
+    ],
+    "baris": [
+     "L006"
+    ],
+    "pesan": [
+     "Info layanan website untuk klinik?"
+    ],
+    "pesan_pertama": "Info layanan website untuk klinik?",
+    "waktu_pertama": "2026-11-18 15:20:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 2,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "meta_ads_form"
+   },
+   {
+    "id": "SAB-004",
+    "nama": "Andreas Müller",
+    "nama_varian": [
+     "Andreas Mueller",
+     "Andreas Müller"
+    ],
+    "telp": "4915100004401",
+    "surel": "a.mueller@weber-handel.example",
+    "perusahaan": "Weber Handel GmbH",
+    "kanal": [
+     "email",
+     "linkedin_form"
+    ],
+    "baris": [
+     "L007",
+     "L008"
+    ],
+    "pesan": [
+     "Guten Tag, wir suchen eine Agentur für Leadgenerierung in Südostasien. Können Sie uns ein Angebot schicken?",
+     "Interesse an Ihren Leistungen."
+    ],
+    "pesan_pertama": "Guten Tag, wir suchen eine Agentur für Leadgenerierung in Südostasien. Können Sie uns ein Angebot schicken?",
+    "waktu_pertama": "2026-11-17 03:15:00+07:00",
+    "bahasa": "DE",
+    "skor_bahasa": {
+     "ID": 0,
+     "EN": 1,
+     "DE": 4
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "email"
+   },
+   {
+    "id": "SAB-005",
+    "nama": "Sarah Lim",
+    "nama_varian": [
+     "Sarah Lim"
+    ],
+    "telp": "6590000501",
+    "surel": "sarah.lim@limtrading.example",
+    "perusahaan": "Lim Trading Pte Ltd",
+    "kanal": [
+     "website_form",
+     "email"
+    ],
+    "baris": [
+     "L009",
+     "L010"
+    ],
+    "pesan": [
+     "Hi, we want to expand B2B sales into Indonesia. What does your lead generation package include?",
+     "Following up on my form submission earlier this week."
+    ],
+    "pesan_pertama": "Hi, we want to expand B2B sales into Indonesia. What does your lead generation package include?",
+    "waktu_pertama": "2026-11-16 13:05:00+07:00",
+    "bahasa": "EN",
+    "skor_bahasa": {
+     "ID": 0,
+     "EN": 2,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-006",
+    "nama": "Dewi",
+    "nama_varian": [
+     "Dewi",
+     "Dewi Anggraini"
+    ],
+    "telp": "6281200000606",
+    "surel": "dewi@tokobunga-anggrek.example",
+    "perusahaan": "Toko Bunga Anggrek",
+    "kanal": [
+     "whatsapp",
+     "meta_ads_form"
+    ],
+    "baris": [
+     "L011",
+     "L012"
+    ],
+    "pesan": [
+     "Kak, ini dengan SAB? Mau tanya jasa bikin website.",
+     "Butuh website toko online."
+    ],
+    "pesan_pertama": "Kak, ini dengan SAB? Mau tanya jasa bikin website.",
+    "waktu_pertama": "2026-11-17 19:58:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 2,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "whatsapp"
+   },
+   {
+    "id": "SAB-007",
+    "nama": "Hendra Wijaya",
+    "nama_varian": [
+     "Hendra Wijaya"
+    ],
+    "telp": "6281100000707",
+    "surel": "hendra.w@solusiteknik.example",
+    "perusahaan": "CV Solusi Teknik",
+    "kanal": [
+     "google_ads_form"
+    ],
+    "baris": [
+     "L013"
+    ],
+    "pesan": [
+     "Butuh jasa SEO untuk website perusahaan."
+    ],
+    "pesan_pertama": "Butuh jasa SEO untuk website perusahaan.",
+    "waktu_pertama": "2026-11-18 10:45:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 4,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "google_ads_form"
+   },
+   {
+    "id": "SAB-008",
+    "nama": "Siti Rahmawati",
+    "nama_varian": [
+     "Siti R",
+     "Siti Rahmawati"
+    ],
+    "telp": "6285700000808",
+    "surel": "siti.rahmawati@edukasimandiri.example",
+    "perusahaan": "Yayasan Edukasi Mandiri",
+    "kanal": [
+     "website_form",
+     "whatsapp",
+     "whatsapp"
+    ],
+    "baris": [
+     "L014",
+     "L015",
+     "L016"
+    ],
+    "pesan": [
+     "Kami ingin menambah pendaftar siswa baru, bisa dibantu?",
+     "Iya kak, untuk tahun ajaran depan.",
+     "berhenti"
+    ],
+    "pesan_pertama": "Kami ingin menambah pendaftar siswa baru, bisa dibantu?",
+    "waktu_pertama": "2026-11-16 14:15:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 0,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-009",
+    "nama": "Agus Pratama",
+    "nama_varian": [
+     "Agus Pratama"
+    ],
+    "telp": "6281200000909",
+    "surel": "agus.pratama@sentosafood.example",
+    "perusahaan": "PT Sentosa Food",
+    "kanal": [
+     "website_form",
+     "website_form"
+    ],
+    "baris": [
+     "L017",
+     "L018"
+    ],
+    "pesan": [
+     "Minta proposal lead generation untuk distributor makanan.",
+     "Minta proposal lead generation untuk distributor makanan."
+    ],
+    "pesan_pertama": "Minta proposal lead generation untuk distributor makanan.",
+    "waktu_pertama": "2026-11-18 13:00:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 2,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-010",
+    "nama": "Agus Prasetyo",
+    "nama_varian": [
+     "Agus Prasetyo"
+    ],
+    "telp": "6281200001010",
+    "surel": "agus.prasetyo@sentosafood.example",
+    "perusahaan": "PT Sentosa Food",
+    "kanal": [
+     "meta_ads_form"
+    ],
+    "baris": [
+     "L019"
+    ],
+    "pesan": [
+     "Saya dari bagian marketing, mau tanya iklan Meta."
+    ],
+    "pesan_pertama": "Saya dari bagian marketing, mau tanya iklan Meta.",
+    "waktu_pertama": "2026-11-18 16:25:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 5,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "meta_ads_form"
+   },
+   {
+    "id": "SAB-011",
+    "nama": "Joko Susilo",
+    "nama_varian": [
+     "Joko Susilo"
+    ],
+    "telp": "622155500111",
+    "surel": "info@sinarabadi.example",
+    "perusahaan": "PT Sinar Abadi",
+    "kanal": [
+     "website_form"
+    ],
+    "baris": [
+     "L020"
+    ],
+    "pesan": [
+     "Mau tanya jasa cold email untuk produk kami."
+    ],
+    "pesan_pertama": "Mau tanya jasa cold email untuk produk kami.",
+    "waktu_pertama": "2026-11-17 11:11:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 5,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-012",
+    "nama": "Maria Tan",
+    "nama_varian": [
+     "Maria Tan"
+    ],
+    "telp": "622155500111",
+    "surel": "info@sinarabadi.example",
+    "perusahaan": "PT Sinar Abadi",
+    "kanal": [
+     "email"
+    ],
+    "baris": [
+     "L021"
+    ],
+    "pesan": [
+     "Saya Maria, purchasing. Apakah SAB bisa bantu riset supplier?"
+    ],
+    "pesan_pertama": "Saya Maria, purchasing. Apakah SAB bisa bantu riset supplier?",
+    "waktu_pertama": "2026-11-19 09:45:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 4,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "email"
+   },
+   {
+    "id": "SAB-013",
+    "nama": "Fajar Nugroho",
+    "nama_varian": [
+     "Fajar Nugroho"
+    ],
+    "telp": "",
+    "surel": "fajar.nugroho@konstruksijaya.example",
+    "perusahaan": "PT Konstruksi Jaya",
+    "kanal": [
+     "email"
+    ],
+    "baris": [
+     "L022"
+    ],
+    "pesan": [
+     "Kami tertarik dengan layanan LinkedIn outreach."
+    ],
+    "pesan_pertama": "Kami tertarik dengan layanan LinkedIn outreach.",
+    "waktu_pertama": "2026-11-17 09:20:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 2,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "email"
+   },
+   {
+    "id": "SAB-014",
+    "nama": "Fajar Nugroho",
+    "nama_varian": [
+     "Fajar Nugroho"
+    ],
+    "telp": "6281200001313",
+    "surel": "",
+    "perusahaan": "",
+    "kanal": [
+     "whatsapp"
+    ],
+    "baris": [
+     "L023"
+    ],
+    "pesan": [
+     "Email dari tim SAB sudah saya terima, boleh telepon besok jam 10?"
+    ],
+    "pesan_pertama": "Email dari tim SAB sudah saya terima, boleh telepon besok jam 10?",
+    "waktu_pertama": "2026-11-18 20:14:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 5,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "whatsapp"
+   },
+   {
+    "id": "SAB-015",
+    "nama": "Linda Hartono",
+    "nama_varian": [
+     "Linda Hartono"
+    ],
+    "telp": "6281700001414",
+    "surel": "linda@hartonolaw.example",
+    "perusahaan": "Hartono & Partners",
+    "kanal": [
+     "website_form"
+    ],
+    "baris": [
+     "L024"
+    ],
+    "pesan": [
+     "Kami firma hukum, butuh klien korporat. Apakah bisa?"
+    ],
+    "pesan_pertama": "Kami firma hukum, butuh klien korporat. Apakah bisa?",
+    "waktu_pertama": "2026-11-14 23:40:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 4,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-016",
+    "nama": "Michael Grant",
+    "nama_varian": [
+     "Michael Grant"
+    ],
+    "telp": "14150001515",
+    "surel": "m.grant@grantsupply.example",
+    "perusahaan": "Grant Supply Co",
+    "kanal": [
+     "email"
+    ],
+    "baris": [
+     "L025"
+    ],
+    "pesan": [
+     "We're looking for an Indonesian partner for appointment setting. Rates?"
+    ],
+    "pesan_pertama": "We're looking for an Indonesian partner for appointment setting. Rates?",
+    "waktu_pertama": "2026-11-16 22:05:00+07:00",
+    "bahasa": "EN",
+    "skor_bahasa": {
+     "ID": 0,
+     "EN": 6,
+     "DE": 1
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "email"
+   },
+   {
+    "id": "SAB-017",
+    "nama": "Klaus Weber",
+    "nama_varian": [
+     "Klaus Weber"
+    ],
+    "telp": "4917000001616",
+    "surel": "klaus.weber@kw-engineering.example",
+    "perusahaan": "KW Engineering",
+    "kanal": [
+     "website_form"
+    ],
+    "baris": [
+     "L026"
+    ],
+    "pesan": [
+     "Hello, do you offer white-label SEO for agencies?"
+    ],
+    "pesan_pertama": "Hello, do you offer white-label SEO for agencies?",
+    "waktu_pertama": "2026-11-18 12:12:00+07:00",
+    "bahasa": "EN",
+    "skor_bahasa": {
+     "ID": 0,
+     "EN": 5,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-018",
+    "nama": "Putri Ayu",
+    "nama_varian": [
+     "Putri Ayu",
+     "Putri Ayu Lestari"
+    ],
+    "telp": "6281200001717",
+    "surel": "putri.ayu@gmial.example",
+    "perusahaan": "Ayu Catering",
+    "kanal": [
+     "google_ads_form",
+     "website_form"
+    ],
+    "baris": [
+     "L027",
+     "L028"
+    ],
+    "pesan": [
+     "Mau pasang iklan Google untuk catering.",
+     "Barusan isi form di iklan, ini email yang benar ya."
+    ],
+    "pesan_pertama": "Mau pasang iklan Google untuk catering.",
+    "waktu_pertama": "2026-11-17 13:33:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 4,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "google_ads_form"
+   },
+   {
+    "id": "SAB-019",
+    "nama": "Rudi Hartanto",
+    "nama_varian": [
+     "Rudi Hartanto"
+    ],
+    "telp": "",
+    "surel": "rudi.hartanto@mitrabaja.example",
+    "perusahaan": "PT Mitra Baja",
+    "kanal": [
+     "email"
+    ],
+    "baris": [
+     "L029"
+    ],
+    "pesan": [
+     "Bisa kirim company profile SAB?"
+    ],
+    "pesan_pertama": "Bisa kirim company profile SAB?",
+    "waktu_pertama": "2026-11-19 10:05:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 2,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "email"
+   },
+   {
+    "id": "SAB-020",
+    "nama": "Rudi Hartono",
+    "nama_varian": [
+     "Rudi Hartono"
+    ],
+    "telp": "",
+    "surel": "rudi.hartono@nusantaratextile.example",
+    "perusahaan": "Nusantara Textile",
+    "kanal": [
+     "linkedin_form"
+    ],
+    "baris": [
+     "L030"
+    ],
+    "pesan": [
+     "Interested in your B2B lead generation services."
+    ],
+    "pesan_pertama": "Interested in your B2B lead generation services.",
+    "waktu_pertama": "2026-11-19 14:30:00+07:00",
+    "bahasa": "EN",
+    "skor_bahasa": {
+     "ID": 0,
+     "EN": 3,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "linkedin_form"
+   },
+   {
+    "id": "SAB-021",
+    "nama": "Yuni Setiawati",
+    "nama_varian": [
+     "Yuni",
+     "Yuni Setiawati"
+    ],
+    "telp": "6281200002020",
+    "surel": "yuni@yunibeauty.example",
+    "perusahaan": "Yuni Beauty",
+    "kanal": [
+     "website_form",
+     "whatsapp"
+    ],
+    "baris": [
+     "L031",
+     "L032"
+    ],
+    "pesan": [
+     "Mau tanya harga kelola Instagram.",
+     "Kak, follow up yang kemarin ya."
+    ],
+    "pesan_pertama": "Mau tanya harga kelola Instagram.",
+    "waktu_pertama": "2026-11-16 15:00:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 2,
+     "EN": 1,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-022",
+    "nama": "Ahmad Fauzi",
+    "nama_varian": [
+     "Ahmad Fauzi"
+    ],
+    "telp": "6281300002121",
+    "surel": "ahmad.fauzi@fauzitech.example",
+    "perusahaan": "Fauzi Tech",
+    "kanal": [
+     "website_form"
+    ],
+    "baris": [
+     "L033"
+    ],
+    "pesan": [
+     "Hi, saya mau tanya pricing untuk lead gen, target market kami Malaysia."
+    ],
+    "pesan_pertama": "Hi, saya mau tanya pricing untuk lead gen, target market kami Malaysia.",
+    "waktu_pertama": "2026-11-18 11:00:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 5,
+     "EN": 1,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-023",
+    "nama": "Eko Saputra",
+    "nama_varian": [
+     "Eko Saputra"
+    ],
+    "telp": "6281200002222",
+    "surel": "eko.saputra@saputramotor.example",
+    "perusahaan": "Saputra Motor",
+    "kanal": [
+     "email",
+     "meta_ads_form"
+    ],
+    "baris": [
+     "L034",
+     "L035"
+    ],
+    "pesan": [
+     "Butuh landing page untuk promo dealer.",
+     "Ini nomor saya yang baru."
+    ],
+    "pesan_pertama": "Butuh landing page untuk promo dealer.",
+    "waktu_pertama": "2026-11-16 10:40:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 3,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "email"
+   },
+   {
+    "id": "SAB-024",
+    "nama": "-",
+    "nama_varian": [
+     "-"
+    ],
+    "telp": "6282100002323",
+    "surel": "",
+    "perusahaan": "",
+    "kanal": [
+     "whatsapp"
+    ],
+    "baris": [
+     "L036"
+    ],
+    "pesan": [
+     "Halo, info jasa iklan?"
+    ],
+    "pesan_pertama": "Halo, info jasa iklan?",
+    "waktu_pertama": "2026-11-18 18:30:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 4,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "whatsapp"
+   },
+   {
+    "id": "SAB-025",
+    "nama": "Thomas Schneider",
+    "nama_varian": [
+     "Thomas Schneider"
+    ],
+    "telp": "",
+    "surel": "t.schneider@schneider-logistik.example",
+    "perusahaan": "Schneider Logistik",
+    "kanal": [
+     "email"
+    ],
+    "baris": [
+     "L037"
+    ],
+    "pesan": [
+     "Bitte keine weiteren E-Mails an diese Adresse."
+    ],
+    "pesan_pertama": "Bitte keine weiteren E-Mails an diese Adresse.",
+    "waktu_pertama": "2026-11-19 08:00:00+07:00",
+    "bahasa": "DE",
+    "skor_bahasa": {
+     "ID": 0,
+     "EN": 1,
+     "DE": 6
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "email"
+   },
+   {
+    "id": "SAB-026",
+    "nama": "Wulan Sari",
+    "nama_varian": [
+     "Wulan",
+     "Wulan Sari"
+    ],
+    "telp": "6281200002525",
+    "surel": "wulan.sari@wulanfurniture.example",
+    "perusahaan": "Wulan Furniture",
+    "kanal": [
+     "meta_ads_form",
+     "whatsapp"
+    ],
+    "baris": [
+     "L038",
+     "L039"
+    ],
+    "pesan": [
+     "Mau konsultasi iklan untuk furniture.",
+     "Sudah baca penawarannya, boleh minta jadwal meeting?"
+    ],
+    "pesan_pertama": "Mau konsultasi iklan untuk furniture.",
+    "waktu_pertama": "2026-11-17 14:44:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 4,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "meta_ads_form"
+   },
+   {
+    "id": "SAB-027",
+    "nama": "Bambang Susanto",
+    "nama_varian": [
+     "Bambang Susanto"
+    ],
+    "telp": "6289900002626",
+    "surel": "promo@followerscepat.example",
+    "perusahaan": "Followers Cepat",
+    "kanal": [
+     "website_form"
+    ],
+    "baris": [
+     "L040"
+    ],
+    "pesan": [
+     "Jual followers dan likes murah, 10rb followers cuma 50rb!"
+    ],
+    "pesan_pertama": "Jual followers dan likes murah, 10rb followers cuma 50rb!",
+    "waktu_pertama": "2026-11-18 03:03:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 4,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-028",
+    "nama": "Citra Dewanti",
+    "nama_varian": [
+     "Citra Dewanti"
+    ],
+    "telp": "6281300002727",
+    "surel": "citra@dewantiinterior.example",
+    "perusahaan": "Dewanti Interior",
+    "kanal": [
+     "google_ads_form"
+    ],
+    "baris": [
+     "L041"
+    ],
+    "pesan": [
+     "Butuh jasa SEO dan Google Ads."
+    ],
+    "pesan_pertama": "Butuh jasa SEO dan Google Ads.",
+    "waktu_pertama": "2026-11-19 13:20:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 3,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "google_ads_form"
+   },
+   {
+    "id": "SAB-029",
+    "nama": "Kevin W.",
+    "nama_varian": [
+     "Kevin W.",
+     "Kevin Wijaya"
+    ],
+    "telp": "6281100002828",
+    "surel": "kevin.wijaya@kwventures.example",
+    "perusahaan": "KW Ventures",
+    "kanal": [
+     "linkedin_form",
+     "email"
+    ],
+    "baris": [
+     "L042",
+     "L043"
+    ],
+    "pesan": [
+     "Looking for outbound lead gen for our SaaS.",
+     "Sending more details about our ICP as discussed."
+    ],
+    "pesan_pertama": "Looking for outbound lead gen for our SaaS.",
+    "waktu_pertama": "2026-11-17 15:15:00+07:00",
+    "bahasa": "EN",
+    "skor_bahasa": {
+     "ID": 0,
+     "EN": 6,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": true,
+    "kanal_pertama": "linkedin_form"
+   },
+   {
+    "id": "SAB-030",
+    "nama": "Lestari Ningsih",
+    "nama_varian": [
+     "Lestari Ningsih"
+    ],
+    "telp": "6281200002929",
+    "surel": "lestari@ningsihbatik.example",
+    "perusahaan": "Ningsih Batik",
+    "kanal": [
+     "website_form"
+    ],
+    "baris": [
+     "L044"
+    ],
+    "pesan": [
+     "Mau jualan batik ke korporat, bisa dibantu cari buyer?"
+    ],
+    "pesan_pertama": "Mau jualan batik ke korporat, bisa dibantu cari buyer?",
+    "waktu_pertama": "2026-11-20 10:30:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 2,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-031",
+    "nama": "Oscar Siahaan",
+    "nama_varian": [
+     "Oscar Siahaan"
+    ],
+    "telp": "6281200003030",
+    "surel": "",
+    "perusahaan": "",
+    "kanal": [
+     "whatsapp"
+    ],
+    "baris": [
+     "L045"
+    ],
+    "pesan": [
+     "Halo SAB, saya mau tanya jasa bikin website company profile."
+    ],
+    "pesan_pertama": "Halo SAB, saya mau tanya jasa bikin website company profile.",
+    "waktu_pertama": "2026-11-15 10:00:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 6,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "whatsapp"
+   },
+   {
+    "id": "SAB-032",
+    "nama": "Gita Permata",
+    "nama_varian": [
+     "Gita Permata"
+    ],
+    "telp": "6281500003131",
+    "surel": "gita.permata@permatahotel.example",
+    "perusahaan": "Permata Hotel",
+    "kanal": [
+     "website_form"
+    ],
+    "baris": [
+     "L046"
+    ],
+    "pesan": [
+     "Kami butuh lebih banyak booking korporat untuk meeting room."
+    ],
+    "pesan_pertama": "Kami butuh lebih banyak booking korporat untuk meeting room.",
+    "waktu_pertama": "2026-11-19 16:50:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 3,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-033",
+    "nama": "Irfan Maulana",
+    "nama_varian": [
+     "Irfan Maulana"
+    ],
+    "telp": "6281200003232",
+    "surel": "irfan.maulana@maulanaexport.example",
+    "perusahaan": "Maulana Export",
+    "kanal": [
+     "google_ads_form"
+    ],
+    "baris": [
+     "L047"
+    ],
+    "pesan": [
+     "Cari buyer luar negeri untuk produk kopi."
+    ],
+    "pesan_pertama": "Cari buyer luar negeri untuk produk kopi.",
+    "waktu_pertama": "2026-11-18 14:14:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 1,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "google_ads_form"
+   },
+   {
+    "id": "SAB-034",
+    "nama": "Hana Wibisono",
+    "nama_varian": [
+     "Hana Wibisono"
+    ],
+    "telp": "",
+    "surel": "hana.wibisono@wibisonoclinic.example",
+    "perusahaan": "Wibisono Dental",
+    "kanal": [
+     "email"
+    ],
+    "baris": [
+     "L048"
+    ],
+    "pesan": [
+     "Halo, apakah SAB menangani Google Business Profile untuk klinik gigi?"
+    ],
+    "pesan_pertama": "Halo, apakah SAB menangani Google Business Profile untuk klinik gigi?",
+    "waktu_pertama": "2026-11-17 12:00:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 3,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "email"
+   },
+   {
+    "id": "SAB-035",
+    "nama": "Tono Saragih",
+    "nama_varian": [
+     "Tono Saragih"
+    ],
+    "telp": "6281200003434",
+    "surel": "tono.saragih@saragihagro.example",
+    "perusahaan": "Saragih Agro",
+    "kanal": [
+     "website_form"
+    ],
+    "baris": [
+     "L049"
+    ],
+    "pesan": [
+     "Mau tanya jasa cold email ke pabrik."
+    ],
+    "pesan_pertama": "Mau tanya jasa cold email ke pabrik.",
+    "waktu_pertama": "2026-11-16 17:30:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 3,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "website_form"
+   },
+   {
+    "id": "SAB-036",
+    "nama": "Yoga Pranata",
+    "nama_varian": [
+     "Yoga Pranata"
+    ],
+    "telp": "6281200003535",
+    "surel": "yoga.pranata@pranatagym.example",
+    "perusahaan": "Pranata Gym",
+    "kanal": [
+     "meta_ads_form"
+    ],
+    "baris": [
+     "L050"
+    ],
+    "pesan": [
+     "Butuh iklan untuk member baru gym."
+    ],
+    "pesan_pertama": "Butuh iklan untuk member baru gym.",
+    "waktu_pertama": "2026-11-20 11:15:00+07:00",
+    "bahasa": "ID",
+    "skor_bahasa": {
+     "ID": 3,
+     "EN": 0,
+     "DE": 0
+    },
+    "balasan_lintas_kanal": false,
+    "kanal_pertama": "meta_ads_form"
+   }
+  ]
+ },
+ "poin_2_bahasa": {
+  "sebaran": {
+   "DE": 2,
+   "EN": 5,
+   "ID": 29
+  },
+  "per_identitas": {
+   "SAB-001": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-002": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-003": {
+    "bahasa": "ID",
+    "kanal_pertama": "meta_ads_form"
+   },
+   "SAB-004": {
+    "bahasa": "DE",
+    "kanal_pertama": "email"
+   },
+   "SAB-005": {
+    "bahasa": "EN",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-006": {
+    "bahasa": "ID",
+    "kanal_pertama": "whatsapp"
+   },
+   "SAB-007": {
+    "bahasa": "ID",
+    "kanal_pertama": "google_ads_form"
+   },
+   "SAB-008": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-009": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-010": {
+    "bahasa": "ID",
+    "kanal_pertama": "meta_ads_form"
+   },
+   "SAB-011": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-012": {
+    "bahasa": "ID",
+    "kanal_pertama": "email"
+   },
+   "SAB-013": {
+    "bahasa": "ID",
+    "kanal_pertama": "email"
+   },
+   "SAB-014": {
+    "bahasa": "ID",
+    "kanal_pertama": "whatsapp"
+   },
+   "SAB-015": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-016": {
+    "bahasa": "EN",
+    "kanal_pertama": "email"
+   },
+   "SAB-017": {
+    "bahasa": "EN",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-018": {
+    "bahasa": "ID",
+    "kanal_pertama": "google_ads_form"
+   },
+   "SAB-019": {
+    "bahasa": "ID",
+    "kanal_pertama": "email"
+   },
+   "SAB-020": {
+    "bahasa": "EN",
+    "kanal_pertama": "linkedin_form"
+   },
+   "SAB-021": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-022": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-023": {
+    "bahasa": "ID",
+    "kanal_pertama": "email"
+   },
+   "SAB-024": {
+    "bahasa": "ID",
+    "kanal_pertama": "whatsapp"
+   },
+   "SAB-025": {
+    "bahasa": "DE",
+    "kanal_pertama": "email"
+   },
+   "SAB-026": {
+    "bahasa": "ID",
+    "kanal_pertama": "meta_ads_form"
+   },
+   "SAB-027": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-028": {
+    "bahasa": "ID",
+    "kanal_pertama": "google_ads_form"
+   },
+   "SAB-029": {
+    "bahasa": "EN",
+    "kanal_pertama": "linkedin_form"
+   },
+   "SAB-030": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-031": {
+    "bahasa": "ID",
+    "kanal_pertama": "whatsapp"
+   },
+   "SAB-032": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-033": {
+    "bahasa": "ID",
+    "kanal_pertama": "google_ads_form"
+   },
+   "SAB-034": {
+    "bahasa": "ID",
+    "kanal_pertama": "email"
+   },
+   "SAB-035": {
+    "bahasa": "ID",
+    "kanal_pertama": "website_form"
+   },
+   "SAB-036": {
+    "bahasa": "ID",
+    "kanal_pertama": "meta_ads_form"
+   }
+  }
+ },
+ "poin_3_optout": {
+  "opt_out": [
+   {
+    "identitas": "SAB-008",
+    "nama": "Siti Rahmawati",
+    "pesan": "berhenti"
+   },
+   {
+    "identitas": "SAB-025",
+    "nama": "Thomas Schneider",
+    "pesan": "Bitte keine weiteren E-Mails an diese Adresse."
+   }
+  ],
+  "lintas_kanal": [
+   "SAB-001",
+   "SAB-002",
+   "SAB-004",
+   "SAB-005",
+   "SAB-006",
+   "SAB-008",
+   "SAB-018",
+   "SAB-021",
+   "SAB-023",
+   "SAB-026",
+   "SAB-029"
+  ]
+ },
+ "poin_5_kirim": {
+  "terkirim": 29,
+  "dlq_awal": 5,
+  "dlq_setelah_putar_ulang": 4,
+  "dipulihkan": 1,
+  "alarm_kedalaman_dlq_saat_kirim": true,
+  "alarm_kedalaman_dlq_setelah_putar_ulang": false,
+  "ambang_alarm": 5,
+  "dlq": [
+   {
+    "id": "DLQ-001",
+    "identitas": "SAB-005",
+    "nama": "Sarah Lim",
+    "kanal": "email",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "pesan": "Hi, we want to expand B2B sales into Indonesia. What does your lead generation package include?"
+    }
+   },
+   {
+    "id": "DLQ-002",
+    "identitas": "SAB-007",
+    "nama": "Hendra Wijaya",
+    "kanal": "google_ads_form",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "pesan": "Butuh jasa SEO untuk website perusahaan."
+    }
+   },
+   {
+    "id": "DLQ-003",
+    "identitas": "SAB-017",
+    "nama": "Klaus Weber",
+    "kanal": "website_form",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "pesan": "Hello, do you offer white-label SEO for agencies?"
+    }
+   },
+   {
+    "id": "DLQ-005",
+    "identitas": "SAB-026",
+    "nama": "Wulan Sari",
+    "kanal": "whatsapp",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "pesan": "Mau konsultasi iklan untuk furniture."
+    }
+   }
+  ],
+  "jejak_retry": [
+   {
+    "identitas": "SAB-001",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-002",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-003",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-004",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-005",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "gagal"
+     },
+     {
+      "percobaan": 2,
+      "hasil": "gagal"
+     },
+     {
+      "percobaan": 3,
+      "hasil": "gagal"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-006",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-007",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "gagal"
+     },
+     {
+      "percobaan": 2,
+      "hasil": "gagal"
+     },
+     {
+      "percobaan": 3,
+      "hasil": "gagal"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-009",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-010",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-011",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-012",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-013",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-014",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-015",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-016",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-017",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "gagal"
+     },
+     {
+      "percobaan": 2,
+      "hasil": "gagal"
+     },
+     {
+      "percobaan": 3,
+      "hasil": "gagal"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-018",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-019",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-020",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-021",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "gagal"
+     },
+     {
+      "percobaan": 2,
+      "hasil": "gagal"
+     },
+     {
+      "percobaan": 3,
+      "hasil": "gagal"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-022",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-023",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-024",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-026",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "gagal"
+     },
+     {
+      "percobaan": 2,
+      "hasil": "gagal"
+     },
+     {
+      "percobaan": 3,
+      "hasil": "gagal"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-028",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-029",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-030",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-031",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-032",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-033",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-034",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-035",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   },
+   {
+    "identitas": "SAB-036",
+    "percobaan": [
+     {
+      "percobaan": 1,
+      "hasil": "terkirim"
+     }
+    ]
+   }
+  ],
+  "item_dicoba_ulang": 5,
+  "total_percobaan": 43,
+  "handoff_manusia": [
+   {
+    "identitas": "SAB-011",
+    "nama": "Joko Susilo",
+    "alasan": [
+     "kontak dipakai bersama — mungkin bukan orang yang sama"
+    ]
+   },
+   {
+    "identitas": "SAB-012",
+    "nama": "Maria Tan",
+    "alasan": [
+     "kontak dipakai bersama — mungkin bukan orang yang sama"
+    ]
+   },
+   {
+    "identitas": "SAB-024",
+    "nama": "-",
+    "alasan": [
+     "nama tidak ada / tidak bisa dibaca"
+    ]
+   },
+   {
+    "identitas": "L022/L023",
+    "nama": "fajar nugroho",
+    "alasan": [
+     "nama persis sama tetapi tidak ada nomor/email yang sama — tidak digabung, menunggu manusia"
+    ]
+   }
+  ]
+ },
+ "poin_6_rekonsiliasi": {
+  "identitas_total": 36,
+  "seharusnya_dibalas": 33,
+  "benar_benar_dibalas": 29,
+  "selisih": 4,
+  "pengecualian": [
+   "SAB-005",
+   "SAB-007",
+   "SAB-017",
+   "SAB-026"
+  ],
+  "sebab_pengecualian": [
+   {
+    "identitas": "SAB-005",
+    "sebab": "pengiriman gagal 3x"
+   },
+   {
+    "identitas": "SAB-007",
+    "sebab": "pengiriman gagal 3x"
+   },
+   {
+    "identitas": "SAB-017",
+    "sebab": "pengiriman gagal 3x"
+   },
+   {
+    "identitas": "SAB-026",
+    "sebab": "pengiriman gagal 3x"
+   }
+  ],
+  "dikecualikan_optout": [
+   "SAB-008",
+   "SAB-025"
+  ],
+  "dikecualikan_spam": [
+   "SAB-027"
+  ]
+ },
+ "spam": [
+  {
+   "identitas": "SAB-027",
+   "nama": "Bambang Susanto"
+  }
+ ]
+}

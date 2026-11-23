@@ -1,5 +1,3 @@
-=== generate.py (data uji sudah ada, dilewati) ===
-
 === demo.py ===
 ==================================================================
 DEMO SAB — poin 1, 5, 6, dijalankan pada data uji sintetis
@@ -24,21 +22,28 @@ POIN 1 — dedup lintas kanal
   CATATAN: 173 adalah identitas SEMENTARA. Setelah 3 pasangan
            di antrean diputuskan manusia, angkanya turun ke 170.
 
-POIN 5 — idempotensi
+POIN 5 — idempotensi, retry, DLQ, alarm, handoff
   total kiriman            : 1000
   tersimpan                : 200
   ditolak sebagai duplikat : 800
   event unik seharusnya    : 200
-  hasil                    : LULUS
+  idempotensi              : LULUS
+  balasan dikirim          : 151
+  gagal setelah 3 percobaan: 22  -> DLQ
+  alarm kedalaman DLQ      : MENYALA (ambang 8)
+  dipulihkan dari DLQ      : 12
+  DLQ akhir                : 10
 
 POIN 6 — rekonsiliasi harian
   seharusnya dibalas       : 173
-  benar-benar dibalas      : 167
-  selisih                  : 6
-  pengecualian             : ID000, ID028, ID056, ID084, ID112, ID140
+  benar-benar dibalas      : 163
+  selisih                  : 10
+  pengecualian             : ID032, ID058, ID068, ID070, ID074, ID109, ID123, ID131 ...
+  handoff ke manusia       : 8
   arti: alur bisa saja hijau 100% sementara angka ini tidak nol.
+  jarak antar-ID           : [26, 10, 2, 4, 35, 14, 8, 2, 9]  (bervariasi = bukan rumus, melainkan akibat pengiriman gagal)
 
-UJI KASUS LAPANGAN — 22/22 lulus
+UJI KASUS LAPANGAN — 25/25 lulus
 
 UJI KASUS NYATA — 12/12 sesuai
 
@@ -47,120 +52,14 @@ UJI KASUS NYATA PUTARAN 2 — 14/14 sesuai
 Laporan disimpan: hasil_demo.json
 
 === uji_kasus.py ===
-========================================================================
-UJI KASUS LAPANGAN — 22 kasus
-========================================================================
-  OK   sapaan bergender berlawanan = dua orang berbeda       
-        'Pak Dewi' vs 'Ibu Dewi' -> pisah (0.000), diharap pisah
-  OK   nama sama tapi Pak vs Ibu: dua orang                  
-        'Pak Budi Santoso' vs 'Ibu Budi Santoso' -> pisah (0.000), diharap pisah
-  OK   Mas vs Mbak (Jawa): dua orang                         
-        'Mas Agus' vs 'Mbak Agus' -> pisah (0.000), diharap pisah
-  OK   nama depan sama, marga beda total                     
-        'Hendra Halim' vs 'Hendra Fischer' -> pisah (0.803), diharap pisah
-  OK   nama lengkap sama: antrean, TIDAK digabung otomatis   
-        'Rizky Wijaya' vs 'Rizky Wijaya' -> antrean (1.000), diharap antrean
-  OK   nomor sama ditulis beda format                        
-        'Budi Santoso' vs 'Budi Santoso' -> gabung (1.000), diharap gabung
-  OK   nomor sama, kurung dan spasi                          
-        'Budi Santoso' vs 'Budi Santoso' -> gabung (1.000), diharap gabung
-  OK   email +tag iklan                                      
+        'Joko Susilo' vs 'Maria Tan' -> antrean (0.600), diharap antrean
+  OK   email sama DAN nama sama: gabung otomatis (kendali)   
         'Budi Santoso' vs 'Budi Santoso' -> gabung (0.950), diharap gabung
-  OK   gmail mengabaikan titik                               
-        'Budi Santoso' vs 'Budi Santoso' -> gabung (0.950), diharap gabung
-  OK   huruf besar/kecil                                     
-        'Budi Santoso' vs 'budi santoso' -> gabung (1.000), diharap gabung
-  OK   marga disingkat: antrean, bukan gabung                
-        'Budi Santoso' vs 'Budi S.' -> antrean (0.964), diharap antrean
-  OK   salah ketik satu huruf di marga                       
-        'Budi Santoso' vs 'Budi Santosa' -> antrean (0.980), diharap antrean
-  OK   urutan nama terbalik                                  
-        'Budi Santoso' vs 'Santoso Budi' -> antrean (1.000), diharap antrean
-  OK   gelar netral (Dr.) dibuang                            
-        'Dr. Budi Santoso' vs 'Budi Santoso' -> antrean (1.000), diharap antrean
-  OK   umlaut Jerman dinormalkan                             
-        'Thomas Müller' vs 'Thomas Muller' -> antrean (1.000), diharap antrean
-  OK   nama depan sama, marga beda                           
-        'Budi Santoso' vs 'Budi Hartono' -> pisah (0.898), diharap pisah
-  OK   nama Jerman, marga beda                               
-        'Thomas Weber' vs 'Thomas Becker' -> pisah (0.906), diharap pisah
-  OK   nama satu kata, beda perusahaan dan kota              
-        'Yusuf' vs 'Yusuf' -> pisah (0.468), diharap pisah
-  OK   nama lengkap sama, beda kota/perusahaan: tetap antre  
-        'Budi Santoso' vs 'Budi Santoso' -> antrean (0.750), diharap antrean
-  OK   perempuan Jerman, marga beda                          
-        'Anna Schmidt' vs 'Anna Weber' -> pisah (0.642), diharap pisah
-  OK   WhatsApp (nomor saja) vs email (email saja), nama sa  
-        'Sabine Schmidt' vs 'Sabine Schmidt' -> antrean (1.000), diharap antrean
-  OK   nama dipendekkan jadi satu kata                       
-        'Lestari' vs 'Lestari Becker' -> antrean (0.918), diharap antrean
 
-HASIL: 22/22 lulus
+HASIL: 25/25 lulus
 Semua kasus sesuai harapan.
 
 === uji_kasus_nyata.py ===
-============================================================================
-UJI 12 KASUS NYATA (nama tokoh publik, konvensi terdokumentasi)
-============================================================================
-
- 1. [OK   ] dua mononim berbeda: nama satu kata bukan alasan menggabung
-    'Sukarno' vs 'Suharto'
-    dapat: pisah (0.846) | harusnya: pisah  [cocok]
-    sumber: Wikipedia: single name, Sukarno / Suharto
-
- 2. [OK   ] mononim sama di perusahaan sama: antrean, tidak digabung otomatis
-    'Boediono' vs 'Boediono'
-    dapat: antrean (0.918) | harusnya: antrean  [cocok]
-    sumber: Wikipedia: mononim Boediono
-
- 3. [OK   ] Teuku (L) vs Cut (P) di Aceh: dua orang berbeda
-    'Teuku Ahmad' vs 'Cut Ahmad'
-    dapat: pisah (0.000) | harusnya: pisah  [cocok]
-    sumber: Wikipedia: Acehnese Teuku (male), Cut (female)
-
- 4. [OK   ] gelar bangsawan Jawa disingkat: orang yang sama
-    'Raden Ajeng Kartini' vs 'R.A. Kartini'
-    dapat: antrean (0.981) | harusnya: antrean  [cocok]
-    sumber: Wikipedia: Javanese Raden Ajeng (unmarried female)
-
- 5. [OK   ] inisial dua nama depan, marga Batak ditulis penuh
-    'Abdul Haris Nasution' vs 'A.H. Nasution'
-    dapat: antrean (0.981) | harusnya: antrean  [cocok]
-    sumber: Wikipedia: Abdul Haris Nasution, Batak marga
-
- 6. [OK   ] nama Jerman dengan partikel 'von der', orang yang sama
-    'Ursula von der Leyen' vs 'Ursula von der Leyen'
-    dapat: antrean (1.000) | harusnya: antrean  [cocok]
-    sumber: Partikel Jerman: von der + marga
-
- 7. [OK   ] umlaut ditulis dua huruf (ü -> ue), lazim di Jerman
-    'Thomas Müller' vs 'Thomas Mueller'
-    dapat: antrean (0.970) | harusnya: antrean  [cocok]
-    sumber: Transliterasi Jerman ü=ue
-
- 8. [OK   ] nama tiga kata dipendekkan, marga terakhir hilang
-    'Sri Mulyani Indrawati' vs 'Sri Mulyani'
-    dapat: antrean (0.945) | harusnya: antrean  [cocok]
-    sumber: Wikipedia: Sri Mulyani Indrawati
-
- 9. [OK   ] marga Batak sama tapi orang berbeda: marga bukan pengenal tunggal
-    'Budi Siregar' vs 'Ani Siregar'
-    dapat: pisah (0.909) | harusnya: pisah  [cocok]
-    sumber: Wikipedia: Batak marga Siregar
-
-10. [OK   ] nama Tionghoa dengan marga di depan, orang yang sama
-    'Kwik Kian Gie' vs 'Kwik Kian Gie'
-    dapat: antrean (1.000) | harusnya: antrean  [cocok]
-    sumber: Wikipedia: Chinese-Indonesian, surname first
-
-11. [OK   ] nama panggilan vs nama asli — BENAR dipisah, sistem memakai nama asli
-    'Gus Dur' vs 'Abdurrahman Wahid'
-    dapat: pisah (0.541) | harusnya: pisah  [alias (benar dipisah)]
-    sumber: Wikipedia: Gus Dur = Abdurrahman Wahid (julukan)
-
-12. [OK   ] nama panggilan vs nama asli — BENAR dipisah, sistem memakai nama asli
-    'Joko Widodo' vs 'Jokowi'
-    dapat: pisah (0.886) | harusnya: pisah  [alias (benar dipisah)]
     sumber: Wikipedia: Jokowi = Joko Widodo (julukan)
 
 ============================================================================
@@ -168,174 +67,74 @@ HASIL: 12/12 sesuai (10 pasangan orang sama, 2 alias yang benar dipisah)
 Semua kasus nyata tertangani.
 
 === uji_kasus_nyata2.py ===
-==============================================================================
-UJI 14 KASUS NYATA — PUTARAN KEDUA (ejaan, transliterasi, alias)
-==============================================================================
-
- 1. [OK   ] ejaan lama vs baru (oe -> u) pada nama presiden pertama
-    'Soekarno' vs 'Sukarno'
-    dapat: antrean (0.918) | harusnya: antrean  [cocok]
-    alasan sistem: ejaan lama vs ejaan baru (oe->u, tj->c, dj->j), perusahaan dan kota sama
-    sumber: id.wikipedia EYD: nama sering memakai ejaan lama, mis. Soekarno
-
- 2. [OK   ] ejaan lama vs baru (oe -> u) pada nama presiden kedua
-    'Soeharto' vs 'Suharto'
-    dapat: antrean (0.918) | harusnya: antrean  [cocok]
-    alasan sistem: ejaan lama vs ejaan baru (oe->u, tj->c, dj->j), perusahaan dan kota sama
-    sumber: id.wikipedia EYD (Keppres 57/1972)
-
- 3. [OK   ] ejaan lama bertahan di dalam marga majemuk
-    'Megawati Soekarnoputri' vs 'Megawati Sukarnoputri'
-    dapat: antrean (1.000) | harusnya: antrean  [cocok]
-    alasan sistem: ejaan lama vs ejaan baru (oe->u, tj->c, dj->j), perlu dilihat manusia
-    sumber: id.wikipedia EYD: 'Megawati Soekarnoputri (bukan Sukarnoputri)'
-
- 4. [OK   ] singkatan nama depan (Moh. = Mohammad)
-    'Mohammad Hatta' vs 'Moh. Hatta'
-    dapat: antrean (0.972) | harusnya: antrean  [cocok]
-    alasan sistem: nama nyaris identik, perlu dilihat manusia
-    sumber: Wikipedia: Mohammad Hatta, lazim ditulis Moh. Hatta
-
- 5. [OK   ] ß ditulis ss (Weiß -> Weiss)
-    'Michael Weiß' vs 'Michael Weiss'
-    dapat: antrean (1.000) | harusnya: antrean  [cocok]
-    alasan sistem: nama lengkap sama, perusahaan dan kota sama
-    sumber: Transliterasi Jerman: ß = ss
-
- 6. [OK   ] ß di akhir marga (Strauß -> Strauss)
-    'Johann Strauß' vs 'Johann Strauss'
-    dapat: antrean (1.000) | harusnya: antrean  [cocok]
-    alasan sistem: nama lengkap sama, perusahaan dan kota sama
-    sumber: Transliterasi Jerman: ß = ss
-
- 7. [OK   ] dua umlaut ditulis dua huruf (ü -> ue, ö -> oe)
-    'Jürgen Schröder' vs 'Juergen Schroeder'
-    dapat: antrean (0.963) | harusnya: antrean  [cocok]
-    alasan sistem: nama nyaris identik, perlu dilihat manusia
-    sumber: Transliterasi Jerman: ü = ue, ö = oe
-
- 8. [OK   ] singkatan gelar haji laki-laki (H. = Haji)
-    'H. Ahmad Fauzi' vs 'Haji Ahmad Fauzi'
-    dapat: antrean (1.000) | harusnya: antrean  [cocok]
-    alasan sistem: nama lengkap sama, perusahaan dan kota sama
-    sumber: id.wikipedia 'Haji (gelar)': H. = Haji
-
- 9. [OK   ] singkatan gelar haji perempuan (Hj. = Hajah), gender harus konsisten
-    'Hj. Siti Aminah' vs 'Hajah Siti Aminah'
-    dapat: antrean (1.000) | harusnya: antrean  [cocok]
-    alasan sistem: nama lengkap sama, perusahaan dan kota sama
-    sumber: id.wikipedia 'Haji (gelar)': Hj. = Hajah
-
-10. [OK   ] aksen (é) dan tanda hubung pada marga ganda
-    'Maria José Silva-Santos' vs 'Maria Jose Silva Santos'
-    dapat: antrean (1.000) | harusnya: antrean  [cocok]
-    alasan sistem: nama lengkap sama, perusahaan dan kota sama
-    sumber: Konvensi nama Iberia: marga ganda dengan tanda hubung
-
-11. [OK   ] partikel Belanda 'van der' vs 'van den'
-    'Jan van der Berg' vs 'Jan van den Berg'
-    dapat: antrean (1.000) | harusnya: antrean  [cocok]
-    alasan sistem: nama nyaris identik, perlu dilihat manusia
-    sumber: Konvensi nama Belanda: tussenvoegsel van/van der/van den
-
-12. [OK   ] ganti nama resmi — benar dipisah, butuh tabel alias
-    'Ki Hajar Dewantara' vs 'Raden Mas Soewardi Soerjaningrat'
-    dapat: pisah (0.649) | harusnya: pisah  [alias (benar dipisah)]
-    alasan sistem: tidak ada satu kata pun yang sama pada nama — tanpa tabel alias, ini dua orang berbeda
-    sumber: Jurnal UNY: lahir sebagai Raden Mas Soewardi Soerjaningrat
-
-13. [OK   ] nama Tionghoa diganti nama Indonesia — benar dipisah
-    'Liem Sioe Liong' vs 'Sudono Salim'
-    dapat: pisah (0.450) | harusnya: pisah  [alias (benar dipisah)]
-    alasan sistem: tidak ada satu kata pun yang sama pada nama — tanpa tabel alias, ini dua orang berbeda
-    sumber: IdRef: Salim, Sudono / Liem, Sioe Liong (varian satu orang)
-
-14. [OK   ] nama panggilan, bukan nama asli — benar dipisah
-    'Joko Widodo' vs 'Jokowi'
-    dapat: pisah (0.886) | harusnya: pisah  [alias (benar dipisah)]
-    alasan sistem: nama panggilan, bukan nama asli: 'jokowi' tidak ada di ['joko', 'widodo'] — sistem memakai nama asli, bukan julukan
     sumber: Wikipedia: Jokowi adalah nama panggilan Joko Widodo
 
 ==============================================================================
 HASIL: 14/14 sesuai (11 pasangan orang sama, 3 alias yang benar dipisah)
 Semua kasus nyata tertangani dalam satu kali jalan.
 
-=== bandingkan.py ===
-======================================================================
-PERBANDINGAN DEDUP — data uji yang sama, 200 lead
-======================================================================
+=== ujian/mesin.py ===
+==========================================================================
+UJIAN 50 LEAD SAB — enam poin
+==========================================================================
+baris masuk            : 50
+identitas setelah dedup: 36
+digabung               : 14
+kontak dipakai bersama : 2
+kemungkinan duplikat   : 1 (nama sama, tanpa kontak bersama)
 
-ukuran                         lama     baru
-identitas                       173      173
-digabung otomatis                27       27
-pasangan di antrean              23        8   <-- berubah
-salah gabung                      0        0
+bahasa                 : {'DE': 2, 'EN': 5, 'ID': 29}
+opt-out                : ['SAB-008', 'SAB-025']
+spam                   : ['SAB-027']
+balasan lintas kanal   : 11 identitas
 
---- 15 pasangan yang TIDAK LAGI masuk antrean ---
-  'Michael' vs 'Michael'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
-  'Pak Dewi' vs 'Ibu Dewi'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
-  'Lukas Halim' vs 'Lukas H.'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
-  'Ibu Dewi' vs 'Ibu Dewi'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
-  'Fajar' vs 'Fajar'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
-  'hendra halim' vs 'hendra fischer'
-     skor lama 0.921 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama mirip, perusahaan dan kota sama
-  'Ibu Clara' vs 'Ibu Clara'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
-  'Eko' vs 'Pak Eko'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
-  'SITI SAPUTRA' vs 'Siti Nugroho'
-     skor lama 0.908 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama mirip, perusahaan dan kota sama
-  'julia hidayat' vs 'Julia Fischer'
-     skor lama 0.902 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama mirip, perusahaan dan kota sama
-  'Ibu Fajar' vs 'Pak Fajar'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
-  'JULIA SAPUTRA' vs 'Julia Becker'
-     skor lama 0.903 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama mirip, perusahaan dan kota sama
-  'Bayu S.' vs 'Pak Bayu'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
-  'Bayu' vs 'Pak Bayu'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
-  'Pak Julia' vs 'Julia K.'
-     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
-     alasan lama: nama nyaris identik, perlu dilihat manusia
+terkirim               : 29
+DLQ awal               : 5
+dipulihkan dari DLQ    : 1
+DLQ akhir              : 4
+alarm saat kirim       : MENYALA (ambang 5, DLQ 5)
+alarm setelah putar    : tidak (ambang 5, DLQ 4)
+handoff manusia        : 4
 
+rekonsiliasi           : 29/33 dibalas, selisih 4
+pengecualian           : SAB-005, SAB-007, SAB-017, SAB-026
+
+Kontak dipakai bersama (tidak digabung):
+  - nomor 622155500111: L020 'Joko Susilo' vs L021 'Maria Tan'
+  - email info@sinarabadi.example: L020 'Joko Susilo' vs L021 'Maria Tan'
+
+DLQ:
+  - DLQ-001 SAB-005 'Sarah Lim': kanal menolak setelah 3 percobaan (5xx)
+  - DLQ-002 SAB-007 'Hendra Wijaya': kanal menolak setelah 3 percobaan (5xx)
+  - DLQ-003 SAB-017 'Klaus Weber': kanal menolak setelah 3 percobaan (5xx)
+  - DLQ-005 SAB-026 'Wulan Sari': kanal menolak setelah 3 percobaan (5xx)
+
+Hasil: C:\Users\user\otonom-penuh\n8n_factory\sab_demo\ujian\hasil_ujian.json
+
+=== ujian/uji_kesamaan.py (Python vs n8n) ===
 ======================================================================
-REKONSILIASI 30 DUPLIKAT (pertanyaan SAB poin 4)
+UJI KESAMAAN: mesin.py (Python) vs workflow n8n
 ======================================================================
-  lead mentah                 : 200
-  orang unik sebenarnya       : 170
-  duplikat yang ditanam       : 30
-  digabung otomatis (nomor/email): 27
-  orang terpecah jadi 2 id    : 3
-  identitas akhir             : 173
-  cek: 170 orang + 3 kelebihan = 173
-  pasangan masih di antrean   : 8
+Tidak ada perbedaan pada 24 angka yang dibandingkan.
+Artinya: logika yang diuji di Python memang yang berjalan di n8n.
 
-  Artinya: dari 30 duplikat, 27 berhasil digabung otomatis, 3 terpecah (aman, tidak salah gabung),
-  dan antrean berisi pasangan yang BELUM diputuskan -- bukan duplikat
-  yang sudah dihitung. Angka 173 adalah identitas SEMENTARA.
+=== ujian/log_n8n.json (log eksekusi n8n) ===
+status: success | mode: cli
+  Mulai              cabang=[1]
+  Baca CSV           cabang=[1]
+  Parse CSV          cabang=[50]
+  Dedup              cabang=[33]
+  Kirim              cabang=[28, 5] [0, 5] [0, 5] x3
+  Terkirim           cabang=[28]
+  Rekonsiliasi       cabang=[1] [1] x2
+  Jadikan Berkas     cabang=[1] [1] x2
+  Tulis Hasil        cabang=[1] [1] x2
+  Periksa            cabang=[5, 0] [5, 0] [0, 5] x3
+  Tambah             cabang=[5] [5] x2
+  DLQ                cabang=[5]
 
 === bangun_halaman.py ===
 halaman  : C:\Users\user\otonom-penuh\n8n_factory\sab_demo\publikasi\index.html
 poin 1   : 200 lead -> 173 identitas, salah gabung 0
 poin 5   : 1000 kiriman -> 200 tersimpan
-poin 6   : selisih 6 dari 173
+poin 6   : selisih 10 dari 173

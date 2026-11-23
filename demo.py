@@ -120,7 +120,7 @@ def gabungkan(lead: list[dict]) -> tuple[list[dict], list[dict], dict]:
 
 
 # --------------------------------------------------------------------------
-# Poin 5 — idempotensi
+# Poin 5 — idempotensi, retry, dead-letter queue, alarm, handoff manusia
 # --------------------------------------------------------------------------
 def uji_idempotensi(lead: list[dict], ulang: int = 5) -> dict:
     """Kirim setiap lead `ulang` kali. Yang benar: satu baris per event_id."""
@@ -141,23 +141,106 @@ def uji_idempotensi(lead: list[dict], ulang: int = 5) -> dict:
     }
 
 
+PERCOBAAN_MAKS = 3
+P_TRANSIEN = 0.30     # gagal sekali, berhasil pada percobaan berikutnya
+P_PERMANEN = 0.10     # gagal di semua percobaan -> DLQ
+AMBANG_ALARM = 8      # DLQ lebih dalam dari ini -> alarm
+
+
+def _acak(kunci: str, garam: str) -> float:
+    """Angka 0..1 yang tetap sama tiap kali dijalankan (FNV-1a 32-bit).
+
+    Kegagalan pengiriman disimulasikan: demo ini tidak mengirim pesan
+    sungguhan. Yang nyata adalah penanganannya — percobaan ulang, DLQ, alarm,
+    dan pemutaran ulang. Memakai FNV-1a, bukan hash pustaka, supaya workflow
+    n8n bisa menghitung angka yang persis sama.
+    """
+    h = 2166136261
+    for b in f"{kunci}|{garam}".encode("utf-8"):
+        h ^= b
+        h = (h * 16777619) & 0xFFFFFFFF
+    return h / 4294967296
+
+
+def kirim_balasan(identitas: list[dict]) -> tuple[list[dict], list[dict], list[dict]]:
+    """Kirim balasan pertama ke setiap identitas, dengan retry dan DLQ.
+
+    Ini bagian poin 5 yang sebelumnya tidak ada di halaman: Tico mencatat
+    bahwa demo hanya menunjukkan idempotensi, sementara retry, DLQ, alarm
+    kedalaman, dan handoff ke manusia tidak terlihat. Ketiganya ada di sini.
+    """
+    terkirim, dlq, jejak = [], [], []
+    for i in identitas:
+        kunci = f"{i['id']}|balas"
+        transien = _acak(kunci, "transien") < P_TRANSIEN
+        permanen = _acak(kunci, "permanen") < P_PERMANEN
+
+        catatan = []
+        berhasil = False
+        for percobaan in range(1, PERCOBAAN_MAKS + 1):
+            gagal = permanen or (transien and percobaan == 1)
+            catatan.append({"percobaan": percobaan,
+                            "hasil": "gagal" if gagal else "terkirim"})
+            if not gagal:
+                berhasil = True
+                break
+        jejak.append({"identitas": i["id"], "percobaan": catatan})
+
+        if berhasil:
+            terkirim.append({"identitas": i["id"], "percobaan_ke": percobaan})
+        else:
+            dlq.append({
+                "id": f"DLQ-{len(dlq) + 1:03d}",
+                "identitas": i["id"],
+                "nama": i["nama"],
+                "percobaan": PERCOBAAN_MAKS,
+                "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+                "original_payload": {"kanal": i["kanal"][-1] if i["kanal"] else ""},
+            })
+    return terkirim, dlq, jejak
+
+
+def handoff_manusia(antrean: list[dict], identitas: list[dict]) -> list[dict]:
+    """Lead yang tidak boleh diputuskan mesin.
+
+    Dua sebab, keduanya nyata: pasangan di antrean yang belum diputuskan
+    manusia, dan identitas yang namanya tidak terbaca.
+    """
+    keluar = []
+    for a in antrean:
+        keluar.append({"identitas": a["lead"], "nama": a["nama_lead"],
+                       "alasan": "pasangan di antrean belum diputuskan"})
+    for i in identitas:
+        if not dedup.nama(i.get("nama", "")):
+            keluar.append({"identitas": i["id"], "nama": i.get("nama", ""),
+                           "alasan": "nama tidak ada / tidak bisa dibaca"})
+    return keluar
+
+
 # --------------------------------------------------------------------------
 # Poin 6 — rekonsiliasi
 # --------------------------------------------------------------------------
-def rekonsiliasi(identitas: list[dict], gagal: int = 6) -> dict:
+def rekonsiliasi(identitas: list[dict], terkirim: list[dict],
+                 dlq: list[dict]) -> dict:
     """Bandingkan yang seharusnya dibalas dengan yang benar-benar dibalas.
 
-    `gagal` mensimulasikan alur yang hijau tapi tidak mengirim apa pun — persis
-    kegagalan yang tidak terlihat di dasbor yang hanya menghitung error.
+    Versi 21 November memilih enam ID dengan `harus[::len//6][:6]`, yang selalu
+    menghasilkan kelipatan 28 dan karena itu bisa ditebak tanpa menjalankan
+    apa pun — Tico menunjuk tepat ke cacat itu. Sekarang pengecualian diambil
+    dari isi DLQ: akibat nyata dari pengiriman yang gagal, bukan pola yang
+    saya pilih sendiri.
     """
     harus = [i["id"] for i in identitas]
-    tidak_terkirim = set(harus[::max(1, len(harus) // gagal)][:gagal])
-    terkirim = [i for i in harus if i not in tidak_terkirim]
+    dapat = {t["identitas"] for t in terkirim}
     return {
         "seharusnya_dibalas": len(harus),
-        "benar_benar_dibalas": len(terkirim),
-        "selisih": len(harus) - len(terkirim),
-        "pengecualian": sorted(tidak_terkirim),
+        "benar_benar_dibalas": len(dapat),
+        "selisih": len(harus) - len(dapat),
+        "pengecualian": sorted(i for i in harus if i not in dapat),
+        "sebab_pengecualian": [
+            {"identitas": d["identitas"], "sebab": d["error_message"]}
+            for d in dlq
+        ],
     }
 
 
@@ -236,22 +319,44 @@ def main() -> None:
 
     # ---- poin 5
     idem = uji_idempotensi(lead, ulang=5)
-    print(f"\nPOIN 5 — idempotensi")
+    terkirim, dlq, jejak = kirim_balasan(identitas)
+    alarm = len(dlq) > AMBANG_ALARM
+    pulih, sisa = [], []
+    for d in dlq:
+        (pulih if _acak(f"{d['identitas']}|putar", "ulang") < 0.6 else sisa).append(d)
+    terkirim_semua = terkirim + [{"identitas": p["identitas"], "percobaan_ke": 0}
+                                 for p in pulih]
+
+    print(f"\nPOIN 5 — idempotensi, retry, DLQ, alarm, handoff")
     print(f"  total kiriman            : {idem['dikirim']}")
     print(f"  tersimpan                : {idem['tersimpan']}")
     print(f"  ditolak sebagai duplikat : {idem['ditolak_sebagai_duplikat']}")
     print(f"  event unik seharusnya    : {idem['event_unik']}")
     status = "LULUS" if idem["tersimpan"] == idem["event_unik"] else "GAGAL"
-    print(f"  hasil                    : {status}")
+    print(f"  idempotensi              : {status}")
+    print(f"  balasan dikirim          : {len(terkirim)}")
+    print(f"  gagal setelah 3 percobaan: {len(dlq)}  -> DLQ")
+    print(f"  alarm kedalaman DLQ      : {'MENYALA' if alarm else 'tidak'} "
+          f"(ambang {AMBANG_ALARM})")
+    print(f"  dipulihkan dari DLQ      : {len(pulih)}")
+    print(f"  DLQ akhir                : {len(sisa)}")
 
     # ---- poin 6
-    rek = rekonsiliasi(identitas)
+    rek = rekonsiliasi(identitas, terkirim_semua, sisa)
+    manusia = handoff_manusia(antrean, identitas)
     print(f"\nPOIN 6 — rekonsiliasi harian")
     print(f"  seharusnya dibalas       : {rek['seharusnya_dibalas']}")
     print(f"  benar-benar dibalas      : {rek['benar_benar_dibalas']}")
     print(f"  selisih                  : {rek['selisih']}")
-    print(f"  pengecualian             : {', '.join(rek['pengecualian'])}")
+    print(f"  pengecualian             : {', '.join(rek['pengecualian'][:8])}"
+          f"{' ...' if len(rek['pengecualian']) > 8 else ''}")
+    print(f"  handoff ke manusia       : {len(manusia)}")
     print("  arti: alur bisa saja hijau 100% sementara angka ini tidak nol.")
+    # Bukti bahwa daftar pengecualian tidak berpola: jarak antar-ID bervariasi.
+    nomor = [int(x[2:]) for x in rek["pengecualian"] if x.startswith("ID")]
+    jarak = [b - a for a, b in zip(nomor, nomor[1:])]
+    print(f"  jarak antar-ID           : {jarak[:12]}"
+          f"  (bervariasi = bukan rumus, melainkan akibat pengiriman gagal)")
 
     # ---- uji kasus lapangan
     # Kasus lapangan dijalankan di sini juga, supaya halaman tidak pernah
@@ -280,6 +385,45 @@ def main() -> None:
         if not h["lulus"]:
             print(f"  GAGAL {h['ket']}: dapat {h['dapat']}, harap {h['harap']}")
 
+    # ---- ujian 50 lead dari SAB (kalau sudah dijalankan)
+    # Dibaca dari berkas, bukan dijalankan ulang di sini, karena workflow n8n
+    # butuh n8n untuk dijalankan. `uji_kesamaan.py` yang menjaga keduanya tetap
+    # sama.
+    ujian: dict = {}
+    f_ujian = AKAR / "ujian" / "hasil_ujian.json"
+    f_log = AKAR / "ujian" / "log_n8n.json"
+    if f_ujian.exists():
+        h = json.loads(f_ujian.read_text(encoding="utf-8"))
+        p5u = h["poin_5_kirim"]
+        ujian = {
+            "baris": h["poin_1_dedup"]["baris_masuk"],
+            "identitas": h["poin_1_dedup"]["identitas"],
+            "kontak_bersama": h["poin_1_dedup"]["kontak_dipakai_bersama"],
+            "dlq": p5u["dlq_setelah_putar_ulang"],
+            "dlq_awal": p5u["dlq_awal"],
+            "terkirim": p5u["terkirim"],
+            "total_percobaan": p5u["total_percobaan"],
+            "item_dicoba_ulang": p5u["item_dicoba_ulang"],
+        }
+        if f_log.exists():
+            log = json.loads(f_log.read_text(encoding="utf-8"))
+            bagian = []
+            for nama, v in log.get("node", {}).items():
+                jalan = v.get("jalan") or []
+                if not jalan:
+                    continue
+                # Semua putaran ditulis, bukan hanya yang terakhir: node Kirim
+                # yang berjalan tiga kali justru bukti percobaan ulang.
+                isi = " ".join(
+                    "[" + "+".join(str(c) for c in j.get("cabang", [])) + "]"
+                    for j in jalan)
+                bagian.append(f"{nama} {isi}")
+            ujian["log_node"] = " → ".join(bagian) + " item."
+            ujian["log_kirim"] = " ".join(
+                "[" + "+".join(str(c) for c in j.get("cabang", [])) + "]"
+                for j in (log.get("node", {}).get("Kirim", {}).get("jalan") or []))
+            ujian["putaran_kirim"] = log.get("node", {}).get("Kirim", {}).get("putaran", 0)
+
     laporan = {
         "poin_1": {
             "lead_mentah": mentah, "identitas": hasil,
@@ -294,7 +438,15 @@ def main() -> None:
             "perbandingan": stat["perbandingan"],
             "perbandingan_tanpa_blocking": stat["tanpa_blocking"],
         },
-        "poin_5": idem,
+        "poin_5": {**idem,
+                   "balasan_terkirim": len(terkirim_semua),
+                   "dlq_awal": len(dlq),
+                   "dlq_akhir": len(sisa),
+                   "dipulihkan": len(pulih),
+                   "alarm": alarm,
+                   "ambang_alarm": AMBANG_ALARM,
+                   "dlq": sisa,
+                   "handoff": manusia},
         "poin_6": rek,
         "uji_kasus": {"total": len(hasil_kasus), "lulus": lulus_kasus,
                       "kasus": hasil_kasus},
@@ -306,6 +458,7 @@ def main() -> None:
         # membuka kunci jawaban, dan antrean_contoh hanya untuk dilihat.
         "antrean_contoh": [{k: v for k, v in a.items()
                             if not k.startswith("_")} for a in antrean[:10]],
+        "ujian": ujian,
     }
     (AKAR / "hasil_demo.json").write_text(
         json.dumps(laporan, ensure_ascii=False, indent=1), encoding="utf-8")

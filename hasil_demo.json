@@ -18,24 +18,220 @@
   "dikirim": 1000,
   "tersimpan": 200,
   "ditolak_sebagai_duplikat": 800,
-  "event_unik": 200
+  "event_unik": 200,
+  "balasan_terkirim": 163,
+  "dlq_awal": 22,
+  "dlq_akhir": 10,
+  "dipulihkan": 12,
+  "alarm": true,
+  "ambang_alarm": 8,
+  "dlq": [
+   {
+    "id": "DLQ-004",
+    "identitas": "ID032",
+    "nama": "fajar hoffmann",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "kanal": "email"
+    }
+   },
+   {
+    "id": "DLQ-008",
+    "identitas": "ID058",
+    "nama": "EKO SAPUTRA",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "kanal": "linkedin"
+    }
+   },
+   {
+    "id": "DLQ-010",
+    "identitas": "ID068",
+    "nama": "felix hoffmann",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "kanal": "email"
+    }
+   },
+   {
+    "id": "DLQ-011",
+    "identitas": "ID070",
+    "nama": "Agus",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "kanal": "whatsapp"
+    }
+   },
+   {
+    "id": "DLQ-012",
+    "identitas": "ID074",
+    "nama": "Sabine",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "kanal": "email"
+    }
+   },
+   {
+    "id": "DLQ-014",
+    "identitas": "ID109",
+    "nama": "Hendra N.",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "kanal": "form_website"
+    }
+   },
+   {
+    "id": "DLQ-017",
+    "identitas": "ID123",
+    "nama": "Maya",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "kanal": "google_meta_ads"
+    }
+   },
+   {
+    "id": "DLQ-018",
+    "identitas": "ID131",
+    "nama": "Ibu Clara",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "kanal": "whatsapp"
+    }
+   },
+   {
+    "id": "DLQ-019",
+    "identitas": "ID133",
+    "nama": "Pak Felix",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "kanal": "form_website"
+    }
+   },
+   {
+    "id": "DLQ-020",
+    "identitas": "ID142",
+    "nama": "Ayu H.",
+    "percobaan": 3,
+    "error_message": "kanal menolak setelah 3 percobaan (5xx)",
+    "original_payload": {
+     "kanal": "linkedin"
+    }
+   }
+  ],
+  "handoff": [
+   {
+    "identitas": "ev-0005",
+    "nama": "PUTRI PRATAMA",
+    "alasan": "pasangan di antrean belum diputuskan"
+   },
+   {
+    "identitas": "ev-0091",
+    "nama": "nadia pratama",
+    "alasan": "pasangan di antrean belum diputuskan"
+   },
+   {
+    "identitas": "ev-0071",
+    "nama": "Rizky Wijaya",
+    "alasan": "pasangan di antrean belum diputuskan"
+   },
+   {
+    "identitas": "ev-0072",
+    "nama": "bayu saputra",
+    "alasan": "pasangan di antrean belum diputuskan"
+   },
+   {
+    "identitas": "ev-0024",
+    "nama": "Lestari M.",
+    "alasan": "pasangan di antrean belum diputuskan"
+   },
+   {
+    "identitas": "ev-0172",
+    "nama": "Lestari",
+    "alasan": "pasangan di antrean belum diputuskan"
+   },
+   {
+    "identitas": "ev-0160",
+    "nama": "Agus W.",
+    "alasan": "pasangan di antrean belum diputuskan"
+   },
+   {
+    "identitas": "ev-0018",
+    "nama": "Pak Yusuf",
+    "alasan": "pasangan di antrean belum diputuskan"
+   }
+  ]
  },
  "poin_6": {
   "seharusnya_dibalas": 173,
-  "benar_benar_dibalas": 167,
-  "selisih": 6,
+  "benar_benar_dibalas": 163,
+  "selisih": 10,
   "pengecualian": [
-   "ID000",
-   "ID028",
-   "ID056",
-   "ID084",
-   "ID112",
-   "ID140"
+   "ID032",
+   "ID058",
+   "ID068",
+   "ID070",
+   "ID074",
+   "ID109",
+   "ID123",
+   "ID131",
+   "ID133",
+   "ID142"
+  ],
+  "sebab_pengecualian": [
+   {
+    "identitas": "ID032",
+    "sebab": "kanal menolak setelah 3 percobaan (5xx)"
+   },
+   {
+    "identitas": "ID058",
+    "sebab": "kanal menolak setelah 3 percobaan (5xx)"
+   },
+   {
+    "identitas": "ID068",
+    "sebab": "kanal menolak setelah 3 percobaan (5xx)"
+   },
+   {
+    "identitas": "ID070",
+    "sebab": "kanal menolak setelah 3 percobaan (5xx)"
+   },
+   {
+    "identitas": "ID074",
+    "sebab": "kanal menolak setelah 3 percobaan (5xx)"
+   },
+   {
+    "identitas": "ID109",
+    "sebab": "kanal menolak setelah 3 percobaan (5xx)"
+   },
+   {
+    "identitas": "ID123",
+    "sebab": "kanal menolak setelah 3 percobaan (5xx)"
+   },
+   {
+    "identitas": "ID131",
+    "sebab": "kanal menolak setelah 3 percobaan (5xx)"
+   },
+   {
+    "identitas": "ID133",
+    "sebab": "kanal menolak setelah 3 percobaan (5xx)"
+   },
+   {
+    "identitas": "ID142",
+    "sebab": "kanal menolak setelah 3 percobaan (5xx)"
+   }
   ]
  },
  "uji_kasus": {
-  "total": 22,
-  "lulus": 22,
+  "total": 25,
+  "lulus": 25,
   "kasus": [
    {
     "ket": "sapaan bergender berlawanan = dua orang berbeda",
@@ -275,6 +471,39 @@
     "dapat": "antrean",
     "harap": "antrean",
     "skor": 0.918,
+    "sumber": "",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "email kantor sama, nama tidak cocok: JANGAN digabung",
+    "nama_a": "Joko Susilo",
+    "nama_b": "Maria Tan",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.6,
+    "sumber": "",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "nomor kantor sama, nama tidak cocok: JANGAN digabung",
+    "nama_a": "Joko Susilo",
+    "nama_b": "Maria Tan",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.6,
+    "sumber": "",
+    "jenis": "cocok",
+    "lulus": true
+   },
+   {
+    "ket": "email sama DAN nama sama: gabung otomatis (kendali)",
+    "nama_a": "Budi Santoso",
+    "nama_b": "Budi Santoso",
+    "dapat": "gabung",
+    "harap": "gabung",
+    "skor": 0.95,
     "sumber": "",
     "jenis": "cocok",
     "lulus": true
@@ -652,5 +881,18 @@
    "skor": 0.918,
    "alasan": "nama depan sama (tanpa marga), perusahaan dan kota sama"
   }
- ]
+ ],
+ "ujian": {
+  "baris": 50,
+  "identitas": 36,
+  "kontak_bersama": 2,
+  "dlq": 4,
+  "dlq_awal": 5,
+  "terkirim": 29,
+  "total_percobaan": 43,
+  "item_dicoba_ulang": 5,
+  "log_node": "Mulai [1] → Baca CSV [1] → Parse CSV [50] → Dedup [33] → Kirim [28+5] [0+5] [0+5] → Terkirim [28] → Rekonsiliasi [1] [1] → Jadikan Berkas [1] [1] → Tulis Hasil [1] [1] → Periksa [5+0] [5+0] [0+5] → Tambah [5] [5] → DLQ [5] item.",
+  "log_kirim": "[28+5] [0+5] [0+5]",
+  "putaran_kirim": 3
+ }
 }

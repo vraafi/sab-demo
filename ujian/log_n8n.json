@@ -1,0 +1,194 @@
+{
+ "status": "success",
+ "mode": "cli",
+ "mulai": "2026-11-23T06:04:15.863Z",
+ "selesai": "2026-11-23T06:04:17.464Z",
+ "node": {
+  "Mulai": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 1
+    }
+   ]
+  },
+  "Baca CSV": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 60
+    }
+   ]
+  },
+  "Parse CSV": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      50
+     ],
+     "waktu_ms": 23
+    }
+   ]
+  },
+  "Dedup": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      33
+     ],
+     "waktu_ms": 1200
+    }
+   ]
+  },
+  "Kirim": {
+   "putaran": 3,
+   "jalan": [
+    {
+     "cabang": [
+      28,
+      5
+     ],
+     "waktu_ms": 67
+    },
+    {
+     "cabang": [
+      0,
+      5
+     ],
+     "waktu_ms": 9
+    },
+    {
+     "cabang": [
+      0,
+      5
+     ],
+     "waktu_ms": 10
+    }
+   ]
+  },
+  "Terkirim": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      28
+     ],
+     "waktu_ms": 16
+    }
+   ]
+  },
+  "Rekonsiliasi": {
+   "putaran": 2,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 28
+    },
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 20
+    }
+   ]
+  },
+  "Jadikan Berkas": {
+   "putaran": 2,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 35
+    },
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 18
+    }
+   ]
+  },
+  "Tulis Hasil": {
+   "putaran": 2,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 15
+    },
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 6
+    }
+   ]
+  },
+  "Periksa": {
+   "putaran": 3,
+   "jalan": [
+    {
+     "cabang": [
+      5,
+      0
+     ],
+     "waktu_ms": 39
+    },
+    {
+     "cabang": [
+      5,
+      0
+     ],
+     "waktu_ms": 6
+    },
+    {
+     "cabang": [
+      0,
+      5
+     ],
+     "waktu_ms": 6
+    }
+   ]
+  },
+  "Tambah": {
+   "putaran": 2,
+   "jalan": [
+    {
+     "cabang": [
+      5
+     ],
+     "waktu_ms": 11
+    },
+    {
+     "cabang": [
+      5
+     ],
+     "waktu_ms": 11
+    }
+   ]
+  },
+  "DLQ": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      5
+     ],
+     "waktu_ms": 8
+    }
+   ]
+  }
+ }
+}

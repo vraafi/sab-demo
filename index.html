@@ -147,15 +147,67 @@ menggabungkan</td></tr>
 belas pasangan yang keluar seluruhnya orang berbeda: kebisingan yang selama ini
 membuat antrean tidak layak diperiksa manusia.</p>
 
+<h3>Tujuh catatan SAB, 23 November 2026</h3>
+<p>Catatan itu ditulis pukul 09.18, dan semuanya benar untuk versi yang ada saat
+itu. Kode baru masuk ke repo pukul 11.41–12.07, setelah surat itu dikirim. Jadi
+tidak ada satu pun catatan yang saya bantah; yang ada di bawah adalah apa yang
+berubah sejak itu.</p>
+<table>
+<thead><tr><th>Catatan</th><th>Status</th><th>Yang berubah</th></tr></thead>
+<tbody>
+<tr><td><strong>1.</strong> Repo hanya berisi index.html, skrip tidak ada</td>
+<td>Benar saat diperiksa</td>
+<td>Skrip, data uji, dan log sekarang ada di repo. Empat commit masuk 11.41–12.07,
+yaitu setelah surat 09.18 — jadi catatan itu akurat untuk versi yang Anda lihat</td></tr>
+<tr><td><strong>2.</strong> Antrean bertentangan dengan aturan sendiri; ambang
+dan bobot tidak dijelaskan</td>
+<td>Sudah diperbaiki</td>
+<td>Ambang gabung otomatis: hanya nomor atau email yang cocok. Jalur nama
+<em>tidak pernah</em> menggabung. Skor = 0,55 nama + 0,30 perusahaan + 0,15 kota;
+nama = 0,35 depan + 0,65 marga, dan marga harus &ge;0,85.
+"Hendra Halim" vs "Hendra Fischer" sekarang <code>pisah</code></td></tr>
+<tr><td><strong>3.</strong> "Pak Dewi" dan "Ibu Dewi" dinilai nyaris identik</td>
+<td>Sudah diperbaiki</td>
+<td>Sapaan dibaca sebagai sinyal gender sebelum skor dihitung: Pak, Bu, Bapak, Ibu,
+Mas, Mbak, H., Hj., ditambah gelar daerah (Teuku/Cut, Raden Ajeng, Tubagus,
+Lalu/Baiq, Datuk/Tengku) dan Jerman (Herr/Frau). Sapaan berlawanan = dua orang</td></tr>
+<tr><td><strong>4.</strong> Angka dedup tidak menutup; 173 dihitung final</td>
+<td>Sudah diperbaiki</td>
+<td>Ada tabel rekonsiliasi: 170 orang + 3 terpecah = 173, dan 173 ditandai
+sementara (turun ke 170 setelah antrean diputuskan). Antrean 23 &rarr; 8,
+dirinci 3 orang sama dan 5 kebisingan</td></tr>
+<tr><td><strong>5.</strong> Poin 5 baru separuh: retry, DLQ, alarm, handoff
+belum ada</td>
+<td>Benar, dan sekarang ada</td>
+<td>Percobaan ulang 3&times; dibuat eksplisit di graf (bukan
+<code>retryOnFail</code>, yang tidak menyala untuk kegagalan sebagian — diukur,
+lihat bagian n8n), DLQ berisi, alarm kedalaman (ambang 8,
+menyala di 22), pemutaran ulang, dan handoff 8 lead ke manusia</td></tr>
+<tr><td><strong>6.</strong> Pengecualian rekonsiliasi berpola kelipatan 28,
+ID168 tidak muncul</td>
+<td>Benar — cacat nyata</td>
+<td>Rumus <code>harus[::len//6][:6]</code> dibuang. Pengecualian sekarang diambil
+dari isi DLQ, jadi merupakan akibat pengiriman gagal. Jarak antar-ID
+26, 10, 2, 4, 35, 14, 8, 2 — bervariasi, tidak bisa
+ditebak</td></tr>
+<tr><td><strong>7.</strong> Lingkup menyebut n8n, demo-nya Python; siapa
+host, siapa rawat</td>
+<td>Benar, dan sudah dijawab</td>
+<td>Produknya n8n. Workflow untuk 50 lead berjalan di n8n 2.35.7 dan punya log
+eksekusi. Python hanya alat ukur: 24 angka dibandingkan, nol perbedaan.
+Hosting: akun n8n milik SAB, sesuai syarat Anda</td></tr>
+</tbody>
+</table>
+
 <h3>Uji kasus lapangan</h3>
 <p>Data sintetis bisa lolos hanya karena datanya sendiri yang salah. Karena itu
-ada 22 kasus yang diuji terpisah, diambil dari yang benar-benar muncul
+ada 25 kasus yang diuji terpisah, diambil dari yang benar-benar muncul
 di lapangan Indonesia dan Jerman — termasuk keempat kasus di atas, varian nomor
 <code>0812…</code>/<code>+62812…</code>/<code>62812…</code>, email bertanda
 <code>+ads</code>, umlaut Jerman, nama terbalik, dan marga yang disingkat.</p>
-<p><strong>22 dari 22 lulus.</strong> Yang gagal akan
+<p><strong>25 dari 25 lulus.</strong> Yang gagal akan
 ditampilkan di tabel ini juga, tidak disembunyikan.</p>
-<table><thead><tr><th>Kasus</th><th>Nama</th><th>Harusnya</th><th>Hasil</th><th>Skor</th><th></th></tr></thead><tbody><tr><td>sapaan bergender berlawanan = dua orang berbeda</td><td><code>Pak Dewi</code><br><code>Ibu Dewi</code></td><td>pisah</td><td>pisah</td><td>0,00</td><td class="s-ok">lulus</td></tr><tr><td>nama sama tapi Pak vs Ibu: dua orang</td><td><code>Pak Budi Santoso</code><br><code>Ibu Budi Santoso</code></td><td>pisah</td><td>pisah</td><td>0,00</td><td class="s-ok">lulus</td></tr><tr><td>Mas vs Mbak (Jawa): dua orang</td><td><code>Mas Agus</code><br><code>Mbak Agus</code></td><td>pisah</td><td>pisah</td><td>0,00</td><td class="s-ok">lulus</td></tr><tr><td>nama depan sama, marga beda total</td><td><code>Hendra Halim</code><br><code>Hendra Fischer</code></td><td>pisah</td><td>pisah</td><td>0,80</td><td class="s-ok">lulus</td></tr><tr><td>nama lengkap sama: antrean, TIDAK digabung otomatis</td><td><code>Rizky Wijaya</code><br><code>Rizky Wijaya</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nomor sama ditulis beda format</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nomor sama, kurung dan spasi</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>email +tag iklan</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>0,95</td><td class="s-ok">lulus</td></tr><tr><td>gmail mengabaikan titik</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>0,95</td><td class="s-ok">lulus</td></tr><tr><td>huruf besar/kecil</td><td><code>Budi Santoso</code><br><code>budi santoso</code></td><td>gabung</td><td>gabung</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>marga disingkat: antrean, bukan gabung</td><td><code>Budi Santoso</code><br><code>Budi S.</code></td><td>antrean</td><td>antrean</td><td>0,96</td><td class="s-ok">lulus</td></tr><tr><td>salah ketik satu huruf di marga</td><td><code>Budi Santoso</code><br><code>Budi Santosa</code></td><td>antrean</td><td>antrean</td><td>0,98</td><td class="s-ok">lulus</td></tr><tr><td>urutan nama terbalik</td><td><code>Budi Santoso</code><br><code>Santoso Budi</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>gelar netral (Dr.) dibuang</td><td><code>Dr. Budi Santoso</code><br><code>Budi Santoso</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>umlaut Jerman dinormalkan</td><td><code>Thomas Müller</code><br><code>Thomas Muller</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nama depan sama, marga beda</td><td><code>Budi Santoso</code><br><code>Budi Hartono</code></td><td>pisah</td><td>pisah</td><td>0,90</td><td class="s-ok">lulus</td></tr><tr><td>nama Jerman, marga beda</td><td><code>Thomas Weber</code><br><code>Thomas Becker</code></td><td>pisah</td><td>pisah</td><td>0,91</td><td class="s-ok">lulus</td></tr><tr><td>nama satu kata, beda perusahaan dan kota</td><td><code>Yusuf</code><br><code>Yusuf</code></td><td>pisah</td><td>pisah</td><td>0,47</td><td class="s-ok">lulus</td></tr><tr><td>nama lengkap sama, beda kota/perusahaan: tetap antrean</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>antrean</td><td>antrean</td><td>0,75</td><td class="s-ok">lulus</td></tr><tr><td>perempuan Jerman, marga beda</td><td><code>Anna Schmidt</code><br><code>Anna Weber</code></td><td>pisah</td><td>pisah</td><td>0,64</td><td class="s-ok">lulus</td></tr><tr><td>WhatsApp (nomor saja) vs email (email saja), nama sama</td><td><code>Sabine Schmidt</code><br><code>Sabine Schmidt</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nama dipendekkan jadi satu kata</td><td><code>Lestari</code><br><code>Lestari Becker</code></td><td>antrean</td><td>antrean</td><td>0,92</td><td class="s-ok">lulus</td></tr></tbody></table>
+<table><thead><tr><th>Kasus</th><th>Nama</th><th>Harusnya</th><th>Hasil</th><th>Skor</th><th></th></tr></thead><tbody><tr><td>sapaan bergender berlawanan = dua orang berbeda</td><td><code>Pak Dewi</code><br><code>Ibu Dewi</code></td><td>pisah</td><td>pisah</td><td>0,00</td><td class="s-ok">lulus</td></tr><tr><td>nama sama tapi Pak vs Ibu: dua orang</td><td><code>Pak Budi Santoso</code><br><code>Ibu Budi Santoso</code></td><td>pisah</td><td>pisah</td><td>0,00</td><td class="s-ok">lulus</td></tr><tr><td>Mas vs Mbak (Jawa): dua orang</td><td><code>Mas Agus</code><br><code>Mbak Agus</code></td><td>pisah</td><td>pisah</td><td>0,00</td><td class="s-ok">lulus</td></tr><tr><td>nama depan sama, marga beda total</td><td><code>Hendra Halim</code><br><code>Hendra Fischer</code></td><td>pisah</td><td>pisah</td><td>0,80</td><td class="s-ok">lulus</td></tr><tr><td>nama lengkap sama: antrean, TIDAK digabung otomatis</td><td><code>Rizky Wijaya</code><br><code>Rizky Wijaya</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nomor sama ditulis beda format</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nomor sama, kurung dan spasi</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>email +tag iklan</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>0,95</td><td class="s-ok">lulus</td></tr><tr><td>gmail mengabaikan titik</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>0,95</td><td class="s-ok">lulus</td></tr><tr><td>huruf besar/kecil</td><td><code>Budi Santoso</code><br><code>budi santoso</code></td><td>gabung</td><td>gabung</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>marga disingkat: antrean, bukan gabung</td><td><code>Budi Santoso</code><br><code>Budi S.</code></td><td>antrean</td><td>antrean</td><td>0,96</td><td class="s-ok">lulus</td></tr><tr><td>salah ketik satu huruf di marga</td><td><code>Budi Santoso</code><br><code>Budi Santosa</code></td><td>antrean</td><td>antrean</td><td>0,98</td><td class="s-ok">lulus</td></tr><tr><td>urutan nama terbalik</td><td><code>Budi Santoso</code><br><code>Santoso Budi</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>gelar netral (Dr.) dibuang</td><td><code>Dr. Budi Santoso</code><br><code>Budi Santoso</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>umlaut Jerman dinormalkan</td><td><code>Thomas Müller</code><br><code>Thomas Muller</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nama depan sama, marga beda</td><td><code>Budi Santoso</code><br><code>Budi Hartono</code></td><td>pisah</td><td>pisah</td><td>0,90</td><td class="s-ok">lulus</td></tr><tr><td>nama Jerman, marga beda</td><td><code>Thomas Weber</code><br><code>Thomas Becker</code></td><td>pisah</td><td>pisah</td><td>0,91</td><td class="s-ok">lulus</td></tr><tr><td>nama satu kata, beda perusahaan dan kota</td><td><code>Yusuf</code><br><code>Yusuf</code></td><td>pisah</td><td>pisah</td><td>0,47</td><td class="s-ok">lulus</td></tr><tr><td>nama lengkap sama, beda kota/perusahaan: tetap antrean</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>antrean</td><td>antrean</td><td>0,75</td><td class="s-ok">lulus</td></tr><tr><td>perempuan Jerman, marga beda</td><td><code>Anna Schmidt</code><br><code>Anna Weber</code></td><td>pisah</td><td>pisah</td><td>0,64</td><td class="s-ok">lulus</td></tr><tr><td>WhatsApp (nomor saja) vs email (email saja), nama sama</td><td><code>Sabine Schmidt</code><br><code>Sabine Schmidt</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nama dipendekkan jadi satu kata</td><td><code>Lestari</code><br><code>Lestari Becker</code></td><td>antrean</td><td>antrean</td><td>0,92</td><td class="s-ok">lulus</td></tr><tr><td>email kantor sama, nama tidak cocok: JANGAN digabung</td><td><code>Joko Susilo</code><br><code>Maria Tan</code></td><td>antrean</td><td>antrean</td><td>0,60</td><td class="s-ok">lulus</td></tr><tr><td>nomor kantor sama, nama tidak cocok: JANGAN digabung</td><td><code>Joko Susilo</code><br><code>Maria Tan</code></td><td>antrean</td><td>antrean</td><td>0,60</td><td class="s-ok">lulus</td></tr><tr><td>email sama DAN nama sama: gabung otomatis (kendali)</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>0,95</td><td class="s-ok">lulus</td></tr></tbody></table>
 
 <h3>Uji kasus nyata dari internet</h3>
 <p>Kasus di atas saya susun sendiri, jadi bisa saja hanya menguji apa yang sudah
@@ -243,6 +295,27 @@ tetap berlaku setelah server dinyalakan ulang — dan itu bagian yang diuji deng
 sengaja mematikan lalu menyalakan kembali mesinnya, bukan hanya dengan mengirim dua
 kali berturut-turut.</p>
 
+<h3>Retry, dead-letter queue, alarm, dan handoff</h3>
+<p>Catatan SAB nomor 5 benar: versi 21 November hanya menunjukkan idempotensi.
+Retry, DLQ, alarm kedalaman, dan handoff ke manusia belum ada. Sekarang keempatnya
+ada, dan angkanya keluar dari satu kali jalan program:</p>
+
+<div class="grid">
+<div class="card"><div class="num">163</div><div class="cap">balasan terkirim</div></div>
+<div class="card"><div class="num">22</div><div class="cap">gagal 3× &amp;rarr; DLQ</div></div>
+<div class="card"><div class="num ok">12</div><div class="cap">dipulihkan dari DLQ</div></div>
+<div class="card"><div class="num bad">10</div><div class="cap">sisa di DLQ</div></div>
+</div>
+
+<p>Alarm kedalaman menyala pada ambang 8: DLQ sempat mencapai 22,
+dan <strong>menyala</strong>. Setelah satu putaran
+ulang, 12 pulih dan 10 tersisa. Handoff ke manusia: 8
+lead — pasangan yang belum diputuskan, dan nama yang tidak terbaca.</p>
+<p>Kegagalan pengiriman <em>disimulasikan</em>, karena demo ini tidak mengirim pesan
+sungguhan. Yang nyata adalah penanganannya. Pembangkitnya FNV-1a atas
+<code>id|kanal</code>, jadi siapa pun bisa menghitung ulang daftar kegagalan itu
+dengan kode di repo — dan daftarnya tidak bisa ditebak dari nomor baris.</p>
+
 <div class="rule"></div>
 
 <h2>Poin 6 — rekonsiliasi harian</h2>
@@ -252,14 +325,83 @@ pagi.</p>
 
 <div class="grid">
 <div class="card"><div class="num">173</div><div class="cap">seharusnya dibalas</div></div>
-<div class="card"><div class="num">167</div><div class="cap">benar-benar dibalas</div></div>
-<div class="card"><div class="num">6</div><div class="cap">selisih</div></div>
+<div class="card"><div class="num">163</div><div class="cap">benar-benar dibalas</div></div>
+<div class="card"><div class="num">10</div><div class="cap">selisih</div></div>
 </div>
 
-<p>Selisihnya 6, dan itu disengaja: beberapa lead dibuat gagal supaya
-laporannya benar-benar menunjuk sesuatu. Laporan yang selalu nol tidak bisa
-dibedakan dari laporan yang tidak jalan. Yang masuk daftar pengecualian:
-<code>ID000</code>, <code>ID028</code>, <code>ID056</code>, <code>ID084</code>, <code>ID112</code>, <code>ID140</code>.</p>
+<h3>Kenapa daftar pengecualian ini bukan rumus</h3>
+<p>Versi 21 November memilih enam ID dengan <code>harus[::len//6][:6]</code>. Itu
+selalu menghasilkan kelipatan 28 — dan SAB menemukannya sendiri, termasuk fakta
+bahwa ID168 tidak muncul. Daftar yang bisa ditebak tanpa menjalankan sistem tidak
+membuktikan apa pun.</p>
+<p>Sekarang pengecualian diambil dari <strong>isi DLQ</strong>: akibat nyata dari
+pengiriman yang gagal, bukan pola yang saya pilih. Jarak antar-ID-nya
+26, 10, 2, 4, 35, 14, 8, 2, 9 — bervariasi, dan berubah
+kalau data ujinya berubah.</p>
+<p>Yang masuk daftar:
+<code>ID032</code>, <code>ID058</code>, <code>ID068</code>, <code>ID070</code>, <code>ID074</code>, <code>ID109</code>, <code>ID123</code>, <code>ID131</code>, <code>ID133</code>, <code>ID142</code>
+. Setiap satu punya sebab yang tercatat:
+kanal menolak setelah 3 percobaan (5xx).</p>
+
+<div class="rule"></div>
+
+<h2>Ujian 50 lead dari SAB</h2>
+<p>SAB mengirim 50 lead sintetis dan meminta enam poin dikerjakan pada data itu,
+dalam bentuk workflow n8n yang bisa dijalankan sendiri. Hasilnya:</p>
+
+<div class="grid">
+<div class="card"><div class="num">50</div><div class="cap">baris masuk</div></div>
+<div class="card"><div class="num">36</div><div class="cap">identitas</div></div>
+<div class="card"><div class="num">2</div><div class="cap">kontak dipakai bersama</div></div>
+<div class="card"><div class="num bad">4</div><div class="cap">sisa DLQ</div></div>
+</div>
+
+<p>Yang paling penting dari ujian ini bukan angkanya, melainkan jebakan yang
+berhasil dilewati:</p>
+<ul>
+<li><strong>Kontak kantor dipakai bersama.</strong> Dua lead berbagi email
+<code>info@sinarabadi.example</code> dan nomor <code>021-5550-0111</code> tetapi
+namanya berbeda. Kunci email/nomor yang lama akan menggabung dua orang. Sekarang
+sistem menolak menggabung dan menyerahkannya ke manusia.</li>
+<li><strong>Nama persis sama tanpa kontak bersama.</strong> Satu lead masuk lewat
+email, satu lewat WhatsApp, tanpa nomor atau email yang sama. Tidak digabung —
+hanya ditandai sebagai kemungkinan duplikat.</li>
+<li><strong>Opt-out dalam dua bahasa.</strong> "berhenti" dan "Bitte keine weiteren
+E-Mails" keduanya dikenali, dan balasan ke keduanya dihentikan.</li>
+<li><strong>Domain email salah ketik.</strong> <code>gmial.example</code> dan
+<code>gmail.example</code> tidak disamakan lewat tebakan; pasangan itu disatukan
+lewat nomor.</li>
+</ul>
+
+<h3>Dijalankan di n8n, bukan dikirim sebagai JSON</h3>
+<p>Ini jawaban untuk pertanyaan nomor 7. Workflow-nya benar-benar dieksekusi di n8n
+2.35.7 dan menghasilkan log eksekusi, bukan hanya berkas JSON yang belum pernah
+dijalankan.</p>
+
+<h4>Satu hal yang saya ukur, dan hasilnya mengubah rancangan</h4>
+<p>Rancangan pertama memakai <code>retryOnFail</code> milik n8n dengan
+<code>maxTries: 3</code>. Saya mengukurnya, bukan mengasumsikannya: workflow
+dengan <code>waitBetweenTries</code> 2.000 ms selesai dalam 1,9 detik, artinya
+tidak ada satu pun penantian percobaan ulang yang terjadi. Sebabnya,
+<code>retryOnFail</code> mengulang <em>seluruh node</em> dan hanya menyala kalau
+node gagal sebagai satu kesatuan. Pada node Code dengan
+<code>runOnceForEachItem</code>, kegagalan sebagian item ditangkap per item lalu
+dikirim ke cabang error — node-nya sendiri tidak pernah melempar, jadi
+percobaan ulang tidak pernah berjalan.</p>
+<p>Karena itu percobaan ulang dibuat eksplisit di graf:
+<code>Kirim &rarr; Periksa &rarr; Tambah &rarr; Kirim</code>. Jumlah percobaan
+disimpan di item, bukan di <code>$getWorkflowStaticData</code> — tulisan static
+data dari node yang melempar error memang dibuang, itu juga saya ukur. Hasilnya
+bisa diperiksa di log: node <code>Kirim</code> berjalan
+<strong>3 kali</strong>
+(<code>[28+5] [0+5] [0+5]</code>), 5
+lead dicoba lebih dari sekali, dan seluruhnya 43
+percobaan menghasilkan 29 terkirim serta
+5 masuk DLQ.</p>
+<p>Log eksekusinya menunjukkan: Mulai [1] → Baca CSV [1] → Parse CSV [50] → Dedup [33] → Kirim [28+5] [0+5] [0+5] → Terkirim [28] → Rekonsiliasi [1] [1] → Jadikan Berkas [1] [1] → Tulis Hasil [1] [1] → Periksa [5+0] [5+0] [0+5] → Tambah [5] [5] → DLQ [5] item.</p>
+<p>Python tetap ada, tapi hanya sebagai alat ukur: <code>uji_kesamaan.py</code>
+membandingkan 24 angka antara mesin Python dan workflow n8n, dan hasilnya harus
+nol perbedaan. Kalau berbeda satu saja, uji itu gagal.</p>
 
 <div class="rule"></div>
 
@@ -268,9 +410,11 @@ dibedakan dari laporan yang tidak jalan. Yang masuk daftar pengecualian:
 <li><strong>Kanal asli.</strong> WhatsApp Business, form website SAB, dan CRM SAB belum
 disambungkan. Yang berjalan adalah CRM tiruan. Pemasangan ke akun asli adalah
 pekerjaan tahap 1.</li>
-<li><strong>Poin 2, 3, 4.</strong> Balasan otomatis tiga bahasa, penghentian lintas
-kanal, dan sinkron dua arah belum masuk demo ini. Ketiganya ada di lingkup, bukan di
-halaman ini.</li>
+<li><strong>Pengiriman sungguhan.</strong> Balasan tidak benar-benar dikirim ke 50
+lead sintetis. Yang diuji adalah penanganan kegagalannya: retry, DLQ, alarm,
+pemutaran ulang.</li>
+<li><strong>Poin 4 (sinkron CRM dua arah).</strong> Resolusi konflik per-field belum
+ada di demo ini. Poin 1, 2, 3, 5, 6 sudah berjalan pada data ujian.</li>
 <li><strong>Beban produksi.</strong> Uji ini memakai 200 lead. Volume SAB yang
 sebenarnya belum saya ketahui, dan angka itu yang menentukan kebutuhan server.</li>
 <li><strong>Data asli.</strong> Semuanya sintetis. Tidak ada satu pun data pelanggan SAB

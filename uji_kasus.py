@@ -116,6 +116,28 @@ KASUS = [
     kasus("Lestari", "Lestari Becker", "antrean",
           "nama dipendekkan jadi satu kata",
           kota="Berlin", perusahaan="Studio Foto Lensa"),
+
+    # --- kontak kantor dipakai bersama (ditemukan di ujian 50 lead SAB) ---
+    # Joko Susilo dan Maria Tan berbagi email dan nomor kantor yang sama.
+    # Tanpa penjaga ini, kunci email/nomor menggabung dua orang berbeda --
+    # kesalahan yang tidak bisa ditarik kembali. Ditemukan pada L020/L021.
+    kasus("Joko Susilo", "Maria Tan", "antrean",
+          "email kantor sama, nama tidak cocok: JANGAN digabung",
+          kota="Jakarta", perusahaan="PT Sinar Abadi",
+          email="info@sinarabadi.example"),
+
+    kasus("Joko Susilo", "Maria Tan", "antrean",
+          "nomor kantor sama, nama tidak cocok: JANGAN digabung",
+          kota="Jakarta", perusahaan="PT Sinar Abadi",
+          nomor="021-5550-0111"),
+
+    # Kendali: kalau namanya memang sama, kunci email tetap boleh menggabung.
+    # Tanpa kasus ini, penjaga di atas bisa saja terlalu ketat dan tidak ada
+    # yang menyadarinya.
+    kasus("Budi Santoso", "Budi Santoso", "gabung",
+          "email sama DAN nama sama: gabung otomatis (kendali)",
+          kota="Jakarta", perusahaan="PT Sinar Jaya",
+          email="budi.santoso@majulogistik.example"),
 ]
 
 

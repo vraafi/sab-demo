@@ -382,6 +382,28 @@ AMBANG_GABUNG = 0.80
 AMBANG_ANTREAN = 0.55
 
 
+def kontak_dipakai_bersama(nama1: str, nama2: str) -> bool:
+    """True kalau nomor/email yang sama jelas bukan milik orang yang sama.
+
+    Ditemukan saat menguji data ujian SAB: Joko Susilo dan Maria Tan berbagi
+    email `info@sinarabadi.example` dan nomor kantor `021-5550-0111`. Email
+    dan nomor yang sama TIDAK cukup untuk menggabung — di Indonesia satu
+    alamat kantor dipakai banyak orang, dan formulir sering memakai email
+    perusahaan bersama.
+
+    Syarat "cocok": berbagi satu kata nama, atau marganya mirip. Kalau tidak
+    ada satu pun, kunci kontak itu tidak boleh menggabung.
+    """
+    na, nb = nama(nama1), nama(nama2)
+    if not na or not nb:
+        return False                     # tidak bisa dinilai, jangan menghalangi
+    if set(na) & set(nb):
+        return False
+    if len(na) >= 2 and len(nb) >= 2:
+        return _mirip_token(na[-1], nb[-1]) < 0.85
+    return _mirip_token(na[0], nb[0]) < 0.90
+
+
 def putuskan(lead: dict, kandidat: dict) -> tuple[str, float, str]:
     """Kembalikan (keputusan, skor, alasan).
 
@@ -389,10 +411,18 @@ def putuskan(lead: dict, kandidat: dict) -> tuple[str, float, str]:
     """
     n1, n2 = nomor(lead.get("nomor", "")), nomor(kandidat.get("nomor", ""))
     if n1 and n2 and n1 == n2:
+        if kontak_dipakai_bersama(lead.get("nama", ""), kandidat.get("nama", "")):
+            return ("antrean", 0.60,
+                    "nomor sama tetapi nama tidak cocok — kemungkinan nomor "
+                    "kantor dipakai bersama")
         return "gabung", 1.0, "nomor sama setelah dinormalkan"
 
     e1, e2 = email(lead.get("email", "")), email(kandidat.get("email", ""))
     if e1 and e2 and e1 == e2:
+        if kontak_dipakai_bersama(lead.get("nama", ""), kandidat.get("nama", "")):
+            return ("antrean", 0.60,
+                    "email sama tetapi nama tidak cocok — kemungkinan email "
+                    "kantor dipakai bersama")
         return "gabung", 0.95, "email sama setelah +tag dan titik dibuang"
 
     # Aturan 3: sapaan bergender yang bertentangan berarti dua orang berbeda.

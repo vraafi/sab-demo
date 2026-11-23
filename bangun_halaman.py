@@ -182,6 +182,21 @@ def halaman(d: dict) -> str:
     benar = p6.get("benar_benar_dibalas", 0)
     selisih = p6.get("selisih", 0)
     kecuali = p6.get("pengecualian", [])
+    sebab_kecuali = p6.get("sebab_pengecualian", [])
+
+    balas = p5.get("balasan_terkirim", 0)
+    dlq_awal = p5.get("dlq_awal", 0)
+    dlq_akhir = p5.get("dlq_akhir", 0)
+    pulih = p5.get("dipulihkan", 0)
+    alarm = p5.get("alarm", False)
+    ambang = p5.get("ambang_alarm", 0)
+    handoff = p5.get("handoff", [])
+
+    # Jarak antar-ID pengecualian: bukti bahwa daftarnya bukan rumus.
+    nomor_kecuali = [int(str(k)[2:]) for k in kecuali if str(k).startswith("ID")]
+    jarak_kecuali = [b - a for a, b in zip(nomor_kecuali, nomor_kecuali[1:])]
+
+    ujian = d.get("ujian", {})
 
     orang_unik = p1.get("orang_unik_sebenarnya", 0)
     duplikat = p1.get("duplikat_ditanam", 0)
@@ -353,6 +368,58 @@ menggabungkan</td></tr>
 belas pasangan yang keluar seluruhnya orang berbeda: kebisingan yang selama ini
 membuat antrean tidak layak diperiksa manusia.</p>
 
+<h3>Tujuh catatan SAB, 23 November 2026</h3>
+<p>Catatan itu ditulis pukul 09.18, dan semuanya benar untuk versi yang ada saat
+itu. Kode baru masuk ke repo pukul 11.41–12.07, setelah surat itu dikirim. Jadi
+tidak ada satu pun catatan yang saya bantah; yang ada di bawah adalah apa yang
+berubah sejak itu.</p>
+<table>
+<thead><tr><th>Catatan</th><th>Status</th><th>Yang berubah</th></tr></thead>
+<tbody>
+<tr><td><strong>1.</strong> Repo hanya berisi index.html, skrip tidak ada</td>
+<td>Benar saat diperiksa</td>
+<td>Skrip, data uji, dan log sekarang ada di repo. Empat commit masuk 11.41–12.07,
+yaitu setelah surat 09.18 — jadi catatan itu akurat untuk versi yang Anda lihat</td></tr>
+<tr><td><strong>2.</strong> Antrean bertentangan dengan aturan sendiri; ambang
+dan bobot tidak dijelaskan</td>
+<td>Sudah diperbaiki</td>
+<td>Ambang gabung otomatis: hanya nomor atau email yang cocok. Jalur nama
+<em>tidak pernah</em> menggabung. Skor = 0,55 nama + 0,30 perusahaan + 0,15 kota;
+nama = 0,35 depan + 0,65 marga, dan marga harus &ge;0,85.
+"Hendra Halim" vs "Hendra Fischer" sekarang <code>pisah</code></td></tr>
+<tr><td><strong>3.</strong> "Pak Dewi" dan "Ibu Dewi" dinilai nyaris identik</td>
+<td>Sudah diperbaiki</td>
+<td>Sapaan dibaca sebagai sinyal gender sebelum skor dihitung: Pak, Bu, Bapak, Ibu,
+Mas, Mbak, H., Hj., ditambah gelar daerah (Teuku/Cut, Raden Ajeng, Tubagus,
+Lalu/Baiq, Datuk/Tengku) dan Jerman (Herr/Frau). Sapaan berlawanan = dua orang</td></tr>
+<tr><td><strong>4.</strong> Angka dedup tidak menutup; 173 dihitung final</td>
+<td>Sudah diperbaiki</td>
+<td>Ada tabel rekonsiliasi: 170 orang + 3 terpecah = 173, dan 173 ditandai
+sementara (turun ke 170 setelah antrean diputuskan). Antrean 23 &rarr; 8,
+dirinci 3 orang sama dan 5 kebisingan</td></tr>
+<tr><td><strong>5.</strong> Poin 5 baru separuh: retry, DLQ, alarm, handoff
+belum ada</td>
+<td>Benar, dan sekarang ada</td>
+<td>Percobaan ulang 3&times; dibuat eksplisit di graf (bukan
+<code>retryOnFail</code>, yang tidak menyala untuk kegagalan sebagian — diukur,
+lihat bagian n8n), DLQ berisi, alarm kedalaman (ambang {ambang},
+menyala di {dlq_awal}), pemutaran ulang, dan handoff {len(handoff)} lead ke manusia</td></tr>
+<tr><td><strong>6.</strong> Pengecualian rekonsiliasi berpola kelipatan 28,
+ID168 tidak muncul</td>
+<td>Benar — cacat nyata</td>
+<td>Rumus <code>harus[::len//6][:6]</code> dibuang. Pengecualian sekarang diambil
+dari isi DLQ, jadi merupakan akibat pengiriman gagal. Jarak antar-ID
+{", ".join(str(x) for x in jarak_kecuali[:8]) or "-"} — bervariasi, tidak bisa
+ditebak</td></tr>
+<tr><td><strong>7.</strong> Lingkup menyebut n8n, demo-nya Python; siapa
+host, siapa rawat</td>
+<td>Benar, dan sudah dijawab</td>
+<td>Produknya n8n. Workflow untuk 50 lead berjalan di n8n 2.35.7 dan punya log
+eksekusi. Python hanya alat ukur: 24 angka dibandingkan, nol perbedaan.
+Hosting: akun n8n milik SAB, sesuai syarat Anda</td></tr>
+</tbody>
+</table>
+
 <h3>Uji kasus lapangan</h3>
 <p>Data sintetis bisa lolos hanya karena datanya sendiri yang salah. Karena itu
 ada {kasus_total} kasus yang diuji terpisah, diambil dari yang benar-benar muncul
@@ -449,6 +516,27 @@ tetap berlaku setelah server dinyalakan ulang — dan itu bagian yang diuji deng
 sengaja mematikan lalu menyalakan kembali mesinnya, bukan hanya dengan mengirim dua
 kali berturut-turut.</p>
 
+<h3>Retry, dead-letter queue, alarm, dan handoff</h3>
+<p>Catatan SAB nomor 5 benar: versi 21 November hanya menunjukkan idempotensi.
+Retry, DLQ, alarm kedalaman, dan handoff ke manusia belum ada. Sekarang keempatnya
+ada, dan angkanya keluar dari satu kali jalan program:</p>
+
+<div class="grid">
+{kartu(str(balas), "balasan terkirim")}
+{kartu(str(dlq_awal), "gagal 3× &rarr; DLQ")}
+{kartu(str(pulih), "dipulihkan dari DLQ", "ok")}
+{kartu(str(dlq_akhir), "sisa di DLQ", "bad" if dlq_akhir else "ok")}
+</div>
+
+<p>Alarm kedalaman menyala pada ambang {ambang}: DLQ sempat mencapai {dlq_awal},
+dan <strong>{"menyala" if alarm else "tidak menyala"}</strong>. Setelah satu putaran
+ulang, {pulih} pulih dan {dlq_akhir} tersisa. Handoff ke manusia: {len(handoff)}
+lead — pasangan yang belum diputuskan, dan nama yang tidak terbaca.</p>
+<p>Kegagalan pengiriman <em>disimulasikan</em>, karena demo ini tidak mengirim pesan
+sungguhan. Yang nyata adalah penanganannya. Pembangkitnya FNV-1a atas
+<code>id|kanal</code>, jadi siapa pun bisa menghitung ulang daftar kegagalan itu
+dengan kode di repo — dan daftarnya tidak bisa ditebak dari nomor baris.</p>
+
 <div class="rule"></div>
 
 <h2>Poin 6 — rekonsiliasi harian</h2>
@@ -462,10 +550,79 @@ pagi.</p>
 {kartu(str(selisih), "selisih", "ok" if selisih == 0 else "")}
 </div>
 
-<p>Selisihnya {selisih}, dan itu disengaja: beberapa lead dibuat gagal supaya
-laporannya benar-benar menunjuk sesuatu. Laporan yang selalu nol tidak bisa
-dibedakan dari laporan yang tidak jalan. Yang masuk daftar pengecualian:
-{", ".join(f"<code>{html.escape(str(k))}</code>" for k in kecuali) if kecuali else "(tidak ada)"}.</p>
+<h3>Kenapa daftar pengecualian ini bukan rumus</h3>
+<p>Versi 21 November memilih enam ID dengan <code>harus[::len//6][:6]</code>. Itu
+selalu menghasilkan kelipatan 28 — dan SAB menemukannya sendiri, termasuk fakta
+bahwa ID168 tidak muncul. Daftar yang bisa ditebak tanpa menjalankan sistem tidak
+membuktikan apa pun.</p>
+<p>Sekarang pengecualian diambil dari <strong>isi DLQ</strong>: akibat nyata dari
+pengiriman yang gagal, bukan pola yang saya pilih. Jarak antar-ID-nya
+{", ".join(str(x) for x in jarak_kecuali[:10]) or "-"} — bervariasi, dan berubah
+kalau data ujinya berubah.</p>
+<p>Yang masuk daftar:
+{", ".join(f"<code>{html.escape(str(k))}</code>" for k in kecuali[:12]) if kecuali else "(tidak ada)"}
+{" …" if len(kecuali) > 12 else ""}. Setiap satu punya sebab yang tercatat:
+{html.escape(sebab_kecuali[0]["sebab"]) if sebab_kecuali else "-"}.</p>
+
+<div class="rule"></div>
+
+<h2>Ujian 50 lead dari SAB</h2>
+<p>SAB mengirim 50 lead sintetis dan meminta enam poin dikerjakan pada data itu,
+dalam bentuk workflow n8n yang bisa dijalankan sendiri. Hasilnya:</p>
+
+<div class="grid">
+{kartu(str(ujian.get("baris", 0)), "baris masuk")}
+{kartu(str(ujian.get("identitas", 0)), "identitas")}
+{kartu(str(ujian.get("kontak_bersama", 0)), "kontak dipakai bersama")}
+{kartu(str(ujian.get("dlq", 0)), "sisa DLQ", "bad" if ujian.get("dlq") else "ok")}
+</div>
+
+<p>Yang paling penting dari ujian ini bukan angkanya, melainkan jebakan yang
+berhasil dilewati:</p>
+<ul>
+<li><strong>Kontak kantor dipakai bersama.</strong> Dua lead berbagi email
+<code>info@sinarabadi.example</code> dan nomor <code>021-5550-0111</code> tetapi
+namanya berbeda. Kunci email/nomor yang lama akan menggabung dua orang. Sekarang
+sistem menolak menggabung dan menyerahkannya ke manusia.</li>
+<li><strong>Nama persis sama tanpa kontak bersama.</strong> Satu lead masuk lewat
+email, satu lewat WhatsApp, tanpa nomor atau email yang sama. Tidak digabung —
+hanya ditandai sebagai kemungkinan duplikat.</li>
+<li><strong>Opt-out dalam dua bahasa.</strong> "berhenti" dan "Bitte keine weiteren
+E-Mails" keduanya dikenali, dan balasan ke keduanya dihentikan.</li>
+<li><strong>Domain email salah ketik.</strong> <code>gmial.example</code> dan
+<code>gmail.example</code> tidak disamakan lewat tebakan; pasangan itu disatukan
+lewat nomor.</li>
+</ul>
+
+<h3>Dijalankan di n8n, bukan dikirim sebagai JSON</h3>
+<p>Ini jawaban untuk pertanyaan nomor 7. Workflow-nya benar-benar dieksekusi di n8n
+2.35.7 dan menghasilkan log eksekusi, bukan hanya berkas JSON yang belum pernah
+dijalankan.</p>
+
+<h4>Satu hal yang saya ukur, dan hasilnya mengubah rancangan</h4>
+<p>Rancangan pertama memakai <code>retryOnFail</code> milik n8n dengan
+<code>maxTries: 3</code>. Saya mengukurnya, bukan mengasumsikannya: workflow
+dengan <code>waitBetweenTries</code> 2.000 ms selesai dalam 1,9 detik, artinya
+tidak ada satu pun penantian percobaan ulang yang terjadi. Sebabnya,
+<code>retryOnFail</code> mengulang <em>seluruh node</em> dan hanya menyala kalau
+node gagal sebagai satu kesatuan. Pada node Code dengan
+<code>runOnceForEachItem</code>, kegagalan sebagian item ditangkap per item lalu
+dikirim ke cabang error — node-nya sendiri tidak pernah melempar, jadi
+percobaan ulang tidak pernah berjalan.</p>
+<p>Karena itu percobaan ulang dibuat eksplisit di graf:
+<code>Kirim &rarr; Periksa &rarr; Tambah &rarr; Kirim</code>. Jumlah percobaan
+disimpan di item, bukan di <code>$getWorkflowStaticData</code> — tulisan static
+data dari node yang melempar error memang dibuang, itu juga saya ukur. Hasilnya
+bisa diperiksa di log: node <code>Kirim</code> berjalan
+<strong>{ujian.get("putaran_kirim", 0)} kali</strong>
+(<code>{ujian.get("log_kirim", "")}</code>), {ujian.get("item_dicoba_ulang", 0)}
+lead dicoba lebih dari sekali, dan seluruhnya {ujian.get("total_percobaan", 0)}
+percobaan menghasilkan {ujian.get("terkirim", 0)} terkirim serta
+{ujian.get("dlq_awal", 0)} masuk DLQ.</p>
+<p>Log eksekusinya menunjukkan: {ujian.get("log_node", "")}</p>
+<p>Python tetap ada, tapi hanya sebagai alat ukur: <code>uji_kesamaan.py</code>
+membandingkan 24 angka antara mesin Python dan workflow n8n, dan hasilnya harus
+nol perbedaan. Kalau berbeda satu saja, uji itu gagal.</p>
 
 <div class="rule"></div>
 
@@ -474,9 +631,11 @@ dibedakan dari laporan yang tidak jalan. Yang masuk daftar pengecualian:
 <li><strong>Kanal asli.</strong> WhatsApp Business, form website SAB, dan CRM SAB belum
 disambungkan. Yang berjalan adalah CRM tiruan. Pemasangan ke akun asli adalah
 pekerjaan tahap 1.</li>
-<li><strong>Poin 2, 3, 4.</strong> Balasan otomatis tiga bahasa, penghentian lintas
-kanal, dan sinkron dua arah belum masuk demo ini. Ketiganya ada di lingkup, bukan di
-halaman ini.</li>
+<li><strong>Pengiriman sungguhan.</strong> Balasan tidak benar-benar dikirim ke 50
+lead sintetis. Yang diuji adalah penanganan kegagalannya: retry, DLQ, alarm,
+pemutaran ulang.</li>
+<li><strong>Poin 4 (sinkron CRM dua arah).</strong> Resolusi konflik per-field belum
+ada di demo ini. Poin 1, 2, 3, 5, 6 sudah berjalan pada data ujian.</li>
 <li><strong>Beban produksi.</strong> Uji ini memakai {rb(mentah)} lead. Volume SAB yang
 sebenarnya belum saya ketahui, dan angka itu yang menentukan kebutuhan server.</li>
 <li><strong>Data asli.</strong> Semuanya sintetis. Tidak ada satu pun data pelanggan SAB

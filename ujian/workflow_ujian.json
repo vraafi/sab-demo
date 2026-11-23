@@ -1,0 +1,324 @@
+{
+ "id": "sabujian001",
+ "name": "SAB — Ujian 50 lead (enam poin)",
+ "nodes": [
+  {
+   "parameters": {},
+   "id": "mulai",
+   "name": "Mulai",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "fileSelector": "C:\\Users\\user\\otonom-penuh\\n8n_factory\\marketing\\sab\\SAB_test_leads_50.csv",
+    "options": {}
+   },
+   "id": "baca-csv",
+   "name": "Baca CSV",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    200,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "operation": "csv",
+    "binaryPropertyName": "data",
+    "options": {}
+   },
+   "id": "parse-csv",
+   "name": "Parse CSV",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    400,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForAllItems",
+    "jsCode": "/* Logika ujian 50 lead SAB — implementasi JavaScript untuk node Code n8n.\n *\n * Ini port dari mesin.py. Keduanya harus menghasilkan hal yang sama pada data\n * yang sama; itu yang menjawab pertanyaan Tico nomor 7: sistemnya dibangun di\n * n8n, dan Python hanya alat ukur yang dipakai untuk memeriksa hasilnya.\n *\n * Fungsi di bawah sengaja tidak memakai pustaka luar supaya bisa disalin apa\n * adanya ke node Code, yang tidak boleh require modul sembarang.\n */\n\n// ---------------------------------------------------------------- normalisasi\n\nconst GELAR_NETRAL = new Set(['dr','drg','ir','prof','drs','dra','st']);\nconst SAPAAN_L = new Set(['pak','bapak','mas','mr','h','haji','tuan','teuku',\n  'teungku','tubagus','cokorda','lalu','datuk','datuak','sutan','tengku']);\nconst SAPAAN_P = new Set(['bu','ibu','mbak','mrs','ms','hj','hajah','nyonya',\n  'nona','cut','baiq','ajeng','rara','nyimas','masayu']);\nconst SAPAAN = new Set([...SAPAAN_L, ...SAPAAN_P]);\n\nconst PETA_HURUF = {'ß':'ss','ẞ':'ss','æ':'ae','Æ':'ae','œ':'oe','Œ':'oe',\n  'ø':'o','Ø':'o','đ':'d','Đ':'d','ð':'d','Ð':'d','ł':'l','Ł':'l',\n  'þ':'th','Þ':'th'};\n\nfunction huruf(t) {\n  let s = '';\n  for (const c of String(t || '')) s += (PETA_HURUF[c] !== undefined ? PETA_HURUF[c] : c);\n  // NFKD lalu buang tanda diakritik. Normalisasi bawaan JS menangani ini.\n  return s.normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '');\n}\n\nfunction tokenKasar(n) {\n  let s = huruf(String(n || '').toLowerCase());\n  s = s.replace(/[^a-z\\s.]/g, ' ');\n  return s.replace(/\\./g, ' ').split(/\\s+/).filter(Boolean);\n}\n\nfunction nama(n) {\n  return tokenKasar(n).filter(t => !GELAR_NETRAL.has(t) && !SAPAAN.has(t));\n}\n\nfunction telp(s) {\n  let d = String(s || '').replace(/\\D/g, '');\n  if (!d) return '';\n  if (d.startsWith('00')) d = d.slice(2);\n  if (d.startsWith('0')) d = '62' + d.slice(1);\n  else if (d.startsWith('8') && d.length >= 9) d = '62' + d;\n  return d;\n}\n\nfunction surel(e) {\n  let s = String(e || '').trim().toLowerCase();\n  if (!s.includes('@')) return '';\n  let [lokal, domain] = [s.slice(0, s.lastIndexOf('@')), s.slice(s.lastIndexOf('@') + 1)];\n  lokal = lokal.split('+')[0];\n  if (domain === 'gmail.com' || domain === 'googlemail.com') lokal = lokal.replace(/\\./g, '');\n  return lokal + '@' + domain;\n}\n\n// ------------------------------------------------------------------ kemiripan\n\nfunction jaro(a, b) {\n  if (a === b) return 1.0;\n  const la = a.length, lb = b.length;\n  if (la === 0 || lb === 0) return 0.0;\n  const jendela = Math.max(la, lb) / 2 - 1;\n  const jw = Math.trunc(jendela);\n  const cocokA = new Array(la).fill(false), cocokB = new Array(lb).fill(false);\n  let cocok = 0;\n  for (let i = 0; i < la; i++) {\n    const lo = Math.max(0, i - jw), hi = Math.min(i + jw + 1, lb);\n    for (let j = lo; j < hi; j++) {\n      if (!cocokB[j] && b[j] === a[i]) { cocokA[i] = cocokB[j] = true; cocok++; break; }\n    }\n  }\n  if (cocok === 0) return 0.0;\n  let t = 0, k = 0;\n  for (let i = 0; i < la; i++) {\n    if (cocokA[i]) {\n      while (!cocokB[k]) k++;\n      if (a[i] !== b[k]) t++;\n      k++;\n    }\n  }\n  t /= 2;\n  return (cocok / la + cocok / lb + (cocok - t) / cocok) / 3;\n}\n\nfunction jaroWinkler(a, b) {\n  const j = jaro(a, b);\n  let p = 0;\n  for (let i = 0; i < Math.min(a.length, b.length); i++) {\n    if (a[i] === b[i] && p < 4) p++; else break;\n  }\n  return Math.round((j + p * 0.1 * (1 - j)) * 10000) / 10000;\n}\n\nconst EJAAN_LAMA = [['oe','u'],['tj','c'],['dj','j'],['sj','sy'],['nj','ny'],['ch','kh']];\nfunction ejaanBaru(t) {\n  let s = t;\n  for (const [lama, baru] of EJAAN_LAMA) s = s.split(lama).join(baru);\n  return s;\n}\n\nfunction miripToken(x, y) {\n  if (x === y) return 1.0;\n  if (x.length === 1 || y.length === 1) return x[0] === y[0] ? 0.90 : 0.0;\n  let skor = jaroWinkler(x, y);\n  const ex = ejaanBaru(x), ey = ejaanBaru(y);\n  if (ex !== x || ey !== y) skor = Math.max(skor, jaroWinkler(ex, ey));\n  return skor;\n}\n\nfunction namaCocok(a, b) {\n  const na = nama(a), nb = nama(b);\n  if (na.length === 0 || nb.length === 0) return true;\n  if (na.some(t => nb.includes(t))) return true;\n  if (na.length >= 2 && nb.length >= 2) {\n    return miripToken(na[na.length - 1], nb[nb.length - 1]) >= 0.85;\n  }\n  return miripToken(na[0], nb[0]) >= 0.90;\n}\n\n// -------------------------------------------------------------- dedup kanal\n\nclass Gabung {\n  constructor(n) { this.induk = Array.from({ length: n }, (_, i) => i); }\n  cari(i) {\n    while (this.induk[i] !== i) { this.induk[i] = this.induk[this.induk[i]]; i = this.induk[i]; }\n    return i;\n  }\n  satukan(a, b) {\n    const ra = this.cari(a), rb = this.cari(b);\n    if (ra !== rb) this.induk[rb] = ra;\n  }\n}\n\nfunction kelompokkan(rows) {\n  const n = rows.length;\n  const g = new Gabung(n);\n  const perTelp = new Map(), perSurel = new Map(), perIsi = new Map();\n  const tambah = (m, k, i) => { if (!m.has(k)) m.set(k, []); m.get(k).push(i); };\n\n  rows.forEach((r, i) => {\n    r._telp = telp(r.phone);\n    r._surel = surel(r.email);\n    if (r._telp) tambah(perTelp, r._telp, i);\n    if (r._surel) tambah(perSurel, r._surel, i);\n    r._sidik = [r.channel, r.name, r.phone, r.email, r.message].join('|');\n    tambah(perIsi, r._sidik, i);\n  });\n\n  const bentrok = [];\n  const sambung = (idx, jenis, nilai) => {\n    if (idx.length < 2) return;\n    for (let x = 0; x < idx.length; x++) {\n      for (let y = x + 1; y < idx.length; y++) {\n        const i = idx[x], j = idx[y];\n        if (namaCocok(rows[i].name, rows[j].name)) g.satukan(i, j);\n        else bentrok.push({\n          jenis, nilai, baris_a: rows[i].row_id, nama_a: rows[i].name,\n          baris_b: rows[j].row_id, nama_b: rows[j].name,\n          sebab: `${jenis} sama tetapi nama tidak cocok — kemungkinan kontak kantor dipakai bersama`,\n        });\n      }\n    }\n  };\n\n  for (const [nilai, idx] of perTelp) sambung(idx, 'nomor', nilai);\n  for (const [nilai, idx] of perSurel) sambung(idx, 'email', nilai);\n  for (const [, idx] of perIsi) {\n    if (idx.length > 1) for (const k of idx.slice(1)) g.satukan(idx[0], k);\n  }\n\n  const kelompok = new Map();\n  for (let i = 0; i < n; i++) {\n    const akar = g.cari(i);\n    if (!kelompok.has(akar)) kelompok.set(akar, []);\n    kelompok.get(akar).push(i);\n  }\n\n  const kunciUrut = [...kelompok.entries()].sort((A, B) => {\n    const a = rows[Math.min(...A[1])].row_id, b = rows[Math.min(...B[1])].row_id;\n    return a < b ? -1 : a > b ? 1 : 0;\n  });\n\n  const identitas = [];\n  for (const [, idx] of kunciUrut) {\n    const anggota = idx.slice().sort((a, b) =>\n      rows[a].received_at < rows[b].received_at ? -1 :\n      rows[a].received_at > rows[b].received_at ? 1 : 0).map(i => rows[i]);\n    const utama = anggota[0];\n    const varian = [...new Set(anggota.map(a => a.name))].sort();\n    identitas.push({\n      id: `SAB-${String(identitas.length + 1).padStart(3, '0')}`,\n      nama: utama.name,\n      nama_varian: varian,\n      telp: (anggota.find(a => a._telp) || {})._telp || '',\n      surel: (anggota.find(a => a._surel) || {})._surel || '',\n      perusahaan: (anggota.find(a => a.company) || {}).company || '',\n      kanal: anggota.map(a => a.channel),\n      baris: anggota.map(a => a.row_id),\n      pesan: anggota.map(a => a.message),\n      pesan_pertama: utama.message,\n      waktu_pertama: utama.received_at,\n      _anggota: anggota,\n    });\n  }\n\n  // Kemungkinan duplikat yang hanya bisa dikenali dari nama persis sama.\n  const perNama = new Map();\n  rows.forEach((r, i) => {\n    const tok = nama(r.name);\n    if (tok.length >= 2) {\n      const k = tok.join(' ');\n      if (!perNama.has(k)) perNama.set(k, []);\n      perNama.get(k).push(i);\n    }\n  });\n  const mungkin = [];\n  for (const [k, idx] of perNama) {\n    if (idx.length < 2) continue;\n    for (let x = 0; x < idx.length; x++) {\n      for (let y = x + 1; y < idx.length; y++) {\n        const i = idx[x], j = idx[y];\n        if (g.cari(i) === g.cari(j)) continue;\n        mungkin.push({\n          nama: k, baris_a: rows[i].row_id, baris_b: rows[j].row_id,\n          sebab: 'nama persis sama tetapi tidak ada nomor/email yang sama — tidak digabung, menunggu manusia',\n        });\n      }\n    }\n  }\n\n  return {\n    identitas, bentrok, mungkin,\n    stat: {\n      baris_masuk: n, identitas: identitas.length,\n      digabung: n - identitas.length,\n      kontak_dipakai_bersama: bentrok.length,\n      kemungkinan_duplikat_nama: mungkin.length,\n    },\n  };\n}\n\n// --------------------------------------------------------------- klasifikasi\n\nconst KATA_ID = new Set(['kami','saya','mau','tanya','butuh','bisa','jasa','iklan',\n  'untuk','yang','ini','sudah','belum','harga','pasang','minta','bantu','dengan',\n  'apakah','dari','kapan','kak','toko','perusahaan','bikin','kirim','info','halo',\n  'dan','cuma','jual','murah','kelola','jadwal','penawaran','isi','tadi','besok',\n  'tahun','berapa','boleh']);\nconst KATA_EN = new Set(['we','our','you','your','what','does','looking','for',\n  'services','interested','hi','hello','want','expand','follow','include','rates',\n  'offer','agencies','more','details','about','sending','partner','package','sales',\n  'submission','week','discussed','outbound','into','an']);\nconst KATA_DE = new Set(['wir','sie','ihr','ihre','ihren','uns','eine','einen',\n  'für','können','guten','tag','bitte','keine','weiteren','interesse','an',\n  'leistungen','schicken','suchen','agentur','südostasien','angebot','diese',\n  'adresse','emails']);\n\nconst OPTOUT_ID = [/\\bberhenti\\b/,/\\bstop\\b/,/\\bjangan (kirim|hubungi|email)\\b/,\n  /\\bunsubscribe\\b/,/\\bhapus (saya|data)\\b/];\nconst OPTOUT_EN = [/\\bunsubscribe\\b/,/\\bstop\\b/,/\\bremove me\\b/,\n  /\\bdo(n'?t| not) contact\\b/,/\\bopt out\\b/];\nconst OPTOUT_DE = [/\\bkeine weiteren e-?mails?\\b/,/\\babmelden\\b/,/\\baustragen\\b/,\n  /\\bl[öo]schen sie\\b/,/\\bnicht mehr\\b/];\nconst SPAM = [/\\bjual followers\\b/,/\\bfollowers (murah|cepat)\\b/,/\\blikes murah\\b/,\n  /\\b10rb followers\\b/,/\\bjasa followers\\b/,/\\bpromo followers\\b/];\n\nfunction bahasa(teks) {\n  const t = String(teks || '').toLowerCase();\n  const kata = new Set((t.match(/[a-zäöüß]+/g) || []));\n  const skor = { ID: 0, EN: 0, DE: 0 };\n  for (const k of kata) {\n    if (KATA_ID.has(k)) skor.ID++;\n    if (KATA_EN.has(k)) skor.EN++;\n    if (KATA_DE.has(k)) skor.DE++;\n  }\n  let terbaik = 'ID';\n  for (const k of ['EN', 'DE']) if (skor[k] > skor[terbaik]) terbaik = k;\n  if (skor[terbaik] === 0) return ['??', skor];\n  return [terbaik, skor];\n}\n\nfunction optOut(teks) {\n  const t = String(teks || '').toLowerCase();\n  return [...OPTOUT_ID, ...OPTOUT_EN, ...OPTOUT_DE].some(p => p.test(t));\n}\n\nfunction spam(teks) {\n  const t = String(teks || '').toLowerCase();\n  return SPAM.some(p => p.test(t));\n}\n\n// ------------------------------------------------------------------ pengiriman\n\nfunction acak(kunci, garam) {\n  // FNV-1a 32-bit. Harus sama persis dengan mesin.py.\n  let h = 2166136261 >>> 0;\n  const buf = Buffer.from(`${kunci}|${garam}`, 'utf8');\n  for (const b of buf) { h = (h ^ b) >>> 0; h = Math.imul(h, 16777619) >>> 0; }\n  return h / 4294967296;\n}\n\n// Satu kategori kegagalan saja — lihat catatan di mesin.py.\nconst P_PERMANEN = 0.16;\n\nfunction tujuanBisa(ident) {\n  const kanal = ident.kanal[ident.kanal.length - 1];\n  if (kanal === 'whatsapp') return [!!ident.telp, 'nomor'];\n  return [!!ident.surel, 'email'];\n}\n\nif (typeof module !== 'undefined') {\n  module.exports = { huruf, nama, telp, surel, jaro, jaroWinkler, miripToken,\n    namaCocok, kelompokkan, bahasa, optOut, spam, acak, tujuanBisa,\n    P_PERMANEN };\n}\n\n\n// ---- Node: Dedup (sekaligus menyimpan state untuk rekonsiliasi) --------\nconst sd = $getWorkflowStaticData('global');\nconst rows = items.map(i => i.json);\nconst hasil = kelompokkan(rows);\n\n// Klasifikasi dilakukan di sini juga supaya rekonsiliasi punya daftar lengkap\n// (termasuk yang dikecualikan) tanpa perlu membawa cabang terpisah.\nfor (const i of hasil.identitas) {\n  const semua = i.pesan || [];\n  const [bhsAkhir] = bahasa(semua[semua.length - 1] || '');\n  const [bhsAwal] = bahasa(semua[0] || '');\n  i.bahasa = bhsAkhir !== '??' ? bhsAkhir : bhsAwal;\n  i.optout = semua.some(p => optOut(p));\n  i.spam = semua.some(p => spam(p));\n  i.lintas = new Set(i.kanal).size > 1;\n  i.dikecualikan = i.optout || i.spam;\n  const [bisa, jalur] = tujuanBisa(i);\n  i.tanpa_saluran = bisa ? null : jalur;\n  i.jalur = bisa ? jalur : null;\n  // Keputusan gagal/tidak ditentukan di sini supaya node Kirim cukup\n  // melempar error. Kuncinya sama dengan mesin.py: id + jalur, di-hash\n  // FNV-1a, sehingga daftar kegagalan tidak bisa ditebak dari nomor baris.\n  if (bisa) {\n    const kunci = i.id + '|' + jalur;\n    i.akan_gagal_permanen = acak(kunci, 'permanen') < P_PERMANEN;\n  }\n}\n\n// Wadah hasil dikosongkan di awal setiap eksekusi. Tanpa ini, sisa dari\n// eksekusi sebelumnya bisa ikut terhitung.\nsd.__stat = hasil.stat;\nsd.__bentrok = hasil.bentrok;\nsd.__mungkin = hasil.mungkin;\nsd.__terkirim = [];\nsd.__dlq = [];\nsd.__ulang = {};\nsd.__semua_identitas = hasil.identitas.map(i => ({\n  id: i.id, bahasa: i.bahasa, optout: i.optout, spam: i.spam,\n  lintas: i.lintas, dikecualikan: i.dikecualikan, tanpa_saluran: i.tanpa_saluran,\n}));\n\n// Yang dikirim hanya yang memang boleh dan bisa dibalas. Yang opt-out, spam,\n// atau tanpa saluran tidak pernah masuk node Kirim — bukan dikirim lalu gagal.\nconst kirim = hasil.identitas.filter(i => !i.dikecualikan && !i.tanpa_saluran);\nreturn kirim.map(i => ({json: {\n  id: i.id, nama: i.nama, telp: i.telp, surel: i.surel, kanal: i.kanal,\n  baris: i.baris, pesan: i.pesan, pesan_pertama: i.pesan_pertama,\n  bahasa: i.bahasa, optout: i.optout, spam: i.spam, lintas: i.lintas,\n  dikecualikan: i.dikecualikan, tanpa_saluran: i.tanpa_saluran,\n  jalur: i.jalur,\n  akan_gagal_permanen: i.akan_gagal_permanen,\n  percobaan: 1,\n}}));\n"
+   },
+   "id": "dedup",
+   "name": "Dedup",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 1,
+   "position": [
+    600,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "\n// ---- Node: Kirim -------------------------------------------------------\n// Satu item = satu identitas. Node ini sengaja MELEMPAR error untuk\n// mensimulasikan kanal yang menolak. Yang nyata di sini adalah\n// penanganannya, bukan pengirimannya: tidak ada pesan sungguhan yang\n// dikirim ke 50 lead sintetis.\n//\n// Percobaan ke berapa disimpan di item (`percobaan`), bukan di static data,\n// karena tulisan static data dari node yang melempar error dibuang.\nif ($json.akan_gagal_permanen) {\n  throw new Error('kanal menolak (5xx) pada percobaan ' + $json.percobaan + ': ' + $json.jalur);\n}\nreturn {json: {...$json, status: 'terkirim'}};\n"
+   },
+   "id": "kirim",
+   "name": "Kirim",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 1,
+   "position": [
+    820,
+    0
+   ],
+   "onError": "continueErrorOutput"
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForAllItems",
+    "jsCode": "\n// ---- Node: Terkirim ----------------------------------------------------\n// Menumpuk yang berhasil ke static data. Node ini tidak pernah melempar,\n// jadi tulisannya tersimpan. Dipanggil berkali-kali (sekali per putaran\n// percobaan), karena itu hasilnya ditumpuk, bukan ditimpa.\nconst sd = $getWorkflowStaticData('global');\nsd.__terkirim = sd.__terkirim || [];\nfor (const item of items) {\n  sd.__terkirim.push({\n    identitas: item.json.id,\n    nama: item.json.nama,\n    kanal: item.json.jalur,\n    percobaan_ke: item.json.percobaan,\n  });\n}\nreturn items.map(i => ({json: i.json}));\n"
+   },
+   "id": "terkirim",
+   "name": "Terkirim",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 1,
+   "position": [
+    1040,
+    -180
+   ]
+  },
+  {
+   "parameters": {
+    "conditions": {
+     "number": [
+      {
+       "value1": "={{ $json.percobaan }}",
+       "operation": "smaller",
+       "value2": 3
+      }
+     ]
+    }
+   },
+   "id": "periksa",
+   "name": "Periksa",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 1,
+   "position": [
+    1040,
+    180
+   ]
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "\n// ---- Node: Tambah percobaan --------------------------------------------\n// Satu-satunya tempat keadaan percobaan berubah, dan ia berubah di item —\n// ikut mengalir kembali ke node Kirim lewat kabel, bukan lewat memori.\nconst sd = $getWorkflowStaticData('global');\nsd.__ulang = sd.__ulang || {};\nsd.__ulang[$json.id] = $json.percobaan;\nreturn {json: {...$json, percobaan: $json.percobaan + 1}};\n"
+   },
+   "id": "tambah",
+   "name": "Tambah",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 1,
+   "position": [
+    1260,
+    180
+   ]
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForAllItems",
+    "jsCode": "\n// ---- Node: DLQ ---------------------------------------------------------\n// Menerima cabang error dari node Kirim SETELAH tiga percobaan. n8n\n// mempertahankan data asli item dan menambahkan properti `error`, jadi\n// catatan DLQ lengkap: siapa, kanal apa, pesan apa, berapa percobaan.\nconst sd = $getWorkflowStaticData('global');\nsd.__dlq = sd.__dlq || [];\nfor (const item of items) {\n  const j = item.json;\n  sd.__dlq.push({\n    id: 'DLQ-' + String(sd.__dlq.length + 1).padStart(3, '0'),\n    identitas: j.id,\n    nama: j.nama,\n    kanal: j.jalur || (j.kanal ? j.kanal[j.kanal.length - 1] : ''),\n    percobaan: j.percobaan,\n    error_message: 'kanal menolak setelah ' + j.percobaan + ' percobaan (5xx)',\n    error_n8n: typeof j.error === 'string' ? j.error : (j.error && j.error.message) || '',\n    original_payload: {pesan: j.pesan_pertama},\n  });\n}\nreturn items.map(i => ({json: i.json}));\n"
+   },
+   "id": "dlq",
+   "name": "DLQ",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 1,
+   "position": [
+    1480,
+    300
+   ]
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForAllItems",
+    "jsCode": "/* Logika ujian 50 lead SAB — implementasi JavaScript untuk node Code n8n.\n *\n * Ini port dari mesin.py. Keduanya harus menghasilkan hal yang sama pada data\n * yang sama; itu yang menjawab pertanyaan Tico nomor 7: sistemnya dibangun di\n * n8n, dan Python hanya alat ukur yang dipakai untuk memeriksa hasilnya.\n *\n * Fungsi di bawah sengaja tidak memakai pustaka luar supaya bisa disalin apa\n * adanya ke node Code, yang tidak boleh require modul sembarang.\n */\n\n// ---------------------------------------------------------------- normalisasi\n\nconst GELAR_NETRAL = new Set(['dr','drg','ir','prof','drs','dra','st']);\nconst SAPAAN_L = new Set(['pak','bapak','mas','mr','h','haji','tuan','teuku',\n  'teungku','tubagus','cokorda','lalu','datuk','datuak','sutan','tengku']);\nconst SAPAAN_P = new Set(['bu','ibu','mbak','mrs','ms','hj','hajah','nyonya',\n  'nona','cut','baiq','ajeng','rara','nyimas','masayu']);\nconst SAPAAN = new Set([...SAPAAN_L, ...SAPAAN_P]);\n\nconst PETA_HURUF = {'ß':'ss','ẞ':'ss','æ':'ae','Æ':'ae','œ':'oe','Œ':'oe',\n  'ø':'o','Ø':'o','đ':'d','Đ':'d','ð':'d','Ð':'d','ł':'l','Ł':'l',\n  'þ':'th','Þ':'th'};\n\nfunction huruf(t) {\n  let s = '';\n  for (const c of String(t || '')) s += (PETA_HURUF[c] !== undefined ? PETA_HURUF[c] : c);\n  // NFKD lalu buang tanda diakritik. Normalisasi bawaan JS menangani ini.\n  return s.normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '');\n}\n\nfunction tokenKasar(n) {\n  let s = huruf(String(n || '').toLowerCase());\n  s = s.replace(/[^a-z\\s.]/g, ' ');\n  return s.replace(/\\./g, ' ').split(/\\s+/).filter(Boolean);\n}\n\nfunction nama(n) {\n  return tokenKasar(n).filter(t => !GELAR_NETRAL.has(t) && !SAPAAN.has(t));\n}\n\nfunction telp(s) {\n  let d = String(s || '').replace(/\\D/g, '');\n  if (!d) return '';\n  if (d.startsWith('00')) d = d.slice(2);\n  if (d.startsWith('0')) d = '62' + d.slice(1);\n  else if (d.startsWith('8') && d.length >= 9) d = '62' + d;\n  return d;\n}\n\nfunction surel(e) {\n  let s = String(e || '').trim().toLowerCase();\n  if (!s.includes('@')) return '';\n  let [lokal, domain] = [s.slice(0, s.lastIndexOf('@')), s.slice(s.lastIndexOf('@') + 1)];\n  lokal = lokal.split('+')[0];\n  if (domain === 'gmail.com' || domain === 'googlemail.com') lokal = lokal.replace(/\\./g, '');\n  return lokal + '@' + domain;\n}\n\n// ------------------------------------------------------------------ kemiripan\n\nfunction jaro(a, b) {\n  if (a === b) return 1.0;\n  const la = a.length, lb = b.length;\n  if (la === 0 || lb === 0) return 0.0;\n  const jendela = Math.max(la, lb) / 2 - 1;\n  const jw = Math.trunc(jendela);\n  const cocokA = new Array(la).fill(false), cocokB = new Array(lb).fill(false);\n  let cocok = 0;\n  for (let i = 0; i < la; i++) {\n    const lo = Math.max(0, i - jw), hi = Math.min(i + jw + 1, lb);\n    for (let j = lo; j < hi; j++) {\n      if (!cocokB[j] && b[j] === a[i]) { cocokA[i] = cocokB[j] = true; cocok++; break; }\n    }\n  }\n  if (cocok === 0) return 0.0;\n  let t = 0, k = 0;\n  for (let i = 0; i < la; i++) {\n    if (cocokA[i]) {\n      while (!cocokB[k]) k++;\n      if (a[i] !== b[k]) t++;\n      k++;\n    }\n  }\n  t /= 2;\n  return (cocok / la + cocok / lb + (cocok - t) / cocok) / 3;\n}\n\nfunction jaroWinkler(a, b) {\n  const j = jaro(a, b);\n  let p = 0;\n  for (let i = 0; i < Math.min(a.length, b.length); i++) {\n    if (a[i] === b[i] && p < 4) p++; else break;\n  }\n  return Math.round((j + p * 0.1 * (1 - j)) * 10000) / 10000;\n}\n\nconst EJAAN_LAMA = [['oe','u'],['tj','c'],['dj','j'],['sj','sy'],['nj','ny'],['ch','kh']];\nfunction ejaanBaru(t) {\n  let s = t;\n  for (const [lama, baru] of EJAAN_LAMA) s = s.split(lama).join(baru);\n  return s;\n}\n\nfunction miripToken(x, y) {\n  if (x === y) return 1.0;\n  if (x.length === 1 || y.length === 1) return x[0] === y[0] ? 0.90 : 0.0;\n  let skor = jaroWinkler(x, y);\n  const ex = ejaanBaru(x), ey = ejaanBaru(y);\n  if (ex !== x || ey !== y) skor = Math.max(skor, jaroWinkler(ex, ey));\n  return skor;\n}\n\nfunction namaCocok(a, b) {\n  const na = nama(a), nb = nama(b);\n  if (na.length === 0 || nb.length === 0) return true;\n  if (na.some(t => nb.includes(t))) return true;\n  if (na.length >= 2 && nb.length >= 2) {\n    return miripToken(na[na.length - 1], nb[nb.length - 1]) >= 0.85;\n  }\n  return miripToken(na[0], nb[0]) >= 0.90;\n}\n\n// -------------------------------------------------------------- dedup kanal\n\nclass Gabung {\n  constructor(n) { this.induk = Array.from({ length: n }, (_, i) => i); }\n  cari(i) {\n    while (this.induk[i] !== i) { this.induk[i] = this.induk[this.induk[i]]; i = this.induk[i]; }\n    return i;\n  }\n  satukan(a, b) {\n    const ra = this.cari(a), rb = this.cari(b);\n    if (ra !== rb) this.induk[rb] = ra;\n  }\n}\n\nfunction kelompokkan(rows) {\n  const n = rows.length;\n  const g = new Gabung(n);\n  const perTelp = new Map(), perSurel = new Map(), perIsi = new Map();\n  const tambah = (m, k, i) => { if (!m.has(k)) m.set(k, []); m.get(k).push(i); };\n\n  rows.forEach((r, i) => {\n    r._telp = telp(r.phone);\n    r._surel = surel(r.email);\n    if (r._telp) tambah(perTelp, r._telp, i);\n    if (r._surel) tambah(perSurel, r._surel, i);\n    r._sidik = [r.channel, r.name, r.phone, r.email, r.message].join('|');\n    tambah(perIsi, r._sidik, i);\n  });\n\n  const bentrok = [];\n  const sambung = (idx, jenis, nilai) => {\n    if (idx.length < 2) return;\n    for (let x = 0; x < idx.length; x++) {\n      for (let y = x + 1; y < idx.length; y++) {\n        const i = idx[x], j = idx[y];\n        if (namaCocok(rows[i].name, rows[j].name)) g.satukan(i, j);\n        else bentrok.push({\n          jenis, nilai, baris_a: rows[i].row_id, nama_a: rows[i].name,\n          baris_b: rows[j].row_id, nama_b: rows[j].name,\n          sebab: `${jenis} sama tetapi nama tidak cocok — kemungkinan kontak kantor dipakai bersama`,\n        });\n      }\n    }\n  };\n\n  for (const [nilai, idx] of perTelp) sambung(idx, 'nomor', nilai);\n  for (const [nilai, idx] of perSurel) sambung(idx, 'email', nilai);\n  for (const [, idx] of perIsi) {\n    if (idx.length > 1) for (const k of idx.slice(1)) g.satukan(idx[0], k);\n  }\n\n  const kelompok = new Map();\n  for (let i = 0; i < n; i++) {\n    const akar = g.cari(i);\n    if (!kelompok.has(akar)) kelompok.set(akar, []);\n    kelompok.get(akar).push(i);\n  }\n\n  const kunciUrut = [...kelompok.entries()].sort((A, B) => {\n    const a = rows[Math.min(...A[1])].row_id, b = rows[Math.min(...B[1])].row_id;\n    return a < b ? -1 : a > b ? 1 : 0;\n  });\n\n  const identitas = [];\n  for (const [, idx] of kunciUrut) {\n    const anggota = idx.slice().sort((a, b) =>\n      rows[a].received_at < rows[b].received_at ? -1 :\n      rows[a].received_at > rows[b].received_at ? 1 : 0).map(i => rows[i]);\n    const utama = anggota[0];\n    const varian = [...new Set(anggota.map(a => a.name))].sort();\n    identitas.push({\n      id: `SAB-${String(identitas.length + 1).padStart(3, '0')}`,\n      nama: utama.name,\n      nama_varian: varian,\n      telp: (anggota.find(a => a._telp) || {})._telp || '',\n      surel: (anggota.find(a => a._surel) || {})._surel || '',\n      perusahaan: (anggota.find(a => a.company) || {}).company || '',\n      kanal: anggota.map(a => a.channel),\n      baris: anggota.map(a => a.row_id),\n      pesan: anggota.map(a => a.message),\n      pesan_pertama: utama.message,\n      waktu_pertama: utama.received_at,\n      _anggota: anggota,\n    });\n  }\n\n  // Kemungkinan duplikat yang hanya bisa dikenali dari nama persis sama.\n  const perNama = new Map();\n  rows.forEach((r, i) => {\n    const tok = nama(r.name);\n    if (tok.length >= 2) {\n      const k = tok.join(' ');\n      if (!perNama.has(k)) perNama.set(k, []);\n      perNama.get(k).push(i);\n    }\n  });\n  const mungkin = [];\n  for (const [k, idx] of perNama) {\n    if (idx.length < 2) continue;\n    for (let x = 0; x < idx.length; x++) {\n      for (let y = x + 1; y < idx.length; y++) {\n        const i = idx[x], j = idx[y];\n        if (g.cari(i) === g.cari(j)) continue;\n        mungkin.push({\n          nama: k, baris_a: rows[i].row_id, baris_b: rows[j].row_id,\n          sebab: 'nama persis sama tetapi tidak ada nomor/email yang sama — tidak digabung, menunggu manusia',\n        });\n      }\n    }\n  }\n\n  return {\n    identitas, bentrok, mungkin,\n    stat: {\n      baris_masuk: n, identitas: identitas.length,\n      digabung: n - identitas.length,\n      kontak_dipakai_bersama: bentrok.length,\n      kemungkinan_duplikat_nama: mungkin.length,\n    },\n  };\n}\n\n// --------------------------------------------------------------- klasifikasi\n\nconst KATA_ID = new Set(['kami','saya','mau','tanya','butuh','bisa','jasa','iklan',\n  'untuk','yang','ini','sudah','belum','harga','pasang','minta','bantu','dengan',\n  'apakah','dari','kapan','kak','toko','perusahaan','bikin','kirim','info','halo',\n  'dan','cuma','jual','murah','kelola','jadwal','penawaran','isi','tadi','besok',\n  'tahun','berapa','boleh']);\nconst KATA_EN = new Set(['we','our','you','your','what','does','looking','for',\n  'services','interested','hi','hello','want','expand','follow','include','rates',\n  'offer','agencies','more','details','about','sending','partner','package','sales',\n  'submission','week','discussed','outbound','into','an']);\nconst KATA_DE = new Set(['wir','sie','ihr','ihre','ihren','uns','eine','einen',\n  'für','können','guten','tag','bitte','keine','weiteren','interesse','an',\n  'leistungen','schicken','suchen','agentur','südostasien','angebot','diese',\n  'adresse','emails']);\n\nconst OPTOUT_ID = [/\\bberhenti\\b/,/\\bstop\\b/,/\\bjangan (kirim|hubungi|email)\\b/,\n  /\\bunsubscribe\\b/,/\\bhapus (saya|data)\\b/];\nconst OPTOUT_EN = [/\\bunsubscribe\\b/,/\\bstop\\b/,/\\bremove me\\b/,\n  /\\bdo(n'?t| not) contact\\b/,/\\bopt out\\b/];\nconst OPTOUT_DE = [/\\bkeine weiteren e-?mails?\\b/,/\\babmelden\\b/,/\\baustragen\\b/,\n  /\\bl[öo]schen sie\\b/,/\\bnicht mehr\\b/];\nconst SPAM = [/\\bjual followers\\b/,/\\bfollowers (murah|cepat)\\b/,/\\blikes murah\\b/,\n  /\\b10rb followers\\b/,/\\bjasa followers\\b/,/\\bpromo followers\\b/];\n\nfunction bahasa(teks) {\n  const t = String(teks || '').toLowerCase();\n  const kata = new Set((t.match(/[a-zäöüß]+/g) || []));\n  const skor = { ID: 0, EN: 0, DE: 0 };\n  for (const k of kata) {\n    if (KATA_ID.has(k)) skor.ID++;\n    if (KATA_EN.has(k)) skor.EN++;\n    if (KATA_DE.has(k)) skor.DE++;\n  }\n  let terbaik = 'ID';\n  for (const k of ['EN', 'DE']) if (skor[k] > skor[terbaik]) terbaik = k;\n  if (skor[terbaik] === 0) return ['??', skor];\n  return [terbaik, skor];\n}\n\nfunction optOut(teks) {\n  const t = String(teks || '').toLowerCase();\n  return [...OPTOUT_ID, ...OPTOUT_EN, ...OPTOUT_DE].some(p => p.test(t));\n}\n\nfunction spam(teks) {\n  const t = String(teks || '').toLowerCase();\n  return SPAM.some(p => p.test(t));\n}\n\n// ------------------------------------------------------------------ pengiriman\n\nfunction acak(kunci, garam) {\n  // FNV-1a 32-bit. Harus sama persis dengan mesin.py.\n  let h = 2166136261 >>> 0;\n  const buf = Buffer.from(`${kunci}|${garam}`, 'utf8');\n  for (const b of buf) { h = (h ^ b) >>> 0; h = Math.imul(h, 16777619) >>> 0; }\n  return h / 4294967296;\n}\n\n// Satu kategori kegagalan saja — lihat catatan di mesin.py.\nconst P_PERMANEN = 0.16;\n\nfunction tujuanBisa(ident) {\n  const kanal = ident.kanal[ident.kanal.length - 1];\n  if (kanal === 'whatsapp') return [!!ident.telp, 'nomor'];\n  return [!!ident.surel, 'email'];\n}\n\nif (typeof module !== 'undefined') {\n  module.exports = { huruf, nama, telp, surel, jaro, jaroWinkler, miripToken,\n    namaCocok, kelompokkan, bahasa, optOut, spam, acak, tujuanBisa,\n    P_PERMANEN };\n}\n\n\n// ---- Node: Rekonsiliasi ------------------------------------------------\n// Membaca hasil yang sudah ditumpuk di static data, bukan dari item yang\n// kebetulan lewat. Dengan begitu urutan cabang tidak mengubah jawaban:\n// node ini boleh dijalankan berkali-kali dan angka terakhirnya tetap sama.\nconst sd = $getWorkflowStaticData('global');\n\nconst awal = sd.__semua_identitas || [];\nconst terkirim = sd.__terkirim || [];\nconst gagal = sd.__dlq || [];\nconst ulang = sd.__ulang || {};\n\n// Pemutaran ulang DLQ: sebagian pulih setelah penyebabnya diperbaiki.\nconst pulih = [], sisa = [];\nfor (const d of gagal) {\n  if (acak(d.identitas + '|putar', 'ulang') < 0.55) pulih.push(d); else sisa.push(d);\n}\n\nconst AMBANG = 5;\nconst alarmAwal = gagal.length >= AMBANG;\nconst alarmAkhir = sisa.length >= AMBANG;\n\nconst seharusnya = awal.filter(i => !i.dikecualikan && !i.tanpa_saluran).map(i => i.id);\nconst dapat = new Set([...terkirim.map(t => t.identitas), ...pulih.map(p => p.identitas)]);\n\nconst hasil = {\n  dijalankan: new Date().toISOString(),\n  mesin: 'n8n',\n  poin_1_dedup: {\n    baris_masuk: sd.__stat ? sd.__stat.baris_masuk : null,\n    identitas: sd.__stat ? sd.__stat.identitas : null,\n    digabung: sd.__stat ? sd.__stat.digabung : null,\n    kontak_dipakai_bersama: sd.__stat ? sd.__stat.kontak_dipakai_bersama : null,\n    kemungkinan_duplikat_nama: sd.__stat ? sd.__stat.kemungkinan_duplikat_nama : null,\n    kontak_bersama: sd.__bentrok || [],\n    kemungkinan_duplikat: sd.__mungkin || [],\n  },\n  poin_2_bahasa: {\n    sebaran: awal.reduce((a, i) => (a[i.bahasa] = (a[i.bahasa] || 0) + 1, a), {}),\n  },\n  poin_3_optout: {\n    opt_out: awal.filter(i => i.optout).map(i => i.id),\n    spam: awal.filter(i => i.spam).map(i => i.id),\n    lintas_kanal: awal.filter(i => i.lintas).map(i => i.id),\n  },\n  poin_5_kirim: {\n    // Terkirim termasuk yang pulih lewat pemutaran ulang DLQ — sama seperti\n    // mesin.py, supaya kedua angka bisa dibandingkan langsung.\n    terkirim: terkirim.length + pulih.length,\n    dlq_awal: gagal.length,\n    dipulihkan: pulih.length,\n    dlq_setelah_putar_ulang: sisa.length,\n    alarm_saat_kirim: alarmAwal,\n    alarm_setelah_putar_ulang: alarmAkhir,\n    ambang_alarm: AMBANG,\n    // Bukti percobaan ulang benar-benar terjadi: berapa item yang perlu\n    // dicoba lebih dari sekali, dan berapa total percobaan yang dijalankan.\n    item_dicoba_ulang: Object.keys(ulang).length,\n    total_percobaan: terkirim.reduce((a, t) => a + (t.percobaan_ke || 1), 0)\n      + gagal.reduce((a, d) => a + (d.percobaan || 0), 0),\n    dlq: sisa.map(d => ({id: d.id, identitas: d.identitas, nama: d.nama,\n      kanal: d.kanal, percobaan: d.percobaan, error_message: d.error_message})),\n    dipulihkan_daftar: pulih.map(p => p.identitas),\n  },\n  poin_6_rekonsiliasi: {\n    seharusnya_dibalas: seharusnya.length,\n    benar_benar_dibalas: dapat.size,\n    selisih: seharusnya.length - dapat.size,\n    pengecualian: seharusnya.filter(i => !dapat.has(i)),\n  },\n};\nreturn [{json: hasil}];\n"
+   },
+   "id": "rekonsiliasi",
+   "name": "Rekonsiliasi",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 1,
+   "position": [
+    1700,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "operation": "toJson",
+    "mode": "all",
+    "options": {}
+   },
+   "id": "jadikan-berkas",
+   "name": "Jadikan Berkas",
+   "type": "n8n-nodes-base.convertToFile",
+   "typeVersion": 1,
+   "position": [
+    1900,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "operation": "write",
+    "fileName": "C:\\Users\\user\\otonom-penuh\\n8n_factory\\sab_demo\\ujian\\hasil_ujian_n8n.json",
+    "dataPropertyName": "data",
+    "options": {}
+   },
+   "id": "tulis-hasil",
+   "name": "Tulis Hasil",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    2080,
+    0
+   ]
+  }
+ ],
+ "connections": {
+  "Mulai": {
+   "main": [
+    [
+     {
+      "node": "Baca CSV",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Baca CSV": {
+   "main": [
+    [
+     {
+      "node": "Parse CSV",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Parse CSV": {
+   "main": [
+    [
+     {
+      "node": "Dedup",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Dedup": {
+   "main": [
+    [
+     {
+      "node": "Kirim",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Kirim": {
+   "main": [
+    [
+     {
+      "node": "Terkirim",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Periksa",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Periksa": {
+   "main": [
+    [
+     {
+      "node": "Tambah",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "DLQ",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Tambah": {
+   "main": [
+    [
+     {
+      "node": "Kirim",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Terkirim": {
+   "main": [
+    [
+     {
+      "node": "Rekonsiliasi",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "DLQ": {
+   "main": [
+    [
+     {
+      "node": "Rekonsiliasi",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Rekonsiliasi": {
+   "main": [
+    [
+     {
+      "node": "Jadikan Berkas",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Jadikan Berkas": {
+   "main": [
+    [
+     {
+      "node": "Tulis Hasil",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "active": false
+}

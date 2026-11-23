@@ -18,6 +18,13 @@ ujinya.
 | `uji_kasus.py` | 22 kasus lapangan (Indonesia + Jerman) dengan hasil yang diharapkan |
 | `uji_kasus_nyata.py` | 12 kasus dari nama orang sungguhan dan konvensi terdokumentasi (Wikipedia), lengkap dengan sumber tiap kasus |
 | `uji_kasus_nyata2.py` | 14 kasus putaran kedua: reformasi ejaan 1972, transliterasi Jerman (ß, umlaut), singkatan gelar, dan alias yang benar dipisah |
+| `ujian/mesin.py` | Mesin enam poin untuk 50 lead ujian SAB (implementasi rujukan, Python) |
+| `ujian/logika.js` | Port JavaScript dari logika yang sama, dipakai di node Code n8n |
+| `ujian/workflow_ujian.json` | Workflow n8n untuk 50 lead — dijalankan sungguhan, bukan JSON yang belum pernah dieksekusi |
+| `ujian/uji_kesamaan.py` | Membandingkan 24 angka antara mesin Python dan workflow n8n; gagal kalau ada satu perbedaan |
+| `ujian/hasil_ujian.json` | Keluaran mesin Python |
+| `ujian/hasil_ujian_n8n.json` | Keluaran workflow n8n pada data yang sama |
+| `ujian/log_n8n.json` | Ringkasan log eksekusi n8n: semua putaran per node (bukan hanya yang terakhir), termasuk cabang error |
 | `bandingkan.py` | Membandingkan `dedup.py` (baru) dengan `dedup_lama.py` (versi 21 Nov) pada data yang sama |
 | `generate.py` | Membangkitkan `data_uji.json` — 170 orang, 200 lead, 30 duplikat |
 | `bangun_halaman.py` | Membangun `index.html` dari `hasil_demo.json` |
@@ -47,9 +54,16 @@ Tidak ada dependensi luar. Python 3.10+.
 27 digabung otomatis lewat nomor/email
 8 pasangan di antrean manusia (3 orang sama, 5 hanya mirip nama)
 0 salah gabung
-22/22 kasus lapangan sesuai
+151 balasan terkirim, 22 gagal 3x masuk DLQ, alarm menyala (ambang 8), 10 sisa
+rekonsiliasi 163/173, pengecualian diambil dari DLQ (jarak antar-ID bervariasi)
+22/25 kasus lapangan sesuai  (25 kasus, termasuk 3 kasus kontak kantor bersama)
 12/12 kasus nyata sesuai (10 orang sama, 2 alias benar dipisah)
 14/14 kasus nyata putaran kedua sesuai (11 orang sama, 3 alias benar dipisah)
+
+Ujian 50 lead SAB:
+50 baris -> 36 identitas, 14 digabung, 2 kontak dipakai bersama, 1 kemungkinan duplikat
+33 seharusnya dibalas, 29 terkirim, 5 DLQ, 1 dipulihkan, 4 sisa
+mesin Python vs workflow n8n: 24 angka dibandingkan, 0 perbedaan
 ```
 
 ## Uji kasus nyata
@@ -141,6 +155,74 @@ Versi 21 November mendapat empat catatan dari SAB. Semuanya benar:
 Efeknya pada data yang sama: antrean turun dari 23 ke 8 pasangan, **tanpa
 kehilangan satu pun duplikat nyata**. Kelima belas pasangan yang keluar
 seluruhnya orang berbeda.
+
+## Ujian 50 lead dan workflow n8n
+
+`ujian/` berisi pengerjaan enam poin pada 50 lead sintetis yang dikirim SAB.
+Workflow-nya **dijalankan**, bukan hanya dikirim sebagai JSON:
+
+```bash
+cd ujian
+python mesin.py          # mesin rujukan (Python)  -> hasil_ujian.json
+python bangun_workflow.py
+n8n import:workflow --input=workflow_ujian.json
+n8n execute --id=sabujian001                      -> hasil_ujian_n8n.json
+python simpan_log_n8n.py                          -> log_n8n.json
+python uji_kesamaan.py                            -> harus 0 perbedaan
+```
+
+### Percobaan ulang: satu hal yang diukur, dan hasilnya mengubah rancangan
+
+Rancangan pertama memakai `retryOnFail` n8n (`maxTries: 3`). Saya mengukurnya,
+bukan mengasumsikannya: workflow dengan `waitBetweenTries: 2000` selesai dalam
+1,9 detik — tidak ada satu pun penantian percobaan ulang. Sebabnya,
+`retryOnFail` mengulang **seluruh node** dan hanya menyala kalau node gagal
+sebagai satu kesatuan. Pada node Code `runOnceForEachItem`, kegagalan sebagian
+item ditangkap per item lalu dikirim ke cabang error, sehingga node-nya tidak
+pernah melempar.
+
+Karena itu percobaan ulang dibuat eksplisit di graf:
+`Kirim -> Periksa -> Tambah -> Kirim`, dengan `onError: continueErrorOutput`
+untuk cabang DLQ. Jumlah percobaan disimpan di item, bukan di
+`$getWorkflowStaticData` — tulisan static data dari node yang melempar error
+memang dibuang, itu juga diukur.
+
+Buktinya ada di `log_n8n.json`:
+
+```
+Kirim   cabang=[28, 5] [0, 5] [0, 5] x3
+Periksa cabang=[5, 0] [5, 0] [0, 5] x3
+```
+
+Tiga putaran, 5 lead dicoba tiga kali, 43 percobaan seluruhnya, hasil akhir 29
+terkirim (28 + 1 pulih dari DLQ) dan 4 sisa DLQ. `uji_kesamaan.py` membandingkan
+angka `item_dicoba_ulang` dan `total_percobaan` juga — kalau n8n tidak
+benar-benar mengulang, keduanya jatuh ke 0 dan 33, dan uji itu gagal.
+
+Kegagalan pengiriman disimulasikan (tidak ada pesan sungguhan yang dikirim ke 50
+lead sintetis), tetapi pembangkitnya FNV-1a atas `id|kanal`, sehingga bisa
+dihitung ulang oleh siapa pun dengan kode di repo dan tidak bisa ditebak dari
+nomor baris.
+
+**Jebakan yang berhasil dilewati:** kontak kantor dipakai bersama
+(`info@sinarabadi.example` dipakai dua orang berbeda), nama persis sama tanpa
+kontak bersama, opt-out dalam bahasa Indonesia dan Jerman, dan domain email salah
+ketik (`gmial.example`).
+
+## Tujuh catatan SAB, 23 November 2026
+
+Catatan itu ditulis pukul 09.18; kode masuk repo pukul 11.41–12.07. Tidak ada
+catatan yang dibantah — semua benar untuk versi yang diperiksa.
+
+| # | Catatan | Status |
+|---|---|---|
+| 1 | Repo hanya index.html, skrip tidak ada | Benar saat itu; skrip, data, log sekarang ada |
+| 2 | Antrean bertentangan dengan aturan sendiri; ambang/bobot tidak dijelaskan | Diperbaiki: gabung otomatis hanya nomor/email; skor 0,55 nama + 0,30 perusahaan + 0,15 kota; marga ≥0,85 |
+| 3 | "Pak Dewi"/"Ibu Dewi" dinilai identik | Diperbaiki: sapaan dibaca sebagai sinyal gender sebelum skor |
+| 4 | Angka dedup tidak menutup; 173 dihitung final | Diperbaiki: 170 + 3 = 173, ditandai sementara, antrean 23 → 8 |
+| 5 | Poin 5 baru separuh | Diperbaiki: percobaan ulang 3× eksplisit di graf, DLQ, alarm kedalaman, pemutaran ulang, handoff |
+| 6 | Pengecualian berpola kelipatan 28 | Diperbaiki: `[::28]` dibuang, pengecualian diambil dari isi DLQ |
+| 7 | Lingkup n8n, demo Python | Dijawab: produknya n8n (dijalankan, ada log); Python hanya alat ukur, 24 angka identik |
 
 ## Batas yang diketahui
 
