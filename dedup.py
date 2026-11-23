@@ -340,9 +340,14 @@ def putuskan(lead: dict, kandidat: dict) -> tuple[str, float, str]:
     # nama cuma satu kata ("Lestari"), tidak ada marga untuk dibandingkan, dan
     # memaksakan syarat itu justru membuang kasus yang benar.
     marga_ok = True
-    if len(na) >= 2 and len(nb) >= 2:
+    dua_marga = len(na) >= 2 and len(nb) >= 2
+    if dua_marga:
         marga_ok = mirip_marga(na, nb) >= 0.85
 
     if s_nama >= 0.82 and marga_ok and s_prsh >= 0.80 and kota_sama:
-        return "antrean", max(skor, 0.70), "nama mirip, marga cocok, perusahaan dan kota sama"
+        # Kalimat alasan harus jujur: kalau salah satu nama hanya satu kata,
+        # tidak ada marga yang dibandingkan, jadi jangan menulis "marga cocok".
+        als = ("nama mirip, marga cocok, perusahaan dan kota sama" if dua_marga
+               else "nama depan sama (tanpa marga), perusahaan dan kota sama")
+        return "antrean", max(skor, 0.70), als
     return "pisah", skor, "tidak cukup bukti"
