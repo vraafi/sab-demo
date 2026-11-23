@@ -1,0 +1,176 @@
+{
+ "ringkasan": {
+  "kontak_hidup": 10,
+  "konflik_terbuka": 5,
+  "tombstone": 1,
+  "permintaan_http": 27,
+  "jawaban_409": 4,
+  "nilai_dibandingkan": 55,
+  "perbedaan": 0
+ },
+ "konflik": [
+  {
+   "id": "C04",
+   "field": "telp",
+   "dasar": "628121110004",
+   "sekarang": "628121118888",
+   "diusulkan": "628121119999",
+   "pada": "2026-11-23T08:06:00.054Z"
+  },
+  {
+   "id": "C05",
+   "field": "telp",
+   "dasar": "628121110005",
+   "sekarang": "628121110066",
+   "diusulkan": "628121110055",
+   "pada": "2026-11-23T08:06:00.056Z"
+  },
+  {
+   "id": "C05",
+   "field": "surel",
+   "dasar": "hendra@contoh.example",
+   "sekarang": "hendra.w@contoh.example",
+   "diusulkan": "hendra.wijaya@contoh.example",
+   "pada": "2026-11-23T08:06:00.057Z"
+  },
+  {
+   "id": "C06",
+   "field": "kota",
+   "dasar": "Yogyakarta",
+   "sekarang": "Solo",
+   "diusulkan": null,
+   "pada": "2026-11-23T08:06:00.058Z"
+  },
+  {
+   "id": "C09",
+   "field": "(dihapus)",
+   "dasar": null,
+   "sekarang": "dihapus",
+   "diusulkan": "dihidupkan kembali karena ada perubahan",
+   "pada": "2026-11-23T08:06:00.089Z"
+  }
+ ],
+ "kontak": [
+  {
+   "id": "C01",
+   "versi": 2,
+   "seq": 19,
+   "dihapus": false,
+   "nama": "Budi Santoso",
+   "telp": "628121110001",
+   "surel": "budi@sinarabadi.example",
+   "kota": "Jakarta",
+   "tahap": "tertarik",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C02",
+   "versi": 2,
+   "seq": 10,
+   "dihapus": false,
+   "nama": "Siti Aminah",
+   "telp": "628121110002",
+   "surel": "siti@contoh.example",
+   "kota": "Bandung",
+   "tahap": "dihubungi",
+   "updated_at": "2026-11-20T09:00:00+07:00",
+   "pemilik": "Dewi"
+  },
+  {
+   "id": "C03",
+   "versi": 2,
+   "seq": 11,
+   "dihapus": false,
+   "nama": "Andi Wijaya",
+   "telp": "628121110003",
+   "surel": "andi@contoh.example",
+   "kota": "Surabaya",
+   "tahap": "dihubungi",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C04",
+   "versi": 3,
+   "seq": 20,
+   "dihapus": false,
+   "nama": "Maria Tan",
+   "telp": "628121118888",
+   "surel": "maria@contoh.example",
+   "kota": "Medan",
+   "tahap": "tertarik",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C05",
+   "versi": 3,
+   "seq": 21,
+   "dihapus": false,
+   "nama": "Hendra Wijaya",
+   "telp": "628121110066",
+   "surel": "hendra.w@contoh.example",
+   "kota": "Semarang",
+   "tahap": "tertarik",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C06",
+   "versi": 2,
+   "seq": 21,
+   "dihapus": false,
+   "nama": "Rina Kusuma",
+   "telp": "628121110006",
+   "surel": "rina@contoh.example",
+   "kota": "Solo",
+   "tahap": "baru",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C07",
+   "versi": 2,
+   "seq": 22,
+   "dihapus": false,
+   "nama": "Klaus Weber",
+   "telp": "628121110007",
+   "surel": "klaus@contoh.example",
+   "kota": "Denpasar",
+   "tahap": "tertarik",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C09",
+   "versi": 4,
+   "seq": 24,
+   "dihapus": false,
+   "nama": "Wulan Sari",
+   "telp": "628121110009",
+   "surel": "wulan@contoh.example",
+   "kota": "Makassar",
+   "tahap": "tertarik",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C10",
+   "versi": 1,
+   "seq": 25,
+   "dihapus": false,
+   "nama": "Lead Baru",
+   "telp": "628121110010",
+   "surel": "baru@contoh.example",
+   "kota": "Palembang",
+   "tahap": "baru",
+   "updated_at": "2026-11-23T08:18:00+07:00"
+  },
+  {
+   "id": "C11",
+   "versi": 1,
+   "seq": 16,
+   "dihapus": false,
+   "nama": "Lead dari CRM",
+   "telp": "628121110011",
+   "surel": "crm@contoh.example",
+   "kota": "Balikpapan",
+   "tahap": "baru",
+   "updated_at": "2026-11-23T09:38:00+07:00"
+  }
+ ]
+}

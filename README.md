@@ -30,6 +30,10 @@ ujinya.
 | `poin4/workflow_poin4.json` | Workflow n8n untuk poin 4 — dijalankan sungguhan |
 | `poin4/uji_sama.py` | Membandingkan isi tiap field hasil Python dan n8n; gagal kalau ada satu nilai berbeda |
 | `poin4/hasil_poin4.json`, `poin4/hasil_poin4_n8n.json` | Keluaran kedua mesin pada data yang sama |
+| `poin4/sinkron_api.py` | Poin 4 dijalankan lewat HTTP ke CRM API sungguhan; 55 nilai dibandingkan dengan mesin dalam-proses |
+| `crm_api/server.js` | CRM API yang berjalan: auth, ETag/If-Match, Idempotency-Key, kursor delta, tombstone, webhook HMAC, audit. Tanpa dependensi |
+| `crm_api/openapi.json` | Spesifikasi OpenAPI 3.1, bisa diimpor ke Postman |
+| `crm_api/uji_api.py` | 41 uji integrasi lewat HTTP; keluarannya di `hasil_uji_api.txt` |
 | `bandingkan.py` | Membandingkan `dedup.py` (baru) dengan `dedup_lama.py` (versi 21 Nov) pada data yang sama |
 | `generate.py` | Membangkitkan `data_uji.json` — 170 orang, 200 lead, 30 duplikat |
 | `bangun_halaman.py` | Membangun `index.html` dari `hasil_demo.json` |
@@ -61,14 +65,20 @@ Tidak ada dependensi luar. Python 3.10+.
 0 salah gabung
 151 balasan terkirim, 22 gagal 3x masuk DLQ, alarm menyala (ambang 8), 10 sisa
 rekonsiliasi 163/173, pengecualian diambil dari DLQ (jarak antar-ID bervariasi)
-22/25 kasus lapangan sesuai  (25 kasus, termasuk 3 kasus kontak kantor bersama)
+25/25 kasus lapangan sesuai  (termasuk 3 kasus kontak kantor bersama)
 12/12 kasus nyata sesuai (10 orang sama, 2 alias benar dipisah)
 14/14 kasus nyata putaran kedua sesuai (11 orang sama, 3 alias benar dipisah)
+23/23 uji poin 4 (sinkron dua arah, resolusi konflik per-field)
 
 Ujian 50 lead SAB:
 50 baris -> 36 identitas, 14 digabung, 2 kontak dipakai bersama, 1 kemungkinan duplikat
 33 seharusnya dibalas, 29 terkirim, 5 DLQ, 1 dipulihkan, 4 sisa
 mesin Python vs workflow n8n: 24 angka dibandingkan, 0 perbedaan
+
+Poin 4 lewat HTTP:
+41/41 uji integrasi CRM API (auth, idempotensi, ETag, konflik, tombstone, webhook)
+27 permintaan HTTP, 4 dijawab 409, 5 konflik terbuka, 1 tombstone
+55 nilai dibandingkan dengan mesin dalam-proses, 0 perbedaan
 ```
 
 ## Uji kasus nyata
@@ -207,6 +217,49 @@ Pada data uji: 9 catatan dasar + 10 lokal + 8 CRM -> 10 catatan hasil gabung,
 5 konflik masuk antrean, 1 dihapus. Termasuk kasus hapus-vs-ubah, yang tidak
 menghapus apa pun dan menyerahkannya ke manusia.
 
+### CRM API — poin 4 tidak lagi berhenti di dua sisi tiruan
+
+Aturan yang hanya lulus di dalam satu proses belum tentu lulus ketika ada dua
+penulis, pengiriman ulang, dan urutan yang tidak dijamin. Karena itu ada server
+HTTP sungguhan yang menegakkan janji-janji itu, bukan mengharapkannya dari klien.
+
+```bash
+cd crm_api
+node server.js                      # port 8787
+python uji_api.py                   # 41 uji, -> hasil_uji_api.txt
+cd ../poin4 && python sinkron_api.py   # poin 4 lewat HTTP, 55 nilai, harus 0 beda
+```
+
+| Rute | Yang ditegakkan |
+|---|---|
+| `POST /v1/contacts` | Wajib `Idempotency-Key`; kirim ulang tidak membuat kontak kedua |
+| `GET /v1/contacts?since=` | Kursor bilangan urut, bukan `updated_at`; tombstone ikut tersebar |
+| `PATCH /v1/contacts/{id}` | Per field dengan `base` sebagai nenek moyang bersama; field berkonflik tidak diubah, dijawab `409`, field lain tetap masuk |
+| `If-Match` / `ETag` | Tulisan di atas versi basi ditolak `412` |
+| `POST /v1/conflicts/resolve` | Satu-satunya jalan keluar konflik, dan hanya manusia |
+| `POST /v1/webhooks` | HMAC-SHA256 atas `timestamp.body`, timestamp > 5 menit ditolak, kiriman ganda dikenali |
+| `GET /v1/audit` | Siapa mengubah field apa, dari nilai apa ke apa |
+
+Empat keputusan yang diambil dari praktik yang berlaku November 2026:
+
+1. **ETag + If-Match** untuk konkurensi optimistis (Azure Architecture Center,
+   *RESTful Web API Implementation Best Practices*). Tanpa ini, dua penulis
+   terakhir saling menimpa tanpa ada yang tahu.
+2. **Idempotency-Key** untuk POST/PATCH. Pengiriman ulang itu normal, bukan
+   kesalahan: webhook bersifat at-least-once dan klien yang timeout akan
+   mencoba lagi.
+3. **Kursor `seq`, bukan `updated_at`.** Jam dua sistem tidak pernah sama dan
+   bisa mundur karena NTP. Alasannya sama dengan alasan poin 4 menolak
+   last-write-wins: jam tidak boleh jadi wasit.
+4. **HMAC + batas waktu 5 menit.** Tanda tangan saja tidak cukup: tanpa batas
+   waktu, satu permintaan sah bisa diputar ulang selamanya.
+
+Yang dibandingkan `sinkron_api.py` bukan "apakah kedua sisi sama", karena pada
+field berkonflik keduanya memang harus berbeda. Yang diperiksa: field tanpa
+konflik harus identik, field berkonflik di sisi CRM harus tetap memuat nilai CRM
+(perubahan orang lain tidak boleh ditimpa), dan catatan gabungan harus tetap
+memuat nilai dasar. Kalau ada satu sisi menang diam-diam, uji gagal.
+
 **Jebakan yang berhasil dilewati:** kontak kantor dipakai bersama
 (`info@sinarabadi.example` dipakai dua orang berbeda), nama persis sama tanpa
 kontak bersama, opt-out dalam bahasa Indonesia dan Jerman, dan domain email salah
@@ -229,9 +282,13 @@ catatan yang dibantah — semua benar untuk versi yang diperiksa.
 
 ## Batas yang diketahui
 
-- **Kanal asli belum disambungkan.** Yang berjalan CRM tiruan dengan data
-  sintetis. Pemasangan ke akun SAB adalah pekerjaan tahap 1.
-- **Poin 2, 3, 4 belum masuk demo ini.**
+- **Kanal asli belum disambungkan.** WhatsApp Business, form website SAB, dan
+  email belum tersambung ke akun sungguhan; yang berjalan simulasi kanal di
+  dalam workflow. Pemasangan ke akun SAB adalah pekerjaan tahap 1.
+- **Poin 4 tersambung ke CRM API rujukan, belum ke CRM SAB.** API-nya berjalan
+  dan diuji 41 kali lewat HTTP, tapi nama field dan kredensial CRM SAB belum ada.
+- **Volume lead SAB belum diketahui.** Angka itu menentukan kebutuhan server dan
+  lama pemrosesan.
 - **Generator data masih mengandung satu ketidakkonsistenan:** sapaan Pak/Ibu
   ditulis acak per kemunculan, bukan per orang, sehingga satu orang bisa muncul
   sebagai "Ibu Siti" dan "Pak Siti". Ini tidak mungkin di dunia nyata. Logika

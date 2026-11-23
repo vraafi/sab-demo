@@ -462,21 +462,125 @@ seluruh isi hasil — setiap field pada setiap catatan, plus setiap entri konfli
 — antara mesin Python dan workflow n8n, dan hasilnya nol perbedaan. Angkanya
 bukan cuma jumlah baris, tapi nilai tiap field.</p>
 
+<h3>Dan sekarang lewat HTTP, ke server sungguhan</h3>
+<p>Aturan yang hanya lulus di dalam satu proses belum tentu lulus ketika ada
+dua penulis, pengiriman ulang, dan urutan yang tidak dijamin. Karena itu poin 4
+tidak lagi berhenti di dua sisi tiruan: ada CRM API yang benar-benar berjalan,
+dan sinkronnya memanggilnya lewat jaringan.</p>
+
+<p><code>crm_api/server.js</code> — 10 kontak,
+9 rute, tanpa dependensi, 41 uji integrasi lulus.
+Spesifikasinya di <code>crm_api/openapi.json</code> (OpenAPI 3.1), bisa
+diimpor ke Postman.</p>
+
+<table>
+<thead><tr><th>Rute</th><th>Yang ditegakkan</th></tr></thead>
+<tbody>
+<tr><td><code>POST /v1/contacts</code></td><td>Wajib <code>Idempotency-Key</code>.
+Kirim ulang dengan kunci sama menjawab <code>Idempotent-Replay: true</code> dan
+<strong>tidak</strong> membuat kontak kedua</td></tr>
+<tr><td><code>GET /v1/contacts?since=</code></td><td>Kursor berupa bilangan urut
+naik, bukan <code>updated_at</code>. Penghapusan ikut tersebar sebagai
+<em>tombstone</em></td></tr>
+<tr><td><code>PATCH /v1/contacts/<built-in function id></code></td><td>Per field, dengan
+<code>base</code> sebagai nenek moyang bersama. Field yang berkonflik
+<strong>tidak diubah</strong> dan dijawab <code>409</code>; field lain tetap
+masuk</td></tr>
+<tr><td><code>If-Match</code> / <code>ETag</code></td><td>Tulisan di atas versi
+basi ditolak <code>412</code>, bukan diterima diam-diam</td></tr>
+<tr><td><code>POST /v1/conflicts/resolve</code></td><td>Satu-satunya jalan
+keluar dari konflik, dan hanya manusia yang bisa memanggilnya</td></tr>
+<tr><td><code>POST /v1/webhooks</code></td><td>Tanda tangan HMAC-SHA256 atas
+<code>timestamp.body</code>, timestamp lebih tua dari 5 menit ditolak, kiriman
+ganda dikenali dari <code>X-Sab-Event-Id</code></td></tr>
+<tr><td><code>GET /v1/audit</code></td><td>Siapa mengubah field apa, dari nilai
+apa ke apa</td></tr>
+</tbody>
+</table>
+
+<p>Ini hasil sungguhan dari <code>curl</code>, bukan rangkuman. CRM mengubah kota
+lebih dulu, SAB menyusul dari nilai dasar yang sama:</p>
+
+<pre><code>1. CRM mengubah kota Bandung -&gt; Medan
+   diterapkan [{'field': 'kota', 'dari': 'Bandung', 'ke': 'Medan'}] [200]
+
+2. SAB juga mengubah kota dari Bandung -&gt; Makassar, plus tahap
+   diterapkan [{'field': 'tahap', 'dari': 'baru', 'ke': 'tertarik'}]
+   konflik [{'field': 'kota', 'dasar': 'Bandung',
+             'sekarang': 'Medan', 'diusulkan': 'Makassar'}]
+   kota tetap 'Medan' | tahap jadi 'tertarik' [409]</code></pre>
+
+<p>Perhatikan baris kedua. Yang berhasil masuk justru field yang
+<em>tidak</em> berkonflik, dan yang berkonflik dibiarkan pada nilai CRM — bukan
+ditimpa nilai lama, bukan pula diterima nilai baru. Server mengembalikan
+<code>409</code> supaya pemanggil tidak bisa mengira semuanya beres.</p>
+
+<p>Lalu seluruh skenario poin 4 dijalankan ulang lewat HTTP:
+27 permintaan, 4 di
+antaranya dijawab <code>409</code>, 5 konflik
+terbuka, 1 tombstone. Hasilnya dibandingkan dengan
+mesin dalam-proses pada <strong>55 nilai</strong>
+— setiap field pada setiap kontak, plus dasar/sekarang/usulan pada setiap
+konflik — dan perbedaannya <strong>0</strong>.</p>
+
+<p>Yang dibandingkan bukan "apakah kedua sisi sama", karena pada field yang
+berkonflik keduanya memang harus berbeda. Yang diperiksa: field tanpa konflik
+harus identik, field berkonflik di sisi CRM harus tetap memuat nilai CRM
+(perubahan orang lain tidak boleh ditimpa), dan catatan gabungan harus tetap
+memuat nilai dasar. Kalau ada satu sisi yang menang diam-diam, uji ini gagal.</p>
+
+<div class="rule"></div>
+
+<h2>Selain API CRM, apa lagi yang dibutuhkan</h2>
+<p>Pertanyaan yang wajar, dan jawabannya bukan satu hal. Ini daftar lengkapnya,
+dengan mana yang bisa saya kerjakan sendiri dan mana yang tidak.</p>
+
+<table>
+<thead><tr><th>Yang dibutuhkan</th><th>Bisa saya kerjakan?</th><th>Yang menghalangi</th></tr></thead>
+<tbody>
+<tr><td><strong>CRM API</strong></td><td><strong>Sudah</strong></td>
+<td>Tidak ada lagi. Yang berjalan adalah API rujukan; ke CRM SAB tinggal tukar
+base URL, kunci, dan nama field</td></tr>
+<tr><td>Skema dan kredensial CRM SAB</td><td>Sebagian</td>
+<td>Nama field, aturan wajib, dan cara SAB memberi akses. Kalau CRM-nya punya
+API sendiri, yang saya butuhkan hanya contoh satu respons</td></tr>
+<tr><td>WhatsApp Business API</td><td>Tidak</td>
+<td>Nomor bisnis terverifikasi dan template pesan yang disetujui Meta. Ini
+proses milik SAB, bukan pekerjaan teknis</td></tr>
+<tr><td>Email keluar</td><td>Bisa</td>
+<td>Hanya perlu satu kotak surat dan kredensial SMTP/IMAP</td></tr>
+<tr><td>Form website SAB</td><td>Bisa</td>
+<td>Perlu akses ke situsnya, atau satu contoh isi kiriman form</td></tr>
+<tr><td>Server</td><td>Bisa</td>
+<td>Satu VPS. Ukurannya ditentukan volume lead, dan volume itu belum saya
+ketahui</td></tr>
+<tr><td>Google Meet</td><td>Tidak</td>
+<td>Ini yang Anda minta, dan saya setuju itu wajar untuk pekerjaan sebesar ini.
+Yang saya butuhkan hanya tanggal</td></tr>
+</tbody>
+</table>
+
+<p>Dari tujuh baris itu, satu sudah selesai, dua bisa saya kerjakan begitu ada
+kredensial, dan empat bergantung pada SAB. Yang paling menentukan bukan yang
+teknis: <strong>volume lead</strong>. Angka itu menentukan kebutuhan server dan
+berapa lama pemrosesan, dan tanpa angka itu setiap perkiraan biaya hanya
+tebakan.</p>
+
 <div class="rule"></div>
 
 <h2>Yang belum diuji, dan tidak saya klaim</h2>
 <ul>
-<li><strong>Kanal asli.</strong> WhatsApp Business, form website SAB, dan CRM SAB belum
-disambungkan. Yang berjalan adalah CRM tiruan. Pemasangan ke akun asli adalah
-pekerjaan tahap 1.</li>
+<li><strong>Kanal asli.</strong> WhatsApp Business, form website SAB, dan email belum
+disambungkan ke akun sungguhan. Yang berjalan adalah simulasi kanal di dalam
+workflow. Pemasangan ke akun asli adalah pekerjaan tahap 1.</li>
 <li><strong>Pengiriman sungguhan.</strong> Balasan tidak benar-benar dikirim ke 50
 lead sintetis. Yang diuji adalah penanganan kegagalannya: retry, DLQ, alarm,
 pemutaran ulang.</li>
-<li><strong>Poin 4 belum tersambung ke API CRM asli.</strong> Aturan resolusi
-konfliknya sudah berjalan dan diuji pada dua sisi tiruan; yang belum ada adalah
-pemanggilan API CRM SAB, karena kredensialnya belum ada. Poin 1&ndash;6 kini
-punya kode yang berjalan, tapi hanya poin 1, 2, 3, 5, 6 yang diuji pada 50 lead
-dari SAB.</li>
+<li><strong>Poin 4 tersambung ke API CRM rujukan, belum ke CRM SAB.</strong> API-nya
+berjalan, diuji 41 kali lewat HTTP, dan sinkronnya benar-benar memanggilnya.
+Yang belum ada adalah nama field dan kredensial CRM SAB sendiri. Poin 1&ndash;6
+kini punya kode yang berjalan, tapi hanya poin 1, 2, 3, 5, 6 yang diuji pada 50
+lead dari SAB.</li>
 <li><strong>Beban produksi.</strong> Uji ini memakai 200 lead. Volume SAB yang
 sebenarnya belum saya ketahui, dan angka itu yang menentukan kebutuhan server.</li>
 <li><strong>Data asli.</strong> Semuanya sintetis. Tidak ada satu pun data pelanggan SAB

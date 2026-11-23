@@ -143,14 +143,31 @@ UJI SAMA: sinkron.py (Python) vs workflow n8n — poin 4
 Tidak ada perbedaan pada 91 angka dan nilai yang dibandingkan.
 Termasuk isi tiap field pada 10 catatan hasil gabung dan 5 entri konflik.
 
-=== poin4/log_n8n.json ===
-status: success | mode: cli
-  Mulai            cabang=[1]
-  Baca Berkas      cabang=[1]
-  Ambil Teks       cabang=[1]
-  Gabung           cabang=[1]
-  Jadikan Berkas   cabang=[1]
-  Tulis Hasil      cabang=[1]
+=== crm_api/uji_api.py (HTTP, 41 uji) ===
+
+== 8. Jejak audit ==
+  ok   audit mencatat perubahan
+  ok   audit menyebut aktor
+  ok   audit memuat buat, ubah, putuskan, hapus
+
+== 9. Kesehatan akhir ==
+  ok   server masih sehat
+  ok   konflik terbuka nol
+
+==============================================================
+LULUS: 41/41 uji integrasi CRM API
+
+=== poin4/sinkron_api.py (poin 4 lewat HTTP) ===
+dasar ditanam: 9 kontak
+  CRM menghapus C08
+  CRM menghapus C09
+perubahan CRM: 8 kontak
+perubahan SAB: 10 kontak (4 permintaan dijawab 409 karena ada field berkonflik)
+
+hasil di server : 10 kontak hidup, 5 konflik terbuka, 1 tombstone
+C07 (CRM updated_at 23:59, SAB 08:16) -> tahap 'tertarik'; yang menang yang berubah, bukan yang jamnya paling malam
+nilai dibandingkan : 55
+PERBEDAAN          : 0 — mesin dalam-proses dan server HTTP sepakat pada setiap field
 
 === bangun_halaman.py ===
 halaman  : C:\Users\user\otonom-penuh\n8n_factory\sab_demo\publikasi\index.html

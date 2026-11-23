@@ -1,0 +1,62 @@
+
+== 1. Kunci API ==
+  ok   tanpa kunci ditolak 401
+  ok   kunci salah ditolak 401
+
+== 2. Idempotensi ==
+  ok   POST tanpa Idempotency-Key ditolak 428
+  ok   POST dengan kunci -> 201
+  ok   versi awal 1
+  ok   ETag dikirim
+  ok   POST ulang dengan kunci sama tidak membuat kontak kedua
+  ok   percobaan ulang ditandai
+  ok   hanya ada satu kontak
+
+== 3. Konkurensi optimistis ==
+  ok   GET membawa ETag
+  ok   PATCH tanpa base dan tanpa If-Match ditolak 428
+  ok   PATCH dengan versi benar -> 200
+  ok   field benar-benar berubah
+  ok   PATCH dengan ETag basi ditolak 412
+
+== 4. Konflik per-field ==
+  ok   sisi CRM mengubah kota -> 200
+  ok   dua sisi mengubah field sama -> 409
+  ok   field yang berkonflik TIDAK diubah
+  ok   field lain tetap tersinkron
+  ok   konflik menyebut nilai dasar, sekarang, dan usulan
+  ok   konflik masuk antrean
+  ok   keputusan manusia diterapkan -> 200
+  ok   nilai akhir sesuai keputusan
+  ok   antrean konflik kosong lagi
+
+== 5. Kursor delta ==
+  ok   delta from 0 memuat kontak
+  ok   delta setelah kursor terakhir kosong
+  ok   perubahan baru muncul di delta
+  ok   hapus -> 200
+  ok   penghapusan tersebar sebagai tombstone
+
+== 6. Webhook ==
+  ok   pendaftaran webhook -> 201
+  ok   webhook terkirim
+  ok   webhook diterima 2xx
+
+== 7. Tanda tangan dan putar ulang ==
+  ok   tanda tangan sah diterima
+  ok   kiriman ganda tetap 200
+  ok   tanda tangan salah ditolak 401
+  ok   tanda tangan sah tapi basi ditolak 401
+  ok   tanpa tanda tangan ditolak 401
+
+== 8. Jejak audit ==
+  ok   audit mencatat perubahan
+  ok   audit menyebut aktor
+  ok   audit memuat buat, ubah, putuskan, hapus
+
+== 9. Kesehatan akhir ==
+  ok   server masih sehat
+  ok   konflik terbuka nol
+
+==============================================================
+LULUS: 41/41 uji integrasi CRM API

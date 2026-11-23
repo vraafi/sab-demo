@@ -1,0 +1,257 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SAB CRM API",
+    "version": "1.0.0",
+    "summary": "CRM dengan sinkron dua arah tanpa last-write-wins",
+    "description": "API rujukan untuk poin 4. Tiga janji yang ditegakkan server, bukan diharapkan dari klien: (1) percobaan ulang tidak menggandakan data, lewat Idempotency-Key; (2) tulisan di atas versi basi ditolak, lewat ETag/If-Match; (3) dua sisi yang mengubah field sama tidak saling menimpa — field itu dibiarkan, dicatat sebagai konflik, dan field lain tetap tersinkron."
+  },
+  "servers": [{ "url": "http://127.0.0.1:8787", "description": "lokal" }],
+  "security": [{ "bearer": [] }],
+  "components": {
+    "securitySchemes": {
+      "bearer": { "type": "http", "scheme": "bearer" }
+    },
+    "parameters": {
+      "IdempotencyKey": {
+        "name": "Idempotency-Key",
+        "in": "header",
+        "required": true,
+        "schema": { "type": "string", "maxLength": 200 },
+        "description": "Kunci unik per niat penulisan. Kirim ulang dengan kunci yang sama menghasilkan jawaban yang sama, bukan data kedua."
+      },
+      "IfMatch": {
+        "name": "If-Match",
+        "in": "header",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "ETag yang dipegang klien, mis. \"C01.3\". Tidak cocok -> 412."
+      },
+      "Since": {
+        "name": "since",
+        "in": "query",
+        "schema": { "type": "integer", "minimum": 0, "default": 0 },
+        "description": "Kursor bilangan urut. Bukan timestamp: jam bisa mundur, seq tidak."
+      }
+    },
+    "schemas": {
+      "Kontak": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string" },
+          "versi": { "type": "integer", "minimum": 1 },
+          "seq": { "type": "integer" },
+          "dihapus": { "type": "boolean", "description": "true = tombstone, tetap muncul di delta feed" },
+          "nama": { "type": "string" },
+          "telp": { "type": "string" },
+          "surel": { "type": "string" },
+          "kota": { "type": "string" },
+          "tahap": { "type": "string" },
+          "updated_at": { "type": ["string", "null"], "description": "Dicatat, TIDAK dipakai memilih pemenang" }
+        },
+        "additionalProperties": true
+      },
+      "Konflik": {
+        "type": "object",
+        "required": ["id", "field", "dasar", "sekarang", "diusulkan"],
+        "properties": {
+          "id": { "type": "string" },
+          "field": { "type": "string", "description": "Nama field, atau (dihapus) untuk hapus-vs-ubah" },
+          "dasar": { "type": ["string", "null"], "description": "Nilai terakhir yang disepakati kedua sisi" },
+          "sekarang": { "type": ["string", "null"], "description": "Nilai di CRM" },
+          "diusulkan": { "type": ["string", "null"], "description": "Nilai yang dikirim SAB" },
+          "pada": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Galat": {
+        "type": "object",
+        "required": ["error", "pesan"],
+        "properties": {
+          "error": { "type": "string" },
+          "pesan": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Kesehatan dan jumlah konflik terbuka",
+        "security": [],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/v1/contacts": {
+      "get": {
+        "summary": "Tarik perubahan sejak kursor",
+        "parameters": [
+          { "$ref": "#/components/parameters/Since" },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 100, "maximum": 1000 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Termasuk tombstone, supaya penghapusan ikut tersebar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": { "type": "array", "items": { "$ref": "#/components/schemas/Kontak" } },
+                    "next_since": { "type": "integer" },
+                    "ada_lagi": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Buat kontak",
+        "parameters": [{ "$ref": "#/components/parameters/IdempotencyKey" }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Kontak" } } }
+        },
+        "responses": {
+          "201": { "description": "Dibuat" },
+          "200": { "description": "Percobaan ulang dengan kunci sama; header Idempotent-Replay: true" },
+          "409": { "description": "id sudah ada", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Galat" } } } },
+          "428": { "description": "Idempotency-Key tidak dikirim", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Galat" } } } }
+        }
+      }
+    },
+    "/v1/contacts/{id}": {
+      "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+      "get": {
+        "summary": "Ambil satu kontak beserta ETag",
+        "responses": { "200": { "description": "OK", "headers": { "ETag": { "schema": { "type": "string" } } } }, "404": { "description": "Tidak ada" } }
+      },
+      "patch": {
+        "summary": "Ubah per field dengan nenek moyang bersama",
+        "description": "Untuk setiap field di `set`: kalau nilai sekarang masih sama dengan `base`, diterapkan. Kalau tidak sama dan berbeda dari usulan, field itu TIDAK diubah dan dicatat sebagai konflik. Field lain tetap diterapkan.",
+        "parameters": [{ "$ref": "#/components/parameters/IfMatch" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "base": { "type": "object", "description": "Nilai yang dipegang klien, per field" },
+                  "set": { "type": "object", "description": "Nilai baru, per field" },
+                  "aktor": { "type": "string" }
+                },
+                "required": ["set"]
+              },
+              "example": { "base": { "kota": "Bandung" }, "set": { "kota": "Bogor" }, "aktor": "sab-sync" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Semua perubahan masuk" },
+          "409": {
+            "description": "Ada field berkonflik; field lain tetap masuk. Isi memuat `diterapkan` dan `konflik`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "versi": { "type": "integer" },
+                    "diterapkan": { "type": "array", "items": { "type": "object" } },
+                    "konflik": { "type": "array", "items": { "$ref": "#/components/schemas/Konflik" } },
+                    "terbuka": { "type": "integer" },
+                    "data": { "$ref": "#/components/schemas/Kontak" }
+                  }
+                }
+              }
+            }
+          },
+          "412": { "description": "ETag basi" },
+          "428": { "description": "Tidak ada `base` dan tidak ada If-Match" }
+        }
+      },
+      "delete": {
+        "summary": "Hapus lunak (tombstone)",
+        "parameters": [{ "$ref": "#/components/parameters/IfMatch" }],
+        "responses": { "200": { "description": "Dihapus" }, "412": { "description": "ETag basi" } }
+      }
+    },
+    "/v1/conflicts": {
+      "get": {
+        "summary": "Antrean konflik terbuka",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/Konflik" } } } } } }
+          }
+        }
+      }
+    },
+    "/v1/conflicts/resolve": {
+      "post": {
+        "summary": "Manusia memutuskan satu field",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["id", "field", "nilai"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "field": { "type": "string" },
+                  "nilai": { "type": ["string", "null"] },
+                  "aktor": { "type": "string" }
+                }
+              },
+              "example": { "id": "C04", "field": "telp", "nilai": "628121119999", "aktor": "rani" }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Diterapkan" }, "404": { "description": "Konflik tidak ada" } }
+      }
+    },
+    "/v1/webhooks": {
+      "post": {
+        "summary": "Daftarkan penerima webhook",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "required": ["url"], "properties": { "url": { "type": "string", "format": "uri" } } }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Terdaftar" } }
+      }
+    },
+    "/v1/webhooks/deliveries": {
+      "get": {
+        "summary": "Log pengiriman webhook, termasuk yang gagal",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/v1/audit": {
+      "get": {
+        "summary": "Jejak perubahan: siapa, kapan, field apa, dari nilai apa ke apa",
+        "parameters": [{ "$ref": "#/components/parameters/Since" }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/contoh/terima": {
+      "post": {
+        "summary": "Penerima webhook rujukan: memeriksa HMAC dan membuang kiriman ganda",
+        "security": [],
+        "description": "Membuktikan sisi penerima, bukan hanya sisi pengirim. Menolak tanda tangan salah, tanda tangan lebih tua dari 5 menit, dan mengenali X-Sab-Event-Id yang sudah pernah diterima.",
+        "responses": {
+          "200": { "description": "Diterima" },
+          "401": { "description": "Tanda tangan hilang, salah, atau basi" }
+        }
+      }
+    }
+  }
+}
