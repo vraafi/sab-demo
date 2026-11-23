@@ -1,0 +1,279 @@
+{
+ "dasar": [
+  {
+   "id": "C01",
+   "versi": 3,
+   "nama": "Budi Santoso",
+   "telp": "628121110001",
+   "surel": "budi@sinarabadi.example",
+   "kota": "Jakarta",
+   "tahap": "baru",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C02",
+   "versi": 5,
+   "nama": "Siti Aminah",
+   "telp": "628121110002",
+   "surel": "siti@contoh.example",
+   "kota": "Bandung",
+   "tahap": "dihubungi",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C03",
+   "versi": 2,
+   "nama": "Andi Wijaya",
+   "telp": "628121110003",
+   "surel": "andi@contoh.example",
+   "kota": "Surabaya",
+   "tahap": "baru",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C04",
+   "versi": 4,
+   "nama": "Maria Tan",
+   "telp": "628121110004",
+   "surel": "maria@contoh.example",
+   "kota": "Medan",
+   "tahap": "dihubungi",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C05",
+   "versi": 7,
+   "nama": "Hendra Wijaya",
+   "telp": "628121110005",
+   "surel": "hendra@contoh.example",
+   "kota": "Semarang",
+   "tahap": "baru",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C06",
+   "versi": 2,
+   "nama": "Rina Kusuma",
+   "telp": "628121110006",
+   "surel": "rina@contoh.example",
+   "kota": "Yogyakarta",
+   "tahap": "baru",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C07",
+   "versi": 9,
+   "nama": "Klaus Weber",
+   "telp": "628121110007",
+   "surel": "klaus@contoh.example",
+   "kota": "Denpasar",
+   "tahap": "dihubungi",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C08",
+   "versi": 1,
+   "nama": "Tanpa Perubahan",
+   "telp": "628121110008",
+   "surel": "tetap@contoh.example",
+   "kota": "Bogor",
+   "tahap": "baru",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C09",
+   "versi": 2,
+   "nama": "Wulan Sari",
+   "telp": "628121110009",
+   "surel": "wulan@contoh.example",
+   "kota": "Makassar",
+   "tahap": "baru",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  }
+ ],
+ "lokal": [
+  {
+   "id": "C01",
+   "versi": 3,
+   "nama": "Budi Santoso",
+   "telp": "628121110001",
+   "surel": "budi@sinarabadi.example",
+   "kota": "Jakarta",
+   "tahap": "tertarik",
+   "updated_at": "2026-11-23T08:10:00+07:00"
+  },
+  {
+   "id": "C02",
+   "versi": 5,
+   "nama": "Siti Aminah",
+   "telp": "628121110002",
+   "surel": "siti@contoh.example",
+   "kota": "Bandung",
+   "tahap": "dihubungi",
+   "updated_at": "2026-11-23T08:11:00+07:00"
+  },
+  {
+   "id": "C03",
+   "versi": 2,
+   "nama": "Andi Wijaya",
+   "telp": "628121110003",
+   "surel": "andi@contoh.example",
+   "kota": "Surabaya",
+   "tahap": "baru",
+   "updated_at": "2026-11-23T08:12:00+07:00"
+  },
+  {
+   "id": "C04",
+   "versi": 4,
+   "nama": "Maria Tan",
+   "telp": "628121119999",
+   "surel": "maria@contoh.example",
+   "kota": "Medan",
+   "tahap": "tertarik",
+   "updated_at": "2026-11-23T08:13:00+07:00"
+  },
+  {
+   "id": "C05",
+   "versi": 7,
+   "nama": "Hendra Wijaya",
+   "telp": "628121110055",
+   "surel": "hendra.wijaya@contoh.example",
+   "kota": "Semarang",
+   "tahap": "tertarik",
+   "updated_at": "2026-11-23T08:14:00+07:00"
+  },
+  {
+   "id": "C06",
+   "versi": 2,
+   "nama": "Rina Kusuma",
+   "telp": "628121110006",
+   "surel": "rina@contoh.example",
+   "kota": "",
+   "tahap": "baru",
+   "updated_at": "2026-11-23T08:15:00+07:00"
+  },
+  {
+   "id": "C07",
+   "versi": 9,
+   "nama": "Klaus Weber",
+   "telp": "628121110007",
+   "surel": "klaus@contoh.example",
+   "kota": "Denpasar",
+   "tahap": "tertarik",
+   "updated_at": "2026-11-23T08:16:00+07:00"
+  },
+  {
+   "id": "C08",
+   "versi": 1,
+   "nama": "Tanpa Perubahan",
+   "telp": "628121110008",
+   "surel": "tetap@contoh.example",
+   "kota": "Bogor",
+   "tahap": "baru",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C09",
+   "versi": 2,
+   "nama": "Wulan Sari",
+   "telp": "628121110009",
+   "surel": "wulan@contoh.example",
+   "kota": "Makassar",
+   "tahap": "tertarik",
+   "updated_at": "2026-11-23T08:17:00+07:00"
+  },
+  {
+   "id": "C10",
+   "versi": 1,
+   "nama": "Lead Baru",
+   "telp": "628121110010",
+   "surel": "baru@contoh.example",
+   "kota": "Palembang",
+   "tahap": "baru",
+   "updated_at": "2026-11-23T08:18:00+07:00"
+  }
+ ],
+ "jauh": [
+  {
+   "id": "C01",
+   "versi": 3,
+   "nama": "Budi Santoso",
+   "telp": "628121110001",
+   "surel": "budi@sinarabadi.example",
+   "kota": "Jakarta",
+   "tahap": "baru",
+   "updated_at": "2026-11-20T09:00:00+07:00"
+  },
+  {
+   "id": "C02",
+   "versi": 6,
+   "nama": "Siti Aminah",
+   "telp": "628121110002",
+   "surel": "siti@contoh.example",
+   "kota": "Bandung",
+   "tahap": "dihubungi",
+   "pemilik": "Dewi",
+   "updated_at": "2026-11-23T09:30:00+07:00"
+  },
+  {
+   "id": "C03",
+   "versi": 3,
+   "nama": "Andi Wijaya",
+   "telp": "628121110003",
+   "surel": "andi@contoh.example",
+   "kota": "Surabaya",
+   "tahap": "dihubungi",
+   "updated_at": "2026-11-23T08:40:00+07:00"
+  },
+  {
+   "id": "C04",
+   "versi": 4,
+   "nama": "Maria Tan",
+   "telp": "628121118888",
+   "surel": "maria@contoh.example",
+   "kota": "Medan",
+   "tahap": "dihubungi",
+   "updated_at": "2026-11-23T09:35:00+07:00"
+  },
+  {
+   "id": "C05",
+   "versi": 7,
+   "nama": "Hendra Wijaya",
+   "telp": "628121110066",
+   "surel": "hendra.w@contoh.example",
+   "kota": "Semarang",
+   "tahap": "baru",
+   "updated_at": "2026-11-23T09:36:00+07:00"
+  },
+  {
+   "id": "C06",
+   "versi": 2,
+   "nama": "Rina Kusuma",
+   "telp": "628121110006",
+   "surel": "rina@contoh.example",
+   "kota": "Solo",
+   "tahap": "baru",
+   "updated_at": "2026-11-23T09:37:00+07:00"
+  },
+  {
+   "id": "C07",
+   "versi": 9,
+   "nama": "Klaus Weber",
+   "telp": "628121110007",
+   "surel": "klaus@contoh.example",
+   "kota": "Denpasar",
+   "tahap": "dihubungi",
+   "updated_at": "2026-11-23T23:59:00+07:00"
+  },
+  {
+   "id": "C11",
+   "versi": 1,
+   "nama": "Lead dari CRM",
+   "telp": "628121110011",
+   "surel": "crm@contoh.example",
+   "kota": "Balikpapan",
+   "tahap": "baru",
+   "updated_at": "2026-11-23T09:38:00+07:00"
+  }
+ ]
+}

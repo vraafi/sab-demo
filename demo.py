@@ -424,6 +424,19 @@ def main() -> None:
                 for j in (log.get("node", {}).get("Kirim", {}).get("jalan") or []))
             ujian["putaran_kirim"] = log.get("node", {}).get("Kirim", {}).get("putaran", 0)
 
+    # ---- poin 4: sinkron dua arah (kalau sudah dijalankan)
+    # Dibaca dari berkas keluaran poin4/, sama seperti ujian: yang dijalankan
+    # di sini hanya mesin 200 lead, bukan seluruh pipeline.
+    poin4: dict = {}
+    f_p4 = AKAR / "poin4" / "hasil_poin4.json"
+    if f_p4.exists():
+        h4 = json.loads(f_p4.read_text(encoding="utf-8"))
+        poin4 = {
+            **h4["ringkasan"],
+            "contoh_konflik": h4["konflik"][:6],
+            "contoh_gabung": h4["gabung"][:4],
+        }
+
     laporan = {
         "poin_1": {
             "lead_mentah": mentah, "identitas": hasil,
@@ -448,6 +461,7 @@ def main() -> None:
                    "dlq": sisa,
                    "handoff": manusia},
         "poin_6": rek,
+        "poin_4": poin4,
         "uji_kasus": {"total": len(hasil_kasus), "lulus": lulus_kasus,
                       "kasus": hasil_kasus},
         "uji_kasus_nyata": {"total": len(hasil_nyata), "lulus": lulus_nyata,

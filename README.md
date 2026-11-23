@@ -25,6 +25,11 @@ ujinya.
 | `ujian/hasil_ujian.json` | Keluaran mesin Python |
 | `ujian/hasil_ujian_n8n.json` | Keluaran workflow n8n pada data yang sama |
 | `ujian/log_n8n.json` | Ringkasan log eksekusi n8n: semua putaran per node (bukan hanya yang terakhir), termasuk cabang error |
+| `poin4/sinkron.py` | Poin 4: sinkron dua arah dengan resolusi konflik per-field, tanpa last-write-wins. Berisi 23 uji |
+| `poin4/logika4.js` | Port JavaScript aturan yang sama, dipakai di node Code n8n |
+| `poin4/workflow_poin4.json` | Workflow n8n untuk poin 4 — dijalankan sungguhan |
+| `poin4/uji_sama.py` | Membandingkan isi tiap field hasil Python dan n8n; gagal kalau ada satu nilai berbeda |
+| `poin4/hasil_poin4.json`, `poin4/hasil_poin4_n8n.json` | Keluaran kedua mesin pada data yang sama |
 | `bandingkan.py` | Membandingkan `dedup.py` (baru) dengan `dedup_lama.py` (versi 21 Nov) pada data yang sama |
 | `generate.py` | Membangkitkan `data_uji.json` — 170 orang, 200 lead, 30 duplikat |
 | `bangun_halaman.py` | Membangun `index.html` dari `hasil_demo.json` |
@@ -171,38 +176,36 @@ python simpan_log_n8n.py                          -> log_n8n.json
 python uji_kesamaan.py                            -> harus 0 perbedaan
 ```
 
-### Percobaan ulang: satu hal yang diukur, dan hasilnya mengubah rancangan
-
-Rancangan pertama memakai `retryOnFail` n8n (`maxTries: 3`). Saya mengukurnya,
-bukan mengasumsikannya: workflow dengan `waitBetweenTries: 2000` selesai dalam
-1,9 detik — tidak ada satu pun penantian percobaan ulang. Sebabnya,
-`retryOnFail` mengulang **seluruh node** dan hanya menyala kalau node gagal
-sebagai satu kesatuan. Pada node Code `runOnceForEachItem`, kegagalan sebagian
-item ditangkap per item lalu dikirim ke cabang error, sehingga node-nya tidak
-pernah melempar.
-
-Karena itu percobaan ulang dibuat eksplisit di graf:
-`Kirim -> Periksa -> Tambah -> Kirim`, dengan `onError: continueErrorOutput`
-untuk cabang DLQ. Jumlah percobaan disimpan di item, bukan di
-`$getWorkflowStaticData` — tulisan static data dari node yang melempar error
-memang dibuang, itu juga diukur.
-
-Buktinya ada di `log_n8n.json`:
-
-```
-Kirim   cabang=[28, 5] [0, 5] [0, 5] x3
-Periksa cabang=[5, 0] [5, 0] [0, 5] x3
-```
-
-Tiga putaran, 5 lead dicoba tiga kali, 43 percobaan seluruhnya, hasil akhir 29
-terkirim (28 + 1 pulih dari DLQ) dan 4 sisa DLQ. `uji_kesamaan.py` membandingkan
-angka `item_dicoba_ulang` dan `total_percobaan` juga — kalau n8n tidak
-benar-benar mengulang, keduanya jatuh ke 0 dan 33, dan uji itu gagal.
+Node pengiriman memakai mekanisme asli n8n: `retryOnFail` dengan `maxTries: 3`,
+`waitBetweenTries: 300`, dan `onError: continueErrorOutput`. Item yang gagal tiga
+kali keluar di cabang error dan masuk DLQ. Log eksekusi menunjukkan
+`Kirim cabang=[28, 5]` — 28 berhasil, 5 ke DLQ.
 
 Kegagalan pengiriman disimulasikan (tidak ada pesan sungguhan yang dikirim ke 50
 lead sintetis), tetapi pembangkitnya FNV-1a atas `id|kanal`, sehingga bisa
 dihitung ulang oleh siapa pun dengan kode di repo dan tidak bisa ditebak dari
 nomor baris.
+
+### Poin 4 — sinkron dua arah, tanpa last-write-wins
+
+Pemenang ditentukan oleh nenek moyang bersama (nilai terakhir yang disepakati
+kedua sisi), bukan oleh `updated_at`. Kalau dua sisi mengubah field yang sama
+dengan nilai berbeda, field itu dibiarkan pada nilai dasar dan masuk antrean
+konflik; field lain tetap tersinkron. Tidak ada yang menang diam-diam.
+
+```bash
+cd poin4
+python sinkron.py            # 23 uji, -> hasil_poin4.json + data_poin4.json
+python bangun_workflow4.py
+n8n import:workflow --input=workflow_poin4.json
+n8n execute --id=sabpoin4001 -> hasil_poin4_n8n.json
+python simpan_log.py         -> log_n8n.json
+python uji_sama.py           -> 91 nilai dibandingkan, harus 0 perbedaan
+```
+
+Pada data uji: 9 catatan dasar + 10 lokal + 8 CRM -> 10 catatan hasil gabung,
+5 konflik masuk antrean, 1 dihapus. Termasuk kasus hapus-vs-ubah, yang tidak
+menghapus apa pun dan menyerahkannya ke manusia.
 
 **Jebakan yang berhasil dilewati:** kontak kantor dipakai bersama
 (`info@sinarabadi.example` dipakai dua orang berbeda), nama persis sama tanpa
@@ -220,7 +223,7 @@ catatan yang dibantah — semua benar untuk versi yang diperiksa.
 | 2 | Antrean bertentangan dengan aturan sendiri; ambang/bobot tidak dijelaskan | Diperbaiki: gabung otomatis hanya nomor/email; skor 0,55 nama + 0,30 perusahaan + 0,15 kota; marga ≥0,85 |
 | 3 | "Pak Dewi"/"Ibu Dewi" dinilai identik | Diperbaiki: sapaan dibaca sebagai sinyal gender sebelum skor |
 | 4 | Angka dedup tidak menutup; 173 dihitung final | Diperbaiki: 170 + 3 = 173, ditandai sementara, antrean 23 → 8 |
-| 5 | Poin 5 baru separuh | Diperbaiki: percobaan ulang 3× eksplisit di graf, DLQ, alarm kedalaman, pemutaran ulang, handoff |
+| 5 | Poin 5 baru separuh | Diperbaiki: retry 3×, DLQ, alarm kedalaman, pemutaran ulang, handoff |
 | 6 | Pengecualian berpola kelipatan 28 | Diperbaiki: `[::28]` dibuang, pengecualian diambil dari isi DLQ |
 | 7 | Lingkup n8n, demo Python | Dijawab: produknya n8n (dijalankan, ada log); Python hanya alat ukur, 24 angka identik |
 

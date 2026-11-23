@@ -1,0 +1,74 @@
+{
+ "status": "success",
+ "mode": "cli",
+ "mulai": "2026-11-23T06:11:51.004Z",
+ "selesai": "2026-11-23T06:11:52.433Z",
+ "node": {
+  "Mulai": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 1
+    }
+   ]
+  },
+  "Baca Berkas": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 99
+    }
+   ]
+  },
+  "Ambil Teks": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 46
+    }
+   ]
+  },
+  "Gabung": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 1198
+    }
+   ]
+  },
+  "Jadikan Berkas": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 56
+    }
+   ]
+  },
+  "Tulis Hasil": {
+   "putaran": 1,
+   "jalan": [
+    {
+     "cabang": [
+      1
+     ],
+     "waktu_ms": 19
+    }
+   ]
+  }
+ }
+}

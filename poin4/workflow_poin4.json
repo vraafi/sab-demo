@@ -1,0 +1,152 @@
+{
+ "id": "sabpoin4001",
+ "name": "SAB — Poin 4 sinkron dua arah",
+ "nodes": [
+  {
+   "parameters": {},
+   "id": "mulai",
+   "name": "Mulai",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "fileSelector": "C:\\Users\\user\\otonom-penuh\\n8n_factory\\sab_demo\\poin4\\data_poin4.json",
+    "options": {}
+   },
+   "id": "baca-berkas",
+   "name": "Baca Berkas",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    200,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "operation": "text",
+    "binaryPropertyName": "data",
+    "options": {}
+   },
+   "id": "ambil-teks",
+   "name": "Ambil Teks",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    400,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "mode": "runOnceForAllItems",
+    "jsCode": "// Poin 4 — port JavaScript dari sinkron.py.\n//\n// Harus menghasilkan keluaran yang PERSIS sama dengan versi Python, karena\n// keduanya diuji dengan data yang sama (uji_sama.py). Kalau berbeda satu\n// field saja, uji itu gagal. Komentar lengkap soal alasannya ada di sinkron.py;\n// di sini hanya aturannya.\n\nconst KUNCI = 'id';\nconst BUKAN_FIELD = new Set([KUNCI, 'versi', 'updated_at']);\n\nfunction nilai(rec, field) {\n  if (!rec) return null;\n  const v = rec[field];\n  if (v === undefined || v === null || v === '') return null;\n  return v;\n}\n\n// Perbandingan isi yang tidak bergantung urutan kunci — JSON.stringify\n// bergantung urutan, dan itu akan membuat hasil JS berbeda dari Python\n// hanya karena urutan field.\nfunction samaIsi(a, b) {\n  const fa = [...new Set([...Object.keys(a || {}), ...Object.keys(b || {})])].sort();\n  return fa.every(f => (a?.[f] ?? null) === (b?.[f] ?? null));\n}\n\nfunction samaDenganDasar(dasar, sisi) {\n  const fields = [...new Set([...Object.keys(dasar || {}), ...Object.keys(sisi || {})])]\n    .filter(f => !BUKAN_FIELD.has(f));\n  return fields.every(f => nilai(dasar, f) === nilai(sisi, f));\n}\n\nfunction gabungSatu(dasar, lokal, jauh) {\n  if (lokal == null && jauh == null) {\n    return { hasil: null, konflik: [], catatan: ['tidak ada di kedua sisi'] };\n  }\n\n  if (dasar == null) {\n    if (lokal != null && jauh == null) {\n      return { hasil: { ...lokal }, konflik: [], catatan: ['baru di lokal — dibuat, bukan konflik'] };\n    }\n    if (jauh != null && lokal == null) {\n      return { hasil: { ...jauh }, konflik: [], catatan: ['baru di jauh — dibuat, bukan konflik'] };\n    }\n    if (samaIsi(lokal, jauh)) {\n      return { hasil: { ...lokal }, konflik: [], catatan: ['baru di kedua sisi dengan isi sama'] };\n    }\n    dasar = {};\n  }\n\n  // dihapus di satu sisi\n  if (lokal == null && jauh != null) {\n    if (samaDenganDasar(dasar, jauh)) {\n      return { hasil: null, konflik: [], catatan: ['dihapus di lokal, jauh tidak berubah — dihapus'] };\n    }\n    return {\n      hasil: { ...jauh },\n      konflik: [{ id: jauh[KUNCI], field: '*', dasar: '(ada)', lokal: '(dihapus)', jauh: '(diubah)',\n        sebab: 'dihapus di lokal tetapi diubah di jauh — penghapusan tidak dijalankan' }],\n      catatan: ['hapus-vs-ubah: tidak dihapus, menunggu manusia'],\n    };\n  }\n  if (jauh == null && lokal != null) {\n    if (samaDenganDasar(dasar, lokal)) {\n      return { hasil: null, konflik: [], catatan: ['dihapus di jauh, lokal tidak berubah — dihapus'] };\n    }\n    return {\n      hasil: { ...lokal },\n      konflik: [{ id: lokal[KUNCI], field: '*', dasar: '(ada)', lokal: '(diubah)', jauh: '(dihapus)',\n        sebab: 'dihapus di jauh tetapi diubah di lokal — penghapusan tidak dijalankan' }],\n      catatan: ['hapus-vs-ubah: tidak dihapus, menunggu manusia'],\n    };\n  }\n\n  const fields = [...new Set([...Object.keys(dasar), ...Object.keys(lokal), ...Object.keys(jauh)])]\n    .filter(f => !BUKAN_FIELD.has(f))\n    .sort();\n\n  const hasil = { [KUNCI]: lokal[KUNCI] };\n  const konflik = [];\n  const catatan = [];\n  let adaPerubahan = false;\n\n  for (const f of fields) {\n    const d = nilai(dasar, f), l = nilai(lokal, f), j = nilai(jauh, f);\n\n    if (l === j) { hasil[f] = l; continue; }\n    if (l === d) { hasil[f] = j; adaPerubahan = true; catatan.push(`${f}: dari jauh`); continue; }\n    if (j === d) { hasil[f] = l; adaPerubahan = true; catatan.push(`${f}: dari lokal`); continue; }\n\n    hasil[f] = d;\n    konflik.push({\n      id: lokal[KUNCI], field: f, dasar: d, lokal: l, jauh: j,\n      sebab: 'diubah di dua tempat dengan nilai berbeda',\n    });\n    catatan.push(`${f}: KONFLIK — dibiarkan pada nilai dasar`);\n  }\n\n  let versi = Math.max(lokal.versi || 0, jauh.versi || 0);\n  if (adaPerubahan || konflik.length) versi += 1;\n  hasil.versi = versi;\n  hasil.updated_at = { lokal: lokal.updated_at ?? null, jauh: jauh.updated_at ?? null };\n  return { hasil, konflik, catatan };\n}\n\nfunction gabung(data) {\n  const peta = (daftar) => {\n    const m = new Map();\n    for (const r of (daftar || [])) m.set(r[KUNCI], r);\n    return m;\n  };\n  const d = peta(data.dasar), l = peta(data.lokal), j = peta(data.jauh);\n  const semua = [...new Set([...d.keys(), ...l.keys(), ...j.keys()])].sort();\n\n  const keluar = [], konflik = [], jejak = [];\n  for (const id of semua) {\n    const r = gabungSatu(d.get(id) ?? null, l.get(id) ?? null, j.get(id) ?? null);\n    if (r.hasil !== null) keluar.push(r.hasil);\n    konflik.push(...r.konflik);\n    jejak.push({ id, catatan: r.catatan, dihapus: r.hasil === null });\n  }\n\n  const pasangan = new Set(konflik.map(k => `${k.id}|${k.field}`));\n  return {\n    gabung: keluar,\n    konflik,\n    ringkasan: {\n      catatan_dasar: d.size,\n      catatan_lokal: l.size,\n      catatan_jauh: j.size,\n      hasil_gabung: keluar.length,\n      konflik: konflik.length,\n      konflik_per_field: pasangan.size,\n      dihapus: jejak.filter(x => x.dihapus).length,\n    },\n    jejak,\n  };\n}\n\nif (typeof module !== 'undefined') {\n  module.exports = { gabung, gabungSatu, KUNCI, BUKAN_FIELD };\n}\n\n\n// ---- Node: Gabung ------------------------------------------------------\n// Satu berkas berisi tiga sisi: dasar, lokal, jauh. Yang dijalankan di sini\n// adalah aturan yang sama dengan sinkron.py — bukan versi yang disederhanakan.\nconst teks = $json.data;\nconst data = typeof teks === 'string' ? JSON.parse(teks) : teks;\nreturn [{json: gabung(data)}];\n"
+   },
+   "id": "gabung",
+   "name": "Gabung",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 1,
+   "position": [
+    600,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "operation": "toJson",
+    "mode": "all",
+    "options": {}
+   },
+   "id": "jadikan-berkas",
+   "name": "Jadikan Berkas",
+   "type": "n8n-nodes-base.convertToFile",
+   "typeVersion": 1,
+   "position": [
+    800,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "operation": "write",
+    "fileName": "C:\\Users\\user\\otonom-penuh\\n8n_factory\\sab_demo\\poin4\\hasil_poin4_n8n.json",
+    "dataPropertyName": "data",
+    "options": {}
+   },
+   "id": "tulis-hasil",
+   "name": "Tulis Hasil",
+   "type": "n8n-nodes-base.readWriteFile",
+   "typeVersion": 1,
+   "position": [
+    1000,
+    0
+   ]
+  }
+ ],
+ "connections": {
+  "Mulai": {
+   "main": [
+    [
+     {
+      "node": "Baca Berkas",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Baca Berkas": {
+   "main": [
+    [
+     {
+      "node": "Ambil Teks",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Ambil Teks": {
+   "main": [
+    [
+     {
+      "node": "Gabung",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Gabung": {
+   "main": [
+    [
+     {
+      "node": "Jadikan Berkas",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Jadikan Berkas": {
+   "main": [
+    [
+     {
+      "node": "Tulis Hasil",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {
+  "executionOrder": "v1"
+ },
+ "active": false
+}

@@ -60,24 +60,28 @@ HASIL: 25/25 lulus
 Semua kasus sesuai harapan.
 
 === uji_kasus_nyata.py ===
-    sumber: Wikipedia: Jokowi = Joko Widodo (julukan)
 
 ============================================================================
 HASIL: 12/12 sesuai (10 pasangan orang sama, 2 alias yang benar dipisah)
 Semua kasus nyata tertangani.
 
 === uji_kasus_nyata2.py ===
-    sumber: Wikipedia: Jokowi adalah nama panggilan Joko Widodo
 
 ==============================================================================
 HASIL: 14/14 sesuai (11 pasangan orang sama, 3 alias yang benar dipisah)
 Semua kasus nyata tertangani dalam satu kali jalan.
 
+=== poin4/sinkron.py ===
+  OK   manusia memilih 'jauh' untuk C04.telp
+  OK   konflik yang belum diputuskan tetap di antrean
+  OK   versi naik setelah keputusan manusia
+
+HASIL: 23/23 lulus
+catatan: dasar 9, lokal 10, jauh 8 -> gabung 10
+konflik per-field: 5 field, 5 entri antrean, dihapus 1
+Hasil: hasil_poin4.json
+
 === ujian/mesin.py ===
-==========================================================================
-UJIAN 50 LEAD SAB — enam poin
-==========================================================================
-baris masuk            : 50
 identitas setelah dedup: 36
 digabung               : 14
 kontak dipakai bersama : 2
@@ -118,7 +122,7 @@ UJI KESAMAAN: mesin.py (Python) vs workflow n8n
 Tidak ada perbedaan pada 24 angka yang dibandingkan.
 Artinya: logika yang diuji di Python memang yang berjalan di n8n.
 
-=== ujian/log_n8n.json (log eksekusi n8n) ===
+=== ujian/log_n8n.json ===
 status: success | mode: cli
   Mulai              cabang=[1]
   Baca CSV           cabang=[1]
@@ -132,6 +136,21 @@ status: success | mode: cli
   Periksa            cabang=[5, 0] [5, 0] [0, 5] x3
   Tambah             cabang=[5] [5] x2
   DLQ                cabang=[5]
+
+=== poin4/uji_sama.py (Python vs n8n) ===
+UJI SAMA: sinkron.py (Python) vs workflow n8n — poin 4
+======================================================================
+Tidak ada perbedaan pada 91 angka dan nilai yang dibandingkan.
+Termasuk isi tiap field pada 10 catatan hasil gabung dan 5 entri konflik.
+
+=== poin4/log_n8n.json ===
+status: success | mode: cli
+  Mulai            cabang=[1]
+  Baca Berkas      cabang=[1]
+  Ambil Teks       cabang=[1]
+  Gabung           cabang=[1]
+  Jadikan Berkas   cabang=[1]
+  Tulis Hasil      cabang=[1]
 
 === bangun_halaman.py ===
 halaman  : C:\Users\user\otonom-penuh\n8n_factory\sab_demo\publikasi\index.html

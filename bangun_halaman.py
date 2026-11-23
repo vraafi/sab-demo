@@ -197,6 +197,7 @@ def halaman(d: dict) -> str:
     jarak_kecuali = [b - a for a, b in zip(nomor_kecuali, nomor_kecuali[1:])]
 
     ujian = d.get("ujian", {})
+    p4 = d.get("poin_4", {})
 
     orang_unik = p1.get("orang_unik_sebenarnya", 0)
     duplikat = p1.get("duplikat_ditanam", 0)
@@ -259,9 +260,13 @@ def halaman(d: dict) -> str:
 <body>
 <div class="wrap">
 
-<h1>Demo poin 1, 5, dan 6 — dijalankan pada data uji</h1>
+<h1>Demo poin 1&ndash;6 — dijalankan pada data uji</h1>
 <p class="lead">Halaman ini memuat hasil satu kali jalan program, bukan rancangan.
 Angka di bawah dihasilkan mesinnya sendiri dan bisa dijalankan ulang kapan saja.</p>
+
+<p>Keenam poin dari surat 20 November sekarang punya kode yang berjalan. Poin 1, 2,
+3, 5, dan 6 diuji pada 50 lead yang Anda kirim; poin 4 (sinkron dua arah) diuji
+pada dua sisi CRM tiruan, karena API CRM SAB belum tersambung.</p>
 
 <p>Yang perlu disepakati lebih dulu: ini <strong>bukan</strong> sambungan ke CRM SAB.
 Ini CRM tiruan berisi {rb(mentah)} lead sintetis dari lima kanal, dengan nomor dan nama
@@ -626,6 +631,61 @@ nol perbedaan. Kalau berbeda satu saja, uji itu gagal.</p>
 
 <div class="rule"></div>
 
+<h2>Poin 4 — sinkron dua arah, tanpa last-write-wins</h2>
+<p>Poin ini paling mudah dijawab dengan satu kalimat: "pakai yang paling baru".
+Kalimat itu juga yang paling sering merusak data, karena jam dua sistem tidak
+pernah sama dan perubahan penting bisa kalah oleh perubahan sepele yang
+kebetulan lebih belakangan.</p>
+<p>Pemenang di sini ditentukan oleh <strong>nenek moyang bersama</strong> — nilai
+terakhir yang disepakati kedua sisi — bukan oleh <code>updated_at</code>.</p>
+
+<table>
+<thead><tr><th>Keadaan</th><th>Yang dilakukan</th><th>Alasan</th></tr></thead>
+<tbody>
+<tr><td>Hanya lokal berubah</td><td>Pakai lokal</td>
+<td>Tidak ada yang perlu diputuskan</td></tr>
+<tr><td>Hanya jauh berubah</td><td>Pakai jauh</td><td>Sama</td></tr>
+<tr><td>Dua sisi berubah, nilainya sama</td><td>Pakai nilai itu, bukan konflik</td>
+<td>Kesepakatan, bukan pertentangan</td></tr>
+<tr><td>Dua sisi berubah, nilainya beda</td>
+<td><strong>Konflik per-field.</strong> Field itu dibiarkan pada nilai dasar dan
+masuk antrean; field lain tetap tersinkron</td>
+<td>Tidak ada yang menang diam-diam</td></tr>
+<tr><td>Dikosongkan di satu sisi, diubah di sisi lain</td><td>Konflik</td>
+<td>Menghapus data orang lain bukan keputusan mesin</td></tr>
+<tr><td>Dihapus di satu sisi, tidak diubah di sisi lain</td><td>Dihapus</td>
+<td>Penghapusan yang disepakati boleh jalan</td></tr>
+<tr><td>Dihapus di satu sisi, diubah di sisi lain</td><td>Tidak dihapus, konflik</td>
+<td>Penghapusan bisa membuang perubahan yang belum tersalin</td></tr>
+</tbody>
+</table>
+
+<p>Hasil pada {p4.get("catatan_dasar", 0)} catatan dasar, {p4.get("catatan_lokal", 0)}
+di sisi lokal, dan {p4.get("catatan_jauh", 0)} di sisi CRM:
+<strong>{p4.get("hasil_gabung", 0)} catatan</strong> setelah digabung,
+<strong>{p4.get("konflik", 0)} konflik</strong> masuk antrean,
+{p4.get("dihapus", 0)} dihapus. Antrean konfliknya berisi nilai dasar, lokal,
+dan jauh sekaligus, jadi yang memutuskan melihat ketiganya — bukan hanya dua:</p>
+
+<table>
+<thead><tr><th>Catatan</th><th>Field</th><th>Nilai dasar</th><th>Lokal</th><th>CRM</th></tr></thead>
+<tbody>
+{"".join(f"<tr><td>{html.escape(str(k['id']))}</td><td><code>{html.escape(str(k['field']))}</code></td><td>{html.escape(str(k['dasar']))}</td><td>{html.escape(str(k['lokal']))}</td><td>{html.escape(str(k['jauh']))}</td></tr>" for k in p4.get("contoh_konflik", []))}
+</tbody>
+</table>
+
+<p>Baris terakhir itu contoh yang paling penting: catatan dihapus di CRM
+tetapi diubah di SAB. Sistem tidak menghapusnya dan tidak pula mengabaikan
+penghapusan itu — keduanya masuk antrean, karena dua-duanya keputusan yang
+punya akibat.</p>
+
+<p>Bukti bahwa ini bukan klaim: <code>poin4/uji_sama.py</code> membandingkan
+seluruh isi hasil — setiap field pada setiap catatan, plus setiap entri konflik
+— antara mesin Python dan workflow n8n, dan hasilnya nol perbedaan. Angkanya
+bukan cuma jumlah baris, tapi nilai tiap field.</p>
+
+<div class="rule"></div>
+
 <h2>Yang belum diuji, dan tidak saya klaim</h2>
 <ul>
 <li><strong>Kanal asli.</strong> WhatsApp Business, form website SAB, dan CRM SAB belum
@@ -634,8 +694,11 @@ pekerjaan tahap 1.</li>
 <li><strong>Pengiriman sungguhan.</strong> Balasan tidak benar-benar dikirim ke 50
 lead sintetis. Yang diuji adalah penanganan kegagalannya: retry, DLQ, alarm,
 pemutaran ulang.</li>
-<li><strong>Poin 4 (sinkron CRM dua arah).</strong> Resolusi konflik per-field belum
-ada di demo ini. Poin 1, 2, 3, 5, 6 sudah berjalan pada data ujian.</li>
+<li><strong>Poin 4 belum tersambung ke API CRM asli.</strong> Aturan resolusi
+konfliknya sudah berjalan dan diuji pada dua sisi tiruan; yang belum ada adalah
+pemanggilan API CRM SAB, karena kredensialnya belum ada. Poin 1&ndash;6 kini
+punya kode yang berjalan, tapi hanya poin 1, 2, 3, 5, 6 yang diuji pada 50 lead
+dari SAB.</li>
 <li><strong>Beban produksi.</strong> Uji ini memakai {rb(mentah)} lead. Volume SAB yang
 sebenarnya belum saya ketahui, dan angka itu yang menentukan kebutuhan server.</li>
 <li><strong>Data asli.</strong> Semuanya sintetis. Tidak ada satu pun data pelanggan SAB
