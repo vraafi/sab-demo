@@ -1,0 +1,16 @@
+{
+  "_sumber": "Meta Lead Ads — respons GET /{lead-id} dari Graph API, dipicu webhook leadgen",
+  "_catatan": "Semua field berbentuk array of {name, values}. Nama field ditentukan pemilik form, jadi bisa 'full_name' atau 'nama_lengkap'. Nomor telepon sering dikirim dengan spasi dan tanda hubung.",
+  "id": "6123456789012345",
+  "created_time": "2026-11-23T00:12:00+0000",
+  "field_data": [
+    { "name": "full_name", "values": ["Siti Aminah"] },
+    { "name": "email", "values": ["siti@contoh.example"] },
+    { "name": "phone_number", "values": ["+62 812-0000-1102"] },
+    { "name": "company_name", "values": ["CV Contoh Nusantara"] },
+    { "name": "job_title", "values": ["Purchasing Manager"] }
+  ],
+  "form_id": "987654321098765",
+  "ad_id": "525252525252525",
+  "campaign_id": "616161616161616"
+}

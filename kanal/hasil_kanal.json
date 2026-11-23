@@ -1,0 +1,67 @@
+{
+ "baris": 7,
+ "kanal": 6,
+ "identitas": 5,
+ "digabung": 2,
+ "antrean": 1,
+ "lulus": 19,
+ "benar": 19,
+ "tabel": [
+  {
+   "row_id": "K01",
+   "kanal": "whatsapp",
+   "nama": "Budi Santoso",
+   "telp": "6281200001101",
+   "surel": "",
+   "id_kanal": "SM9f2c1a7b4e8d3f6a0b5c2d9e1f"
+  },
+  {
+   "row_id": "K02",
+   "kanal": "meta_ads_form",
+   "nama": "Siti Aminah",
+   "telp": "6281200001102",
+   "surel": "siti@contoh.example",
+   "id_kanal": "6123456789012345"
+  },
+  {
+   "row_id": "K03",
+   "kanal": "google_ads_form",
+   "nama": "Klaus Weber",
+   "telp": "6281200001103",
+   "surel": "k.weber@schneider-logistik.example",
+   "id_kanal": "TeStLeAd-7f3a9c2e"
+  },
+  {
+   "row_id": "K04",
+   "kanal": "linkedin_form",
+   "nama": "Maria Tan",
+   "telp": "",
+   "surel": "info@sinarabadi.example",
+   "id_kanal": "urn:li:leadGenFormResponse:7"
+  },
+  {
+   "row_id": "K05",
+   "kanal": "email",
+   "nama": "Siti Aminah",
+   "telp": "6281200001102",
+   "surel": "siti@contoh.example",
+   "id_kanal": "<CAF7x2b3k9m@mail.contoh.exa"
+  },
+  {
+   "row_id": "K06",
+   "kanal": "website_form",
+   "nama": "Budi Santoso",
+   "telp": "6281200001101",
+   "surel": "budi@majulogistik.example",
+   "id_kanal": "kontak-sab:2026-11-23T08:20:"
+  },
+  {
+   "row_id": "K07",
+   "kanal": "website_form",
+   "nama": "Joko Susilo",
+   "telp": "622155500111",
+   "surel": "info@sinarabadi.example",
+   "id_kanal": "kontak-sab:2026-11-23T08:35:"
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+  "_sumber": "Email masuk — dibaca lewat IMAP, bukan webhook. Tidak ada format baku.",
+  "_catatan": "Nama dan nomor harus diambil dari badan surat atau tanda tangan. Di sinilah parsing paling rapuh, dan itu alasannya email diperlakukan sebagai kanal kelas dua: nomor yang tidak ditemukan tidak boleh dikarang.",
+  "message_id": "<CAF7x2b3k9m@mail.contoh.example>",
+  "from": "Siti Aminah <siti@contoh.example>",
+  "to": "halo@sab.id",
+  "subject": "Tanya paket leads B2B",
+  "date": "Mon, 23 Nov 2026 08:05:00 +0700",
+  "body": "Halo SAB,\n\nSaya Siti Aminah dari CV Contoh Nusantara. Kami sedang mencari vendor\nleads B2B untuk pasar Indonesia. Boleh dikirim paket dan harganya?\n\nTerima kasih,\nSiti Aminah\nPurchasing Manager\n+62 812-0000-1102\n"
+}

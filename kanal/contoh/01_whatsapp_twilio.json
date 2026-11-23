@@ -1,0 +1,18 @@
+{
+  "_sumber": "Twilio WhatsApp Sandbox — webhook POST, form-urlencoded, diubah jadi JSON oleh n8n",
+  "_catatan": "Nomor pengirim ada di WaId tanpa awalan '+'. Body berisi teks apa adanya. ProfileName hanya ada kalau pengirim punya nama profil WhatsApp.",
+  "SmsMessageSid": "SM9f2c1a7b4e8d3f6a0b5c2d9e1f4a7b3c",
+  "NumMedia": "0",
+  "ProfileName": "Budi Santoso",
+  "SmsSid": "SM9f2c1a7b4e8d3f6a0b5c2d9e1f4a7b3c",
+  "WaId": "6281200001101",
+  "SmsStatus": "received",
+  "Body": "Halo, saya Budi dari PT Maju Logistik. Kami butuh leads B2B untuk layanan logistik antarkota. Bisa minta info paket?",
+  "To": "whatsapp:+14155238886",
+  "NumSegments": "1",
+  "MessageSid": "SM9f2c1a7b4e8d3f6a0b5c2d9e1f4a7b3c",
+  "AccountSid": "AC7d3e9b1c5a8f2e6d4b0c9a3f7e1d5b",
+  "From": "whatsapp:+6281200001101",
+  "ApiVersion": "2010-04-01",
+  "_diterima": "2026-11-23T08:10:00+07:00"
+}

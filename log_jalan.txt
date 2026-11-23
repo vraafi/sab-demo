@@ -52,40 +52,75 @@ UJI KASUS NYATA PUTARAN 2 — 14/14 sesuai
 Laporan disimpan: hasil_demo.json
 
 === uji_kasus.py ===
-        'Joko Susilo' vs 'Maria Tan' -> antrean (0.600), diharap antrean
-  OK   email sama DAN nama sama: gabung otomatis (kendali)   
         'Budi Santoso' vs 'Budi Santoso' -> gabung (0.950), diharap gabung
 
 HASIL: 25/25 lulus
 Semua kasus sesuai harapan.
 
 === uji_kasus_nyata.py ===
-
 ============================================================================
 HASIL: 12/12 sesuai (10 pasangan orang sama, 2 alias yang benar dipisah)
 Semua kasus nyata tertangani.
 
 === uji_kasus_nyata2.py ===
-
 ==============================================================================
 HASIL: 14/14 sesuai (11 pasangan orang sama, 3 alias yang benar dipisah)
 Semua kasus nyata tertangani dalam satu kali jalan.
 
-=== poin4/sinkron.py ===
-  OK   manusia memilih 'jauh' untuk C04.telp
-  OK   konflik yang belum diputuskan tetap di antrean
-  OK   versi naik setelah keputusan manusia
+=== kanal/normalkan.py (6 kanal -> 1 bentuk) ===
+baris  kanal            nama             telp             surel                              id_kanal
+----------------------------------------------------------------------------------------------------------------------
+K01    whatsapp         Budi Santoso     6281200001101                                       SM9f2c1a7b4e8d3f6a0b5c
+K02    meta_ads_form    Siti Aminah      6281200001102    siti@contoh.example                6123456789012345
+K03    google_ads_form  Klaus Weber      6281200001103    k.weber@schneider-logistik.exampl  TeStLeAd-7f3a9c2e
+K04    linkedin_form    Maria Tan                         info@sinarabadi.example            urn:li:leadGenFormResp
+K05    email            Siti Aminah      6281200001102    siti@contoh.example                <CAF7x2b3k9m@mail.cont
+K06    website_form     Budi Santoso     6281200001101    budi@majulogistik.example          kontak-sab:2026-11-23T
+K07    website_form     Joko Susilo      622155500111     info@sinarabadi.example            kontak-sab:2026-11-23T
 
+7 baris dari 6 kanal -> satu bentuk yang sama.
+
+=== kanal/uji_kanal.py ===
+== 1. Normalisasi ==
+  ok    tujuh baris masuk
+  ok    enam kanal berbeda
+  ok    setiap baris punya kunci idempoten
+  ok    kunci idempoten unik
+  ok    setiap baris punya bentuk yang sama
+  ok    nomor dinormalkan ke bentuk yang sama
+
+== 2. Idempotensi pada kunci kanal ==
+  ok    14 kiriman (7 x 2) menyusut jadi 7
+
+== 3. Dedup lintas kanal ==
+  ok    7 baris -> 5 identitas
+  ok    2 digabung otomatis
+  ok    Budi dari WhatsApp dan form website jadi satu
+  ok    Siti dari Meta Ads dan email jadi satu
+  ok    Budi dan Siti bukan orang yang sama
+  ok    Klaus dari Google Ads berdiri sendiri
+  ok    Maria dari LinkedIn berdiri sendiri
+
+== 4. Jebakan email kantor dipakai bersama ==
+  ok    Maria dan Joko TIDAK digabung
+  ok    pasangan itu masuk antrean manusia
+  ok    antrean berisi Maria dan Joko
+  ok    antrean menyebut sebabnya
+
+== 5. Tidak ada yang hilang ==
+  ok    ketujuh baris terwakili di identitas
+
+==============================================================
+LULUS: 19/19 uji kanal
+6 kanal -> 1 pipeline, 7 baris -> 5 identitas, 0 salah gabung.
+
+=== poin4/sinkron.py ===
 HASIL: 23/23 lulus
 catatan: dasar 9, lokal 10, jauh 8 -> gabung 10
 konflik per-field: 5 field, 5 entri antrean, dihapus 1
 Hasil: hasil_poin4.json
 
 === ujian/mesin.py ===
-identitas setelah dedup: 36
-digabung               : 14
-kontak dipakai bersama : 2
-kemungkinan duplikat   : 1 (nama sama, tanpa kontak bersama)
 
 bahasa                 : {'DE': 2, 'EN': 5, 'ID': 29}
 opt-out                : ['SAB-008', 'SAB-025']
@@ -116,7 +151,6 @@ DLQ:
 Hasil: C:\Users\user\otonom-penuh\n8n_factory\sab_demo\ujian\hasil_ujian.json
 
 === ujian/uji_kesamaan.py (Python vs n8n) ===
-======================================================================
 UJI KESAMAAN: mesin.py (Python) vs workflow n8n
 ======================================================================
 Tidak ada perbedaan pada 24 angka yang dibandingkan.
@@ -138,30 +172,17 @@ status: success | mode: cli
   DLQ                cabang=[5]
 
 === poin4/uji_sama.py (Python vs n8n) ===
-UJI SAMA: sinkron.py (Python) vs workflow n8n — poin 4
 ======================================================================
 Tidak ada perbedaan pada 91 angka dan nilai yang dibandingkan.
 Termasuk isi tiap field pada 10 catatan hasil gabung dan 5 entri konflik.
 
-=== crm_api/uji_api.py (HTTP, 41 uji) ===
-
-== 8. Jejak audit ==
-  ok   audit mencatat perubahan
-  ok   audit menyebut aktor
-  ok   audit memuat buat, ubah, putuskan, hapus
-
-== 9. Kesehatan akhir ==
-  ok   server masih sehat
+=== crm_api/uji_api.py (HTTP) ===
   ok   konflik terbuka nol
 
 ==============================================================
 LULUS: 41/41 uji integrasi CRM API
 
 === poin4/sinkron_api.py (poin 4 lewat HTTP) ===
-dasar ditanam: 9 kontak
-  CRM menghapus C08
-  CRM menghapus C09
-perubahan CRM: 8 kontak
 perubahan SAB: 10 kontak (4 permintaan dijawab 409 karena ada field berkonflik)
 
 hasil di server : 10 kontak hidup, 5 konflik terbuka, 1 tombstone

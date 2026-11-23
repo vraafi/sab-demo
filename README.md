@@ -34,6 +34,10 @@ ujinya.
 | `crm_api/server.js` | CRM API yang berjalan: auth, ETag/If-Match, Idempotency-Key, kursor delta, tombstone, webhook HMAC, audit. Tanpa dependensi |
 | `crm_api/openapi.json` | Spesifikasi OpenAPI 3.1, bisa diimpor ke Postman |
 | `crm_api/uji_api.py` | 41 uji integrasi lewat HTTP; keluarannya di `hasil_uji_api.txt` |
+| `kanal/normalkan.py` | Enam kanal, enam bentuk, satu catatan lead. Adaptor untuk Twilio WhatsApp, Meta Lead Ads, Google Lead Form, LinkedIn, email IMAP, form website |
+| `kanal/contoh/` | Tujuh payload asli dari enam kanal — bentuk dari penyedianya, bukan bentuk yang dikarang agar cocok dengan parser |
+| `kanal/uji_kanal.py` | 19 uji: dedup lintas kanal di atas enam bentuk berbeda |
+| `kanal/RENCANA.md` | Mana yang bisa didemokan sekarang, mana yang butuh akun SAB, dan dua jalan memutar untuk LinkedIn |
 | `bandingkan.py` | Membandingkan `dedup.py` (baru) dengan `dedup_lama.py` (versi 21 Nov) pada data yang sama |
 | `generate.py` | Membangkitkan `data_uji.json` — 170 orang, 200 lead, 30 duplikat |
 | `bangun_halaman.py` | Membangun `index.html` dari `hasil_demo.json` |
@@ -74,6 +78,9 @@ Ujian 50 lead SAB:
 50 baris -> 36 identitas, 14 digabung, 2 kontak dipakai bersama, 1 kemungkinan duplikat
 33 seharusnya dibalas, 29 terkirim, 5 DLQ, 1 dipulihkan, 4 sisa
 mesin Python vs workflow n8n: 24 angka dibandingkan, 0 perbedaan
+
+Enam kanal:
+7 payload dari 6 kanal -> 5 identitas, 0 salah gabung, 19/19 uji
 
 Poin 4 lewat HTTP:
 41/41 uji integrasi CRM API (auth, idempotensi, ETag, konflik, tombstone, webhook)
@@ -170,6 +177,38 @@ Versi 21 November mendapat empat catatan dari SAB. Semuanya benar:
 Efeknya pada data yang sama: antrean turun dari 23 ke 8 pasangan, **tanpa
 kehilangan satu pun duplikat nyata**. Kelima belas pasangan yang keluar
 seluruhnya orang berbeda.
+
+## Enam kanal, satu tabel
+
+Poin 1 bukan soal menyambung API. Yang sulit: lima kanal mengirim lima bentuk yang
+tidak mirip sama sekali, dan dedup hanya bisa bekerja kalau semuanya sudah jadi
+bentuk yang sama lebih dulu.
+
+```bash
+cd kanal
+python normalkan.py    # 7 payload, 6 kanal -> satu bentuk
+python uji_kanal.py    # 19 uji -> hasil_kanal.json
+```
+
+| Kanal | Bentuk aslinya | Yang paling mudah salah |
+|---|---|---|
+| WhatsApp (Twilio) | `WaId` tanpa `+`, `ProfileName` opsional | Nama tidak ada kalau profil kosong; email tidak pernah ada |
+| Meta Lead Ads | `field_data` array `{name, values}` | Nama field ditentukan pemilik form (`full_name` vs `nama_lengkap`) |
+| Google Lead Form | `user_column_data` dengan `column_id` tetap | Tidak ada pesan bebas sama sekali |
+| LinkedIn | `formResponse.answer`, nama dipecah | Nilai dibungkus `{textValue}`, waktu dalam milidetik |
+| Email (IMAP) | tidak ada format | Nama dan nomor harus diambil dari tanda tangan |
+| Form website | bebas | Paling lemah sebagai bukti: selalu cocok dengan parser sendiri |
+
+Hasil: 7 baris dari 6 kanal menjadi 5 identitas, 2 digabung, 1 pasangan masuk
+antrean, 0 salah gabung. Uji 19/19.
+
+Dua kasus yang sengaja ada: **Budi** datang dari WhatsApp (`6281200001101`, tanpa
+email) lalu dari form website (`0812-0000-1101`, dengan email) — digabung.
+**Maria** dari LinkedIn dan **Joko** dari form website memakai email kantor yang
+sama — tidak digabung, masuk antrean.
+
+Kunci idempoten diambil dari kanalnya sendiri, bukan dibuat: `MessageSid` Twilio,
+`lead_id` Google, `message-id` email.
 
 ## Ujian 50 lead dan workflow n8n
 

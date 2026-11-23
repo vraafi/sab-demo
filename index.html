@@ -349,6 +349,50 @@ kanal menolak setelah 3 percobaan (5xx).</p>
 
 <div class="rule"></div>
 
+<h2>Enam kanal, satu tabel</h2>
+<p>Poin 1 bukan soal menyambung API — itu pekerjaan pemasangan, dan tiap kanal
+punya dokumentasinya sendiri. Yang sulit: lima kanal mengirim lima bentuk yang
+tidak mirip sama sekali, dan dedup hanya bisa bekerja kalau semuanya sudah jadi
+bentuk yang sama lebih dulu.</p>
+
+<p>Di bawah ini tujuh payload, dari enam kanal, semuanya bentuk asli — bukan
+bentuk yang saya karang agar cocok dengan parser saya. Kolom terakhir adalah
+kunci idempoten yang diambil dari kanalnya sendiri, bukan dibuat:</p>
+
+<table>
+<thead><tr><th>Baris</th><th>Kanal</th><th>Nama</th><th>Nomor setelah normalisasi</th><th>Email</th><th>Kunci idempoten</th></tr></thead>
+<tbody>
+<tr><td><code>K01</code></td><td>whatsapp</td><td>Budi Santoso</td><td><code>6281200001101</code></td><td>—</td><td><code>SM9f2c1a7b4e8d3f6a0b5c2d9e1f</code></td></tr><tr><td><code>K02</code></td><td>meta_ads_form</td><td>Siti Aminah</td><td><code>6281200001102</code></td><td>siti@contoh.example</td><td><code>6123456789012345</code></td></tr><tr><td><code>K03</code></td><td>google_ads_form</td><td>Klaus Weber</td><td><code>6281200001103</code></td><td>k.weber@schneider-logistik.example</td><td><code>TeStLeAd-7f3a9c2e</code></td></tr><tr><td><code>K04</code></td><td>linkedin_form</td><td>Maria Tan</td><td><code>—</code></td><td>info@sinarabadi.example</td><td><code>urn:li:leadGenFormResponse:7</code></td></tr><tr><td><code>K05</code></td><td>email</td><td>Siti Aminah</td><td><code>6281200001102</code></td><td>siti@contoh.example</td><td><code>&lt;CAF7x2b3k9m@mail.contoh.exa</code></td></tr><tr><td><code>K06</code></td><td>website_form</td><td>Budi Santoso</td><td><code>6281200001101</code></td><td>budi@majulogistik.example</td><td><code>kontak-sab:2026-11-23T08:20:</code></td></tr><tr><td><code>K07</code></td><td>website_form</td><td>Joko Susilo</td><td><code>622155500111</code></td><td>info@sinarabadi.example</td><td><code>kontak-sab:2026-11-23T08:35:</code></td></tr>
+</tbody>
+</table>
+
+<p>7 baris dari 6 kanal menjadi
+<strong>5 identitas</strong>, 2
+digabung otomatis, 1 pasangan masuk antrean,
+<strong>nol salah gabung</strong>. Uji: 19/19.</p>
+
+<p>Dua hal yang paling mudah salah, dan keduanya sengaja ada di data uji:</p>
+<ul>
+<li><strong>Budi</strong> datang dari WhatsApp — nomor <code>6281200001101</code>,
+tanpa email, nama dari profil WhatsApp — lalu dari form website dengan nomor
+<code>0812-0000-1101</code> dan email. Dua bentuk nomor, dua kanal, satu orang.</li>
+<li><strong>Maria</strong> dari LinkedIn dan <strong>Joko</strong> dari form website
+memakai email kantor yang sama, <code>info@sinarabadi.example</code>. Keduanya
+<strong>tidak</strong> digabung, melainkan masuk antrean. Menggabungkan lewat email
+kantor adalah cara tercepat mencampur riwayat percakapan dua orang, dan setelah
+terjadi tidak ada cara memisahkannya lagi.</li>
+</ul>
+
+<p>Untuk WhatsApp saya memakai Twilio Sandbox, yang tidak menuntut WhatsApp
+Business Account maupun nomor terverifikasi. Artinya kanal ini bisa didemokan
+sekarang, bukan menunggu SAB. Yang benar-benar berpagar hanya LinkedIn — izin
+<code>r_events_leadgen_automation</code> harus lewat peninjauan — dan untuk itu ada
+dua jalan yang tidak menuntut SAB membuka API: konektor pihak ketiga yang sudah
+memegang izinnya, atau membaca notifikasi email lead-nya. Rinciannya ada di
+<code>kanal/RENCANA.md</code>.</p>
+
+<div class="rule"></div>
+
 <h2>Ujian 50 lead dari SAB</h2>
 <p>SAB mengirim 50 lead sintetis dan meminta enam poin dikerjakan pada data itu,
 dalam bentuk workflow n8n yang bisa dijalankan sendiri. Hasilnya:</p>

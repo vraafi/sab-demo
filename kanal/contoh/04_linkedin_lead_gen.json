@@ -1,0 +1,44 @@
+{
+  "_sumber": "LinkedIn Lead Gen Forms — respons leadGenFormResponses dari Marketing API",
+  "_catatan": "Nama field berupa kunci internal (firstName, lastName, email) dan nilainya dibungkus objek {textValue}. Tidak ada nomor telepon kecuali form-nya meminta. submittedAt dalam milidetik epoch.",
+  "id": "urn:li:leadGenFormResponse:7345678901234567890",
+  "form": "urn:li:leadGenForm:6987654321098765432",
+  "submittedAt": 1795417920000,
+  "owner": "urn:li:organization:12345678",
+  "formResponse": {
+    "answer": [
+      {
+        "formElement": {
+          "name": "firstName"
+        },
+        "value": {
+          "textValue": "Maria"
+        }
+      },
+      {
+        "formElement": {
+          "name": "lastName"
+        },
+        "value": {
+          "textValue": "Tan"
+        }
+      },
+      {
+        "formElement": {
+          "name": "email"
+        },
+        "value": {
+          "textValue": "info@sinarabadi.example"
+        }
+      },
+      {
+        "formElement": {
+          "name": "companyName"
+        },
+        "value": {
+          "textValue": "PT Sinar Abadi"
+        }
+      }
+    ]
+  }
+}

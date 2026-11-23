@@ -1,0 +1,14 @@
+{
+  "_sumber": "Form website SAB — POST ke endpoint milik SAB sendiri",
+  "_catatan": "Satu-satunya kanal yang formatnya bisa ditentukan sendiri. Karena itu paling mudah, dan karena itu juga paling tidak bisa dijadikan bukti: form yang Anda buat sendiri selalu cocok dengan parser Anda.",
+  "form_id": "kontak-sab",
+  "submitted_at": "2026-11-23T08:20:00+07:00",
+  "halaman": "/kontak",
+  "fields": {
+    "nama": "Budi Santoso",
+    "telepon": "0812-0000-1101",
+    "email": "budi@majulogistik.example",
+    "perusahaan": "PT Maju Logistik",
+    "pesan": "Kami butuh leads B2B untuk layanan logistik antarkota. Sudah kirim WhatsApp juga tadi pagi."
+  }
+}

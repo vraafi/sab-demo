@@ -1,0 +1,35 @@
+{
+  "_sumber": "Google Ads Lead Form — webhook POST ke URL milik penerima (dokumentasi resmi Lead Form Webhook)",
+  "_catatan": "Is_test true kalau dikirim dari alat uji Google. Field berbentuk user_column_data dengan column_id tetap, jadi lebih stabil daripada Meta. Pesan bebas tidak ada: yang dikirim hanya jawaban form.",
+  "lead_id": "TeStLeAd-7f3a9c2e",
+  "api_version": "1.0",
+  "form_id": 1234567890,
+  "campaign_id": 2345678901,
+  "adgroup_id": 3456789012,
+  "creative_id": 4567890123,
+  "gcl_id": "Cj0KCQjw_test_gclid",
+  "is_test": true,
+  "user_column_data": [
+    {
+      "column_id": "FULL_NAME",
+      "column_name": "Full Name",
+      "string_value": "Klaus Weber"
+    },
+    {
+      "column_id": "EMAIL",
+      "column_name": "User Email",
+      "string_value": "k.weber@schneider-logistik.example"
+    },
+    {
+      "column_id": "PHONE_NUMBER",
+      "column_name": "Phone Number",
+      "string_value": "0812-0000-1103"
+    },
+    {
+      "column_id": "COMPANY_NAME",
+      "column_name": "Company Name",
+      "string_value": "Schneider Logistik GmbH"
+    }
+  ],
+  "_diterima": "2026-11-23T08:28:00+07:00"
+}

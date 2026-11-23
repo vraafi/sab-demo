@@ -1,0 +1,14 @@
+{
+  "_sumber": "Form website SAB — orang kedua memakai email kantor yang sama dengan lead LinkedIn",
+  "_catatan": "Ini jebakan yang paling sering menjatuhkan sistem dedup: email kantor dipakai bersama. Kalau digabung, riwayat percakapan Maria dan Joko tercampur dan tidak bisa dipisahkan lagi.",
+  "form_id": "kontak-sab",
+  "submitted_at": "2026-11-23T08:35:00+07:00",
+  "halaman": "/kontak",
+  "fields": {
+    "nama": "Joko Susilo",
+    "telepon": "021-5550-0111",
+    "email": "info@sinarabadi.example",
+    "perusahaan": "PT Sinar Abadi",
+    "pesan": "Mau tanya jasa cold email untuk produk kami."
+  }
+}
