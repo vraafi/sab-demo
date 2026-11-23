@@ -1,0 +1,124 @@
+{
+ "poin_1": {
+  "lead_mentah": 200,
+  "identitas": 173,
+  "digabung_otomatis": 27,
+  "pasangan_antrean": 23,
+  "salah_gabung": 0,
+  "orang_terpecah": 3,
+  "orang_unik_sebenarnya": 170,
+  "perbandingan": 264,
+  "perbandingan_tanpa_blocking": 19900
+ },
+ "poin_5": {
+  "dikirim": 1000,
+  "tersimpan": 200,
+  "ditolak_sebagai_duplikat": 800,
+  "event_unik": 200
+ },
+ "poin_6": {
+  "seharusnya_dibalas": 173,
+  "benar_benar_dibalas": 167,
+  "selisih": 6,
+  "pengecualian": [
+   "ID000",
+   "ID028",
+   "ID056",
+   "ID084",
+   "ID112",
+   "ID140"
+  ]
+ },
+ "antrean_contoh": [
+  {
+   "lead": "ev-0048",
+   "kanal": "whatsapp",
+   "nama_lead": "Michael",
+   "calon": "ID031",
+   "nama_calon": "Michael",
+   "skor": 0.75,
+   "alasan": "nama nyaris identik, perlu dilihat manusia"
+  },
+  {
+   "lead": "ev-0153",
+   "kanal": "form_website",
+   "nama_lead": "Pak Dewi",
+   "calon": "ID004",
+   "nama_calon": "Ibu Dewi",
+   "skor": 0.75,
+   "alasan": "nama nyaris identik, perlu dilihat manusia"
+  },
+  {
+   "lead": "ev-0130",
+   "kanal": "linkedin",
+   "nama_lead": "Lukas Halim",
+   "calon": "ID017",
+   "nama_calon": "Lukas H.",
+   "skor": 0.75,
+   "alasan": "nama nyaris identik, perlu dilihat manusia"
+  },
+  {
+   "lead": "ev-0005",
+   "kanal": "form_website",
+   "nama_lead": "PUTRI PRATAMA",
+   "calon": "ID011",
+   "nama_calon": "putri pratama",
+   "skor": 0.75,
+   "alasan": "nama nyaris identik, perlu dilihat manusia"
+  },
+  {
+   "lead": "ev-0091",
+   "kanal": "google_meta_ads",
+   "nama_lead": "nadia pratama",
+   "calon": "ID043",
+   "nama_calon": "nadia pratama",
+   "skor": 1.0,
+   "alasan": "nama lengkap sama, perusahaan dan kota sama"
+  },
+  {
+   "lead": "ev-0071",
+   "kanal": "email",
+   "nama_lead": "Rizky Wijaya",
+   "calon": "ID038",
+   "nama_calon": "Rizky Wijaya",
+   "skor": 1.0,
+   "alasan": "nama lengkap sama, perusahaan dan kota sama"
+  },
+  {
+   "lead": "ev-0072",
+   "kanal": "linkedin",
+   "nama_lead": "bayu saputra",
+   "calon": "ID040",
+   "nama_calon": "bayu saputra",
+   "skor": 1.0,
+   "alasan": "nama lengkap sama, perusahaan dan kota sama"
+  },
+  {
+   "lead": "ev-0167",
+   "kanal": "form_website",
+   "nama_lead": "Ibu Dewi",
+   "calon": "ID093",
+   "nama_calon": "Ibu Dewi",
+   "skor": 0.75,
+   "alasan": "nama nyaris identik, perlu dilihat manusia"
+  },
+  {
+   "lead": "ev-0191",
+   "kanal": "google_meta_ads",
+   "nama_lead": "Fajar",
+   "calon": "ID054",
+   "nama_calon": "Fajar",
+   "skor": 0.75,
+   "alasan": "nama nyaris identik, perlu dilihat manusia"
+  },
+  {
+   "lead": "ev-0012",
+   "kanal": "linkedin",
+   "nama_lead": "hendra halim",
+   "calon": "ID027",
+   "nama_calon": "hendra fischer",
+   "skor": 0.921,
+   "alasan": "nama mirip, perusahaan dan kota sama"
+  }
+ ]
+}

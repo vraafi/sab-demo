@@ -1,0 +1,169 @@
+=== LOG EKSEKUSI — 2026-11-23 11:41:03 SEAST ===
+
+--- python demo.py ---
+==================================================================
+DEMO SAB — poin 1, 5, 6, dijalankan pada data uji sintetis
+==================================================================
+
+POIN 1 — dedup lintas kanal
+  lead mentah dari 5 kanal : 200
+  identitas setelah dedup  : 173  (SEMENTARA, lihat catatan)
+  digabung otomatis        : 27
+  pasangan perlu dilihat   : 8
+  perbandingan dijalankan  : 264 (tanpa blocking: 19,900)
+  orang unik sebenarnya    : 170
+  salah gabung             : 0  (wajib 0: salah gabung tidak bisa ditarik)
+  orang terpecah           : 3  (boleh >0 selama masuk antrean manusia)
+
+  REKONSILIASI ANGKA
+    duplikat yang ditanam  : 30
+    digabung otomatis      : 27
+    terpecah (aman)        : 3
+    170 orang + 3 kelebihan = 173  -> cocok dengan 173 identitas
+    antrean: 3 pasangan orang sama (perlu diputuskan), 5 pasangan orang berbeda (kebisingan)
+  CATATAN: 173 adalah identitas SEMENTARA. Setelah 3 pasangan
+           di antrean diputuskan manusia, angkanya turun ke 170.
+
+POIN 5 — idempotensi
+  total kiriman            : 1000
+  tersimpan                : 200
+  ditolak sebagai duplikat : 800
+  event unik seharusnya    : 200
+  hasil                    : LULUS
+
+POIN 6 — rekonsiliasi harian
+  seharusnya dibalas       : 173
+  benar-benar dibalas      : 167
+  selisih                  : 6
+  pengecualian             : ID000, ID028, ID056, ID084, ID112, ID140
+  arti: alur bisa saja hijau 100% sementara angka ini tidak nol.
+
+UJI KASUS LAPANGAN — 22/22 lulus
+
+Laporan disimpan: hasil_demo.json
+
+--- python uji_kasus.py ---
+========================================================================
+UJI KASUS LAPANGAN — 22 kasus
+========================================================================
+  OK   sapaan bergender berlawanan = dua orang berbeda       
+        'Pak Dewi' vs 'Ibu Dewi' -> pisah (0.000), diharap pisah
+  OK   nama sama tapi Pak vs Ibu: dua orang                  
+        'Pak Budi Santoso' vs 'Ibu Budi Santoso' -> pisah (0.000), diharap pisah
+  OK   Mas vs Mbak (Jawa): dua orang                         
+        'Mas Agus' vs 'Mbak Agus' -> pisah (0.000), diharap pisah
+  OK   nama depan sama, marga beda total                     
+        'Hendra Halim' vs 'Hendra Fischer' -> pisah (0.803), diharap pisah
+  OK   nama lengkap sama: antrean, TIDAK digabung otomatis   
+        'Rizky Wijaya' vs 'Rizky Wijaya' -> antrean (1.000), diharap antrean
+  OK   nomor sama ditulis beda format                        
+        'Budi Santoso' vs 'Budi Santoso' -> gabung (1.000), diharap gabung
+  OK   nomor sama, kurung dan spasi                          
+        'Budi Santoso' vs 'Budi Santoso' -> gabung (1.000), diharap gabung
+  OK   email +tag iklan                                      
+        'Budi Santoso' vs 'Budi Santoso' -> gabung (0.950), diharap gabung
+  OK   gmail mengabaikan titik                               
+        'Budi Santoso' vs 'Budi Santoso' -> gabung (0.950), diharap gabung
+  OK   huruf besar/kecil                                     
+        'Budi Santoso' vs 'budi santoso' -> gabung (1.000), diharap gabung
+  OK   marga disingkat: antrean, bukan gabung                
+        'Budi Santoso' vs 'Budi S.' -> antrean (0.964), diharap antrean
+  OK   salah ketik satu huruf di marga                       
+        'Budi Santoso' vs 'Budi Santosa' -> antrean (0.980), diharap antrean
+  OK   urutan nama terbalik                                  
+        'Budi Santoso' vs 'Santoso Budi' -> antrean (1.000), diharap antrean
+  OK   gelar netral (Dr.) dibuang                            
+        'Dr. Budi Santoso' vs 'Budi Santoso' -> antrean (1.000), diharap antrean
+  OK   umlaut Jerman dinormalkan                             
+        'Thomas Müller' vs 'Thomas Muller' -> antrean (1.000), diharap antrean
+  OK   nama depan sama, marga beda                           
+        'Budi Santoso' vs 'Budi Hartono' -> pisah (0.898), diharap pisah
+  OK   nama Jerman, marga beda                               
+        'Thomas Weber' vs 'Thomas Becker' -> pisah (0.906), diharap pisah
+  OK   nama satu kata, beda perusahaan dan kota              
+        'Yusuf' vs 'Yusuf' -> pisah (0.468), diharap pisah
+  OK   nama lengkap sama, beda kota/perusahaan: tetap antre  
+        'Budi Santoso' vs 'Budi Santoso' -> antrean (0.750), diharap antrean
+  OK   perempuan Jerman, marga beda                          
+        'Anna Schmidt' vs 'Anna Weber' -> pisah (0.642), diharap pisah
+  OK   WhatsApp (nomor saja) vs email (email saja), nama sa  
+        'Sabine Schmidt' vs 'Sabine Schmidt' -> antrean (1.000), diharap antrean
+  OK   nama dipendekkan jadi satu kata                       
+        'Lestari' vs 'Lestari Becker' -> antrean (0.918), diharap antrean
+
+HASIL: 22/22 lulus
+Semua kasus sesuai harapan.
+
+--- python bandingkan.py ---
+======================================================================
+PERBANDINGAN DEDUP — data uji yang sama, 200 lead
+======================================================================
+
+ukuran                         lama     baru
+identitas                       173      173
+digabung otomatis                27       27
+pasangan di antrean              23        8   <-- berubah
+salah gabung                      0        0
+
+--- 15 pasangan yang TIDAK LAGI masuk antrean ---
+  'Michael' vs 'Michael'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+  'Pak Dewi' vs 'Ibu Dewi'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+  'Lukas Halim' vs 'Lukas H.'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+  'Ibu Dewi' vs 'Ibu Dewi'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+  'Fajar' vs 'Fajar'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+  'hendra halim' vs 'hendra fischer'
+     skor lama 0.921 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama mirip, perusahaan dan kota sama
+  'Ibu Clara' vs 'Ibu Clara'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+  'Eko' vs 'Pak Eko'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+  'SITI SAPUTRA' vs 'Siti Nugroho'
+     skor lama 0.908 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama mirip, perusahaan dan kota sama
+  'julia hidayat' vs 'Julia Fischer'
+     skor lama 0.902 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama mirip, perusahaan dan kota sama
+  'Ibu Fajar' vs 'Pak Fajar'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+  'JULIA SAPUTRA' vs 'Julia Becker'
+     skor lama 0.903 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama mirip, perusahaan dan kota sama
+  'Bayu S.' vs 'Pak Bayu'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+  'Bayu' vs 'Pak Bayu'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+  'Pak Julia' vs 'Julia K.'
+     skor lama 0.750 | ORANG BERBEDA (memang harusnya keluar)
+     alasan lama: nama nyaris identik, perlu dilihat manusia
+
+======================================================================
+REKONSILIASI 30 DUPLIKAT (pertanyaan SAB poin 4)
+======================================================================
+  lead mentah                 : 200
+  orang unik sebenarnya       : 170
+  duplikat yang ditanam       : 30
+  digabung otomatis (nomor/email): 27
+  orang terpecah jadi 2 id    : 3
+  identitas akhir             : 173
+  cek: 170 orang + 3 kelebihan = 173
+  pasangan masih di antrean   : 8
+
+  Artinya: dari 30 duplikat, 27 berhasil digabung otomatis, 3 terpecah (aman, tidak salah gabung),
+  dan antrean berisi pasangan yang BELUM diputuskan -- bukan duplikat
+  yang sudah dihitung. Angka 173 adalah identitas SEMENTARA.

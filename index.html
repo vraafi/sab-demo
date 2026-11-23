@@ -60,7 +60,7 @@ ditulis berbeda, harus tetap dikenali sebagai satu orang.</p>
 <div class="card"><div class="num">200</div><div class="cap">lead mentah dari 5 kanal</div></div>
 <div class="card"><div class="num">173</div><div class="cap">identitas setelah dedup</div></div>
 <div class="card"><div class="num">27</div><div class="cap">digabung otomatis</div></div>
-<div class="card"><div class="num">23</div><div class="cap">masuk antrean manusia</div></div>
+<div class="card"><div class="num">8</div><div class="cap">masuk antrean manusia</div></div>
 <div class="card"><div class="num ok">0</div><div class="cap">salah gabung</div></div>
 <div class="card"><div class="num">3</div><div class="cap">orang terpecah</div></div>
 </div>
@@ -79,9 +79,83 @@ dari nomor dan email yang sudah dinormalkan, jadi yang dibandingkan hanya kandid
 yang masuk akal.</p>
 
 <h3>Antrean yang diputuskan manusia, bukan mesin</h3>
-<p>Ini isi antrean itu. Skor 1,00 berarti yakin; skor di bawahnya berarti mesin tahu
-ia tidak tahu, dan itulah yang diteruskan ke orang.</p>
-<table><thead><tr><th>Lead</th><th>Kanal</th><th>Nama masuk</th><th>Calon</th><th>Nama tersimpan</th><th>Skor</th><th>Kenapa tidak digabung</th></tr></thead><tbody><tr><td><code>ev-0005</code></td><td>Form website</td><td>PUTRI PRATAMA</td><td>ID011</td><td>putri pratama</td><td class="s-warn">0,75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0048</code></td><td>WhatsApp</td><td>Michael</td><td>ID031</td><td>Michael</td><td class="s-warn">0,75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0130</code></td><td>LinkedIn</td><td>Lukas Halim</td><td>ID017</td><td>Lukas H.</td><td class="s-warn">0,75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0153</code></td><td>Form website</td><td>Pak Dewi</td><td>ID004</td><td>Ibu Dewi</td><td class="s-warn">0,75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0167</code></td><td>Form website</td><td>Ibu Dewi</td><td>ID093</td><td>Ibu Dewi</td><td class="s-warn">0,75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0191</code></td><td>Google / Meta Ads</td><td>Fajar</td><td>ID054</td><td>Fajar</td><td class="s-warn">0,75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0012</code></td><td>LinkedIn</td><td>hendra halim</td><td>ID027</td><td>hendra fischer</td><td class="s-ok">0,92</td><td>nama mirip, perusahaan dan kota sama</td></tr><tr><td><code>ev-0071</code></td><td>Email</td><td>Rizky Wijaya</td><td>ID038</td><td>Rizky Wijaya</td><td class="s-ok">1,00</td><td>nama lengkap sama, perusahaan dan kota sama</td></tr><tr><td><code>ev-0072</code></td><td>LinkedIn</td><td>bayu saputra</td><td>ID040</td><td>bayu saputra</td><td class="s-ok">1,00</td><td>nama lengkap sama, perusahaan dan kota sama</td></tr><tr><td><code>ev-0091</code></td><td>Google / Meta Ads</td><td>nadia pratama</td><td>ID043</td><td>nadia pratama</td><td class="s-ok">1,00</td><td>nama lengkap sama, perusahaan dan kota sama</td></tr></tbody></table>
+<p><strong>Cara membaca skor di tabel ini.</strong> Skor adalah kekuatan bukti,
+bukan izin untuk menggabungkan. Ada dua jalur yang berbeda, dan bedanya penting:</p>
+<ul>
+<li><strong>Nomor atau email cocok</strong> — digabung otomatis, skor 0,95–1,00.
+Ini satu-satunya jalur yang boleh menggabungkan tanpa manusia.</li>
+<li><strong>Hanya nama yang cocok</strong> — <em>tidak pernah</em> digabung otomatis,
+termasuk pada skor 1,00. Pasangan seperti ini selalu masuk antrean.</li>
+</ul>
+<p>Karena itu Anda akan melihat skor 1,00 di antrean. Itu bukan kesalahan hitung:
+itu keputusan bahwa nama saja tidak cukup untuk mengambil alih riwayat orang lain.
+Di uji ini antrean berisi 8 pasangan — 3 di antaranya
+benar-benar orang yang sama (perlu diputuskan manusia), 5 hanya mirip
+namanya. Yang terakhir adalah biaya yang diterima, bukan hasil yang diinginkan,
+dan jauh lebih murah daripada menggabungkan dua orang berbeda.</p>
+<table><thead><tr><th>Lead</th><th>Kanal</th><th>Nama masuk</th><th>Calon</th><th>Nama tersimpan</th><th>Skor</th><th>Kenapa tidak digabung</th></tr></thead><tbody><tr><td><code>ev-0005</code></td><td>Form website</td><td>PUTRI PRATAMA</td><td>ID011</td><td>putri pratama</td><td class="s-warn">0,75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0024</code></td><td>Email</td><td>Lestari M.</td><td>ID115</td><td>lestari maulana</td><td class="s-warn">0,75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0160</code></td><td>Form website</td><td>Agus W.</td><td>ID025</td><td>Agus W.</td><td class="s-warn">0,75</td><td>nama nyaris identik, perlu dilihat manusia</td></tr><tr><td><code>ev-0018</code></td><td>Email</td><td>Pak Yusuf</td><td>ID056</td><td>Yusuf</td><td class="s-ok">0,92</td><td>nama mirip, marga cocok, perusahaan dan kota sama</td></tr><tr><td><code>ev-0172</code></td><td>LinkedIn</td><td>Lestari</td><td>ID008</td><td>LESTARI BECKER</td><td class="s-ok">0,92</td><td>nama mirip, marga cocok, perusahaan dan kota sama</td></tr><tr><td><code>ev-0071</code></td><td>Email</td><td>Rizky Wijaya</td><td>ID038</td><td>Rizky Wijaya</td><td class="s-ok">1,00</td><td>nama lengkap sama, perusahaan dan kota sama</td></tr><tr><td><code>ev-0072</code></td><td>LinkedIn</td><td>bayu saputra</td><td>ID040</td><td>bayu saputra</td><td class="s-ok">1,00</td><td>nama lengkap sama, perusahaan dan kota sama</td></tr><tr><td><code>ev-0091</code></td><td>Google / Meta Ads</td><td>nadia pratama</td><td>ID043</td><td>nadia pratama</td><td class="s-ok">1,00</td><td>nama lengkap sama, perusahaan dan kota sama</td></tr></tbody></table>
+
+<h3>Rekonsiliasi angka</h3>
+<p>Angka 173 di atas bisa terlihat tidak menutup, jadi ini rinciannya:</p>
+<table>
+<thead><tr><th>Langkah</th><th>Jumlah</th></tr></thead>
+<tbody>
+<tr><td>Lead mentah masuk</td><td>200</td></tr>
+<tr><td>Orang unik sebenarnya (kunci jawaban)</td><td>170</td></tr>
+<tr><td>Duplikat yang ditanam pada data uji</td><td>30</td></tr>
+<tr><td>Digabung otomatis lewat nomor atau email</td><td>27</td></tr>
+<tr><td>Terpecah, menunggu manusia (aman)</td><td>3</td></tr>
+<tr><td><strong>Identitas sementara</strong> = 170 + 3</td>
+<td><strong>173</strong></td></tr>
+<tr><td>Setelah antrean diputuskan manusia</td><td>170</td></tr>
+</tbody>
+</table>
+<p class="note">Jadi 173 bukan angka final. Ia memuat 3 orang yang
+muncul sebagai dua baris karena tidak digabung otomatis. Setelah 3
+pasangan di antrean diputuskan, angkanya turun ke 170. Tidak ada duplikat
+yang hilang di antara kedua angka itu — keduanya menghitung hal yang sama pada
+tahap yang berbeda.</p>
+
+<h3>Yang diperbaiki 23 November 2026</h3>
+<p>Versi 21 November mendapat empat catatan. Semuanya benar, dan semuanya
+diperbaiki — bukan dijelaskan:</p>
+<table>
+<thead><tr><th>Catatan</th><th>Penyebab</th><th>Perbaikan</th></tr></thead>
+<tbody>
+<tr><td>"Pak Dewi" dan "Ibu Dewi" dinilai nyaris identik</td>
+<td>Sapaan Pak/Ibu dibuang sebagai gelar, sehingga dua orang berbeda gender
+menyusut menjadi satu token yang sama</td>
+<td>Sapaan kini dibaca sebagai sinyal. Sapaan berlawanan berarti dua orang
+berbeda, dan dipisahkan sebelum skor dihitung</td></tr>
+<tr><td>"Hendra Halim" dan "Hendra Fischer" bernilai 0,921</td>
+<td>Pencocokan menghitung cakupan kata, sehingga nama depan yang sama menyumbang
+terlalu besar</td>
+<td>Marga diberi bobot 0,65 dan nama depan 0,35. Marga juga harus cocok sendiri
+(minimal 0,85) sebelum sebuah pasangan boleh masuk antrean</td></tr>
+<tr><td>Skor 1,00 muncul di antrean manusia</td>
+<td>Legenda halaman menyebut 1,00 berarti yakin, padahal jalur nama memang tidak
+pernah menggabung otomatis</td>
+<td>Legenda ditulis ulang di atas: skor adalah kekuatan bukti, bukan izin
+menggabungkan</td></tr>
+<tr><td>27 digabung + 3 terpecah = 30, lalu 23 pasangan itu apa</td>
+<td>Angka identitas ditampilkan sebagai final padahal antrean belum diputuskan</td>
+<td>Tabel rekonsiliasi di atas; angka 173 kini ditandai sementara</td></tr>
+</tbody>
+</table>
+<p>Akibatnya, pada data yang sama, pasangan di antrean turun dari 23 menjadi
+8 — <strong>tanpa kehilangan satu pun duplikat nyata</strong>. Kelima
+belas pasangan yang keluar seluruhnya orang berbeda: kebisingan yang selama ini
+membuat antrean tidak layak diperiksa manusia.</p>
+
+<h3>Uji kasus lapangan</h3>
+<p>Data sintetis bisa lolos hanya karena datanya sendiri yang salah. Karena itu
+ada 22 kasus yang diuji terpisah, diambil dari yang benar-benar muncul
+di lapangan Indonesia dan Jerman — termasuk keempat kasus di atas, varian nomor
+<code>0812…</code>/<code>+62812…</code>/<code>62812…</code>, email bertanda
+<code>+ads</code>, umlaut Jerman, nama terbalik, dan marga yang disingkat.</p>
+<p><strong>22 dari 22 lulus.</strong> Yang gagal akan
+ditampilkan di tabel ini juga, tidak disembunyikan.</p>
+<table><thead><tr><th>Kasus</th><th>Nama</th><th>Harusnya</th><th>Hasil</th><th>Skor</th><th></th></tr></thead><tbody><tr><td>sapaan bergender berlawanan = dua orang berbeda</td><td><code>Pak Dewi</code><br><code>Ibu Dewi</code></td><td>pisah</td><td>pisah</td><td>0,00</td><td class="s-ok">lulus</td></tr><tr><td>nama sama tapi Pak vs Ibu: dua orang</td><td><code>Pak Budi Santoso</code><br><code>Ibu Budi Santoso</code></td><td>pisah</td><td>pisah</td><td>0,00</td><td class="s-ok">lulus</td></tr><tr><td>Mas vs Mbak (Jawa): dua orang</td><td><code>Mas Agus</code><br><code>Mbak Agus</code></td><td>pisah</td><td>pisah</td><td>0,00</td><td class="s-ok">lulus</td></tr><tr><td>nama depan sama, marga beda total</td><td><code>Hendra Halim</code><br><code>Hendra Fischer</code></td><td>pisah</td><td>pisah</td><td>0,80</td><td class="s-ok">lulus</td></tr><tr><td>nama lengkap sama: antrean, TIDAK digabung otomatis</td><td><code>Rizky Wijaya</code><br><code>Rizky Wijaya</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nomor sama ditulis beda format</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nomor sama, kurung dan spasi</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>email +tag iklan</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>0,95</td><td class="s-ok">lulus</td></tr><tr><td>gmail mengabaikan titik</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>gabung</td><td>gabung</td><td>0,95</td><td class="s-ok">lulus</td></tr><tr><td>huruf besar/kecil</td><td><code>Budi Santoso</code><br><code>budi santoso</code></td><td>gabung</td><td>gabung</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>marga disingkat: antrean, bukan gabung</td><td><code>Budi Santoso</code><br><code>Budi S.</code></td><td>antrean</td><td>antrean</td><td>0,96</td><td class="s-ok">lulus</td></tr><tr><td>salah ketik satu huruf di marga</td><td><code>Budi Santoso</code><br><code>Budi Santosa</code></td><td>antrean</td><td>antrean</td><td>0,98</td><td class="s-ok">lulus</td></tr><tr><td>urutan nama terbalik</td><td><code>Budi Santoso</code><br><code>Santoso Budi</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>gelar netral (Dr.) dibuang</td><td><code>Dr. Budi Santoso</code><br><code>Budi Santoso</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>umlaut Jerman dinormalkan</td><td><code>Thomas Müller</code><br><code>Thomas Muller</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nama depan sama, marga beda</td><td><code>Budi Santoso</code><br><code>Budi Hartono</code></td><td>pisah</td><td>pisah</td><td>0,90</td><td class="s-ok">lulus</td></tr><tr><td>nama Jerman, marga beda</td><td><code>Thomas Weber</code><br><code>Thomas Becker</code></td><td>pisah</td><td>pisah</td><td>0,91</td><td class="s-ok">lulus</td></tr><tr><td>nama satu kata, beda perusahaan dan kota</td><td><code>Yusuf</code><br><code>Yusuf</code></td><td>pisah</td><td>pisah</td><td>0,47</td><td class="s-ok">lulus</td></tr><tr><td>nama lengkap sama, beda kota/perusahaan: tetap antrean</td><td><code>Budi Santoso</code><br><code>Budi Santoso</code></td><td>antrean</td><td>antrean</td><td>0,75</td><td class="s-ok">lulus</td></tr><tr><td>perempuan Jerman, marga beda</td><td><code>Anna Schmidt</code><br><code>Anna Weber</code></td><td>pisah</td><td>pisah</td><td>0,64</td><td class="s-ok">lulus</td></tr><tr><td>WhatsApp (nomor saja) vs email (email saja), nama sama</td><td><code>Sabine Schmidt</code><br><code>Sabine Schmidt</code></td><td>antrean</td><td>antrean</td><td>1,00</td><td class="s-ok">lulus</td></tr><tr><td>nama dipendekkan jadi satu kata</td><td><code>Lestari</code><br><code>Lestari Becker</code></td><td>antrean</td><td>antrean</td><td>0,92</td><td class="s-ok">lulus</td></tr></tbody></table>
 
 <div class="rule"></div>
 
@@ -139,8 +213,24 @@ yang saya pegang.</li>
 dengan tangan. Kalau ujinya dijalankan ulang dan hasilnya berubah, angka di halaman
 ini ikut berubah — tidak ada angka yang bisa tertinggal dari mesinnya.</p>
 
+<h3>Satu batas data uji yang perlu Anda tahu</h3>
+<p>Pada data uji ini, sapaan Pak/Ibu ditulis <em>acak per kemunculan</em>, bukan
+per orang. Akibatnya satu orang bisa muncul sebagai "Ibu Siti" di satu kanal dan
+"Pak Siti" di kanal lain — sesuatu yang tidak mungkin terjadi di dunia nyata,
+karena sapaan mengikuti gender orangnya dan tidak berubah antar-kanal. Generator
+datanya sudah dicatat untuk diperbaiki pada uji berikutnya. Logika pencocokan
+sendiri sudah menangani kasus ini dengan benar (lihat uji kasus lapangan di atas),
+tapi data ujinya masih mengandung ketidakkonsistenan itu.</p>
+
 <div class="foot">
 Demo SAB — poin 1, 5, 6. Data uji sintetis, CRM tiruan.<br>
+Kode yang bisa Anda periksa sendiri:
+<a href="https://github.com/vraafi/sab-demo">github.com/vraafi/sab-demo</a><br>
+Isinya: <code>dedup.py</code> (logika pencocokan), <code>demo.py</code> (menjalankan
+uji), <code>uji_kasus.py</code> (22 kasus lapangan), <code>bandingkan.py</code>
+(perbandingan versi lama vs baru), <code>generate.py</code> dan
+<code>data_uji.json</code> (data uji), <code>hasil_demo.json</code> (keluaran mentah),
+serta <code>log_jalan.txt</code> (log eksekusi).<br>
 Dijalankan ulang: <code>python sab_demo/demo.py &amp;&amp; python sab_demo/bangun_halaman.py</code>
 </div>
 

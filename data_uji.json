@@ -1,0 +1,3566 @@
+{
+ "orang": [
+  {
+   "id": "P000",
+   "nama": "Yusuf Weber",
+   "nomor": "628213261622",
+   "email": "yusuf.weber0@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P001",
+   "nama": "Nadia Müller",
+   "nomor": "628139841401",
+   "email": "nadia.muller1@outlook.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "München"
+  },
+  {
+   "id": "P002",
+   "nama": "Eko Schmidt",
+   "nomor": "628216550893",
+   "email": "eko.schmidt2@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P003",
+   "nama": "Ayu Wijaya",
+   "nomor": "628786509885",
+   "email": "ayu.wijaya3@gmx.de",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P004",
+   "nama": "Eko Siregar",
+   "nomor": "628225097084",
+   "email": "eko.siregar4@gmail.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Medan"
+  },
+  {
+   "id": "P005",
+   "nama": "Putri Pratama",
+   "nomor": "628135456200",
+   "email": "putri.pratama5@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P006",
+   "nama": "Fajar Pratama",
+   "nomor": "628130104639",
+   "email": "fajar.pratama6@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P007",
+   "nama": "Anna Wijaya",
+   "nomor": "628131050328",
+   "email": "anna.wijaya7@gmail.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Medan"
+  },
+  {
+   "id": "P008",
+   "nama": "Eko Maulana",
+   "nomor": "628578685597",
+   "email": "eko.maulana8@gmail.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "München"
+  },
+  {
+   "id": "P009",
+   "nama": "Anna Kusuma",
+   "nomor": "628125673520",
+   "email": "anna.kusuma9@outlook.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P010",
+   "nama": "Lestari Maulana",
+   "nomor": "628788547086",
+   "email": "lestari.maulana10@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "München"
+  },
+  {
+   "id": "P011",
+   "nama": "Julia Fischer",
+   "nomor": "628133408520",
+   "email": "julia.fischer11@gmail.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P012",
+   "nama": "Hendra Halim",
+   "nomor": "628574296072",
+   "email": "hendra.halim12@yahoo.com",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P013",
+   "nama": "Eko Kusuma",
+   "nomor": "628128571491",
+   "email": "eko.kusuma13@yahoo.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P014",
+   "nama": "Fajar Maulana",
+   "nomor": "628787263995",
+   "email": "fajar.maulana14@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Medan"
+  },
+  {
+   "id": "P015",
+   "nama": "Thomas Hidayat",
+   "nomor": "628572212391",
+   "email": "thomas.hidayat15@gmx.de",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P016",
+   "nama": "Siti Nugroho",
+   "nomor": "628789756717",
+   "email": "siti.nugroho16@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P017",
+   "nama": "Siti Saputra",
+   "nomor": "628126899975",
+   "email": "siti.saputra17@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P018",
+   "nama": "Yusuf Becker",
+   "nomor": "628213215380",
+   "email": "yusuf.becker18@gmail.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P019",
+   "nama": "Thomas Hoffmann",
+   "nomor": "628220049294",
+   "email": "thomas.hoffmann19@yahoo.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P020",
+   "nama": "Julia Hidayat",
+   "nomor": "628572089677",
+   "email": "julia.hidayat20@yahoo.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P021",
+   "nama": "Ayu Pratama",
+   "nomor": "628784041767",
+   "email": "ayu.pratama21@gmail.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P022",
+   "nama": "Fajar Hoffmann",
+   "nomor": "628225590458",
+   "email": "fajar.hoffmann22@gmx.de",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P023",
+   "nama": "Fajar Fischer",
+   "nomor": "628215635134",
+   "email": "fajar.fischer23@gmail.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan"
+  },
+  {
+   "id": "P024",
+   "nama": "Lestari Müller",
+   "nomor": "628225466156",
+   "email": "lestari.muller24@yahoo.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "München"
+  },
+  {
+   "id": "P025",
+   "nama": "Indah Weber",
+   "nomor": "628215253864",
+   "email": "indah.weber25@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P026",
+   "nama": "Maya Halim",
+   "nomor": "628131917744",
+   "email": "maya.halim26@yahoo.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P027",
+   "nama": "Eko Müller",
+   "nomor": "628226209362",
+   "email": "eko.muller27@yahoo.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P028",
+   "nama": "Michael Weber",
+   "nomor": "628120913435",
+   "email": "michael.weber28@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P029",
+   "nama": "Felix Santoso",
+   "nomor": "628139141972",
+   "email": "felix.santoso29@gmx.de",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P030",
+   "nama": "Putri Weber",
+   "nomor": "628130303832",
+   "email": "putri.weber30@yahoo.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P031",
+   "nama": "Siti Nugroho",
+   "nomor": "628131088117",
+   "email": "siti.nugroho31@yahoo.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P032",
+   "nama": "Fajar Wijaya",
+   "nomor": "628138335867",
+   "email": "fajar.wijaya32@yahoo.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P033",
+   "nama": "Indah Hoffmann",
+   "nomor": "628573509257",
+   "email": "indah.hoffmann33@yahoo.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P034",
+   "nama": "Putri Saputra",
+   "nomor": "628134602352",
+   "email": "putri.saputra34@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "München"
+  },
+  {
+   "id": "P035",
+   "nama": "Julia Müller",
+   "nomor": "628572649031",
+   "email": "julia.muller35@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P036",
+   "nama": "Putri Halim",
+   "nomor": "628131143019",
+   "email": "putri.halim36@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "München"
+  },
+  {
+   "id": "P037",
+   "nama": "Indah Hidayat",
+   "nomor": "628216005743",
+   "email": "indah.hidayat37@gmail.com",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P038",
+   "nama": "Eko Saputra",
+   "nomor": "628217534967",
+   "email": "eko.saputra38@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P039",
+   "nama": "Fajar Wijaya",
+   "nomor": "628215526271",
+   "email": "fajar.wijaya39@yahoo.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P040",
+   "nama": "Maya Müller",
+   "nomor": "628224221495",
+   "email": "maya.muller40@gmx.de",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P041",
+   "nama": "Agus Wijaya",
+   "nomor": "628784034176",
+   "email": "agus.wijaya41@outlook.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "München"
+  },
+  {
+   "id": "P042",
+   "nama": "Putri Saputra",
+   "nomor": "628210251925",
+   "email": "putri.saputra42@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P043",
+   "nama": "Felix Siregar",
+   "nomor": "628124643640",
+   "email": "felix.siregar43@outlook.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P044",
+   "nama": "Siti Schmidt",
+   "nomor": "628227808271",
+   "email": "siti.schmidt44@yahoo.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P045",
+   "nama": "Agus Saputra",
+   "nomor": "628211335197",
+   "email": "agus.saputra45@gmail.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "München"
+  },
+  {
+   "id": "P046",
+   "nama": "Siti Kusuma",
+   "nomor": "628578703586",
+   "email": "siti.kusuma46@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P047",
+   "nama": "Julia Becker",
+   "nomor": "628780587422",
+   "email": "julia.becker47@outlook.com",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Medan"
+  },
+  {
+   "id": "P048",
+   "nama": "Michael Schmidt",
+   "nomor": "628789649129",
+   "email": "michael.schmidt48@yahoo.com",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P049",
+   "nama": "Bayu Fischer",
+   "nomor": "628784858748",
+   "email": "bayu.fischer49@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P050",
+   "nama": "Sabine Schmidt",
+   "nomor": "628783597840",
+   "email": "sabine.schmidt50@gmx.de",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P051",
+   "nama": "Eko Kusuma",
+   "nomor": "628228770635",
+   "email": "eko.kusuma51@yahoo.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P052",
+   "nama": "Sabine Schmidt",
+   "nomor": "628133283237",
+   "email": "sabine.schmidt52@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Medan"
+  },
+  {
+   "id": "P053",
+   "nama": "Lestari Hoffmann",
+   "nomor": "628219700801",
+   "email": "lestari.hoffmann53@outlook.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P054",
+   "nama": "Felix Hidayat",
+   "nomor": "628125446956",
+   "email": "felix.hidayat54@gmail.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P055",
+   "nama": "Yusuf Hidayat",
+   "nomor": "628134087768",
+   "email": "yusuf.hidayat55@yahoo.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan"
+  },
+  {
+   "id": "P056",
+   "nama": "Julia Wijaya",
+   "nomor": "628218505494",
+   "email": "julia.wijaya56@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P057",
+   "nama": "Dewi Wijaya",
+   "nomor": "628579706907",
+   "email": "dewi.wijaya57@gmail.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P058",
+   "nama": "Dewi Pratama",
+   "nomor": "628212909934",
+   "email": "dewi.pratama58@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P059",
+   "nama": "Julia Siregar",
+   "nomor": "628120602028",
+   "email": "julia.siregar59@gmx.de",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P060",
+   "nama": "Anna Fischer",
+   "nomor": "628220175244",
+   "email": "anna.fischer60@gmail.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "München"
+  },
+  {
+   "id": "P061",
+   "nama": "Dewi Halim",
+   "nomor": "628120516776",
+   "email": "dewi.halim61@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "München"
+  },
+  {
+   "id": "P062",
+   "nama": "Hendra Becker",
+   "nomor": "628136620429",
+   "email": "hendra.becker62@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P063",
+   "nama": "Siti Maulana",
+   "nomor": "628226314500",
+   "email": "siti.maulana63@yahoo.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P064",
+   "nama": "Ayu Müller",
+   "nomor": "628789677429",
+   "email": "ayu.muller64@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P065",
+   "nama": "Agus Maulana",
+   "nomor": "628222179890",
+   "email": "agus.maulana65@outlook.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P066",
+   "nama": "Ayu Halim",
+   "nomor": "628577354816",
+   "email": "ayu.halim66@yahoo.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P067",
+   "nama": "Sabine Kusuma",
+   "nomor": "628225082032",
+   "email": "sabine.kusuma67@gmx.de",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P068",
+   "nama": "Budi Weber",
+   "nomor": "628219490581",
+   "email": "budi.weber68@gmail.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "München"
+  },
+  {
+   "id": "P069",
+   "nama": "Fajar Pratama",
+   "nomor": "628222419410",
+   "email": "fajar.pratama69@outlook.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "München"
+  },
+  {
+   "id": "P070",
+   "nama": "Rizky Becker",
+   "nomor": "628130101894",
+   "email": "rizky.becker70@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Medan"
+  },
+  {
+   "id": "P071",
+   "nama": "Rizky Wijaya",
+   "nomor": "628214976170",
+   "email": "rizky.wijaya71@outlook.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P072",
+   "nama": "Bayu Saputra",
+   "nomor": "628576309134",
+   "email": "bayu.saputra72@gmx.de",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P073",
+   "nama": "Hendra Hidayat",
+   "nomor": "628787985435",
+   "email": "hendra.hidayat73@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "München"
+  },
+  {
+   "id": "P074",
+   "nama": "Rizky Fischer",
+   "nomor": "628213577838",
+   "email": "rizky.fischer74@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P075",
+   "nama": "Anna Wijaya",
+   "nomor": "628126116363",
+   "email": "anna.wijaya75@gmail.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P076",
+   "nama": "Indah Hoffmann",
+   "nomor": "628210123710",
+   "email": "indah.hoffmann76@gmail.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P077",
+   "nama": "Maya Maulana",
+   "nomor": "628222729005",
+   "email": "maya.maulana77@outlook.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P078",
+   "nama": "Budi Weber",
+   "nomor": "628786947528",
+   "email": "budi.weber78@yahoo.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P079",
+   "nama": "Anna Wijaya",
+   "nomor": "628781560064",
+   "email": "anna.wijaya79@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P080",
+   "nama": "Hendra Hoffmann",
+   "nomor": "628211339987",
+   "email": "hendra.hoffmann80@yahoo.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P081",
+   "nama": "Thomas Nugroho",
+   "nomor": "628229479672",
+   "email": "thomas.nugroho81@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "München"
+  },
+  {
+   "id": "P082",
+   "nama": "Michael Hoffmann",
+   "nomor": "628782184700",
+   "email": "michael.hoffmann82@gmx.de",
+   "perusahaan": "Toko Berkah",
+   "kota": "München"
+  },
+  {
+   "id": "P083",
+   "nama": "Budi Nugroho",
+   "nomor": "628120943074",
+   "email": "budi.nugroho83@yahoo.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "München"
+  },
+  {
+   "id": "P084",
+   "nama": "Clara Wijaya",
+   "nomor": "628221811826",
+   "email": "clara.wijaya84@gmail.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P085",
+   "nama": "Clara Weber",
+   "nomor": "628213513837",
+   "email": "clara.weber85@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P086",
+   "nama": "Lukas Santoso",
+   "nomor": "628130518485",
+   "email": "lukas.santoso86@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P087",
+   "nama": "Hendra Fischer",
+   "nomor": "628574806338",
+   "email": "hendra.fischer87@outlook.com",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P088",
+   "nama": "Clara Hoffmann",
+   "nomor": "628128574247",
+   "email": "clara.hoffmann88@yahoo.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P089",
+   "nama": "Clara Weber",
+   "nomor": "628123615221",
+   "email": "clara.weber89@gmx.de",
+   "perusahaan": "Toko Berkah",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P090",
+   "nama": "Agus Weber",
+   "nomor": "628213056278",
+   "email": "agus.weber90@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P091",
+   "nama": "Nadia Pratama",
+   "nomor": "628229474975",
+   "email": "nadia.pratama91@gmx.de",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Medan"
+  },
+  {
+   "id": "P092",
+   "nama": "Fajar Müller",
+   "nomor": "628570028701",
+   "email": "fajar.muller92@gmx.de",
+   "perusahaan": "Toko Berkah",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P093",
+   "nama": "Putri Nugroho",
+   "nomor": "628217723807",
+   "email": "putri.nugroho93@yahoo.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P094",
+   "nama": "Hendra Müller",
+   "nomor": "628125127395",
+   "email": "hendra.muller94@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P095",
+   "nama": "Ayu Müller",
+   "nomor": "628214082343",
+   "email": "ayu.muller95@gmail.com",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P096",
+   "nama": "Nadia Fischer",
+   "nomor": "628211441400",
+   "email": "nadia.fischer96@gmail.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "München"
+  },
+  {
+   "id": "P097",
+   "nama": "Indah Fischer",
+   "nomor": "628228904081",
+   "email": "indah.fischer97@gmail.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P098",
+   "nama": "Sabine Saputra",
+   "nomor": "628781220708",
+   "email": "sabine.saputra98@gmx.de",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Medan"
+  },
+  {
+   "id": "P099",
+   "nama": "Bayu Santoso",
+   "nomor": "628227463017",
+   "email": "bayu.santoso99@yahoo.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P100",
+   "nama": "Maya Becker",
+   "nomor": "628570227650",
+   "email": "maya.becker100@gmx.de",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Medan"
+  },
+  {
+   "id": "P101",
+   "nama": "Maya Halim",
+   "nomor": "628229512592",
+   "email": "maya.halim101@gmx.de",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P102",
+   "nama": "Yusuf Kusuma",
+   "nomor": "628132939137",
+   "email": "yusuf.kusuma102@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P103",
+   "nama": "Indah Hidayat",
+   "nomor": "628578432521",
+   "email": "indah.hidayat103@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P104",
+   "nama": "Eko Weber",
+   "nomor": "628120186246",
+   "email": "eko.weber104@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Medan"
+  },
+  {
+   "id": "P105",
+   "nama": "Yusuf Schmidt",
+   "nomor": "628789037594",
+   "email": "yusuf.schmidt105@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Medan"
+  },
+  {
+   "id": "P106",
+   "nama": "Putri Weber",
+   "nomor": "628221344909",
+   "email": "putri.weber106@gmail.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P107",
+   "nama": "Ayu Kusuma",
+   "nomor": "628120967086",
+   "email": "ayu.kusuma107@gmx.de",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P108",
+   "nama": "Rizky Weber",
+   "nomor": "628783025160",
+   "email": "rizky.weber108@gmail.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P109",
+   "nama": "Michael Wijaya",
+   "nomor": "628224409731",
+   "email": "michael.wijaya109@yahoo.com",
+   "perusahaan": "PT Karya Logam",
+   "kota": "München"
+  },
+  {
+   "id": "P110",
+   "nama": "Michael Siregar",
+   "nomor": "628785884492",
+   "email": "michael.siregar110@gmx.de",
+   "perusahaan": "Toko Berkah",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P111",
+   "nama": "Bayu Müller",
+   "nomor": "628573515665",
+   "email": "bayu.muller111@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P112",
+   "nama": "Felix Hoffmann",
+   "nomor": "628218285382",
+   "email": "felix.hoffmann112@gmx.de",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P113",
+   "nama": "Fajar Wijaya",
+   "nomor": "628577682189",
+   "email": "fajar.wijaya113@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Medan"
+  },
+  {
+   "id": "P114",
+   "nama": "Maya Müller",
+   "nomor": "628227511466",
+   "email": "maya.muller114@gmx.de",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan"
+  },
+  {
+   "id": "P115",
+   "nama": "Anna Fischer",
+   "nomor": "628127848892",
+   "email": "anna.fischer115@yahoo.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P116",
+   "nama": "Bayu Wijaya",
+   "nomor": "628210697321",
+   "email": "bayu.wijaya116@gmail.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P117",
+   "nama": "Fajar Halim",
+   "nomor": "628228112888",
+   "email": "fajar.halim117@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Medan"
+  },
+  {
+   "id": "P118",
+   "nama": "Budi Hoffmann",
+   "nomor": "628120142670",
+   "email": "budi.hoffmann118@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Medan"
+  },
+  {
+   "id": "P119",
+   "nama": "Anna Weber",
+   "nomor": "628576966523",
+   "email": "anna.weber119@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P120",
+   "nama": "Clara Siregar",
+   "nomor": "628134022748",
+   "email": "clara.siregar120@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P121",
+   "nama": "Hendra Santoso",
+   "nomor": "628215115399",
+   "email": "hendra.santoso121@yahoo.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P122",
+   "nama": "Hendra Hoffmann",
+   "nomor": "628126450958",
+   "email": "hendra.hoffmann122@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P123",
+   "nama": "Lukas Weber",
+   "nomor": "628786562058",
+   "email": "lukas.weber123@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P124",
+   "nama": "Lestari Becker",
+   "nomor": "628782640180",
+   "email": "lestari.becker124@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P125",
+   "nama": "Julia Saputra",
+   "nomor": "628780964061",
+   "email": "julia.saputra125@gmx.de",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Medan"
+  },
+  {
+   "id": "P126",
+   "nama": "Ayu Halim",
+   "nomor": "628578973883",
+   "email": "ayu.halim126@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P127",
+   "nama": "Eko Fischer",
+   "nomor": "628570229231",
+   "email": "eko.fischer127@gmail.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P128",
+   "nama": "Indah Pratama",
+   "nomor": "628784165842",
+   "email": "indah.pratama128@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P129",
+   "nama": "Dewi Pratama",
+   "nomor": "628129486459",
+   "email": "dewi.pratama129@gmail.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Medan"
+  },
+  {
+   "id": "P130",
+   "nama": "Lukas Halim",
+   "nomor": "628226235235",
+   "email": "lukas.halim130@gmail.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P131",
+   "nama": "Lukas Hidayat",
+   "nomor": "628126713328",
+   "email": "lukas.hidayat131@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P132",
+   "nama": "Rizky Maulana",
+   "nomor": "628214510294",
+   "email": "rizky.maulana132@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P133",
+   "nama": "Hendra Nugroho",
+   "nomor": "628223939323",
+   "email": "hendra.nugroho133@yahoo.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P134",
+   "nama": "Maya Schmidt",
+   "nomor": "628780789107",
+   "email": "maya.schmidt134@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P135",
+   "nama": "Eko Wijaya",
+   "nomor": "628578907784",
+   "email": "eko.wijaya135@gmail.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P136",
+   "nama": "Michael Wijaya",
+   "nomor": "628134012278",
+   "email": "michael.wijaya136@gmail.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P137",
+   "nama": "Siti Pratama",
+   "nomor": "628226027608",
+   "email": "siti.pratama137@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P138",
+   "nama": "Thomas Weber",
+   "nomor": "628577879941",
+   "email": "thomas.weber138@gmail.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P139",
+   "nama": "Bayu Becker",
+   "nomor": "628130976359",
+   "email": "bayu.becker139@gmail.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P140",
+   "nama": "Clara Weber",
+   "nomor": "628216185044",
+   "email": "clara.weber140@yahoo.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Medan"
+  },
+  {
+   "id": "P141",
+   "nama": "Nadia Pratama",
+   "nomor": "628212816843",
+   "email": "nadia.pratama141@yahoo.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Medan"
+  },
+  {
+   "id": "P142",
+   "nama": "Rizky Schmidt",
+   "nomor": "628571487203",
+   "email": "rizky.schmidt142@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P143",
+   "nama": "Budi Müller",
+   "nomor": "628217643321",
+   "email": "budi.muller143@outlook.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Medan"
+  },
+  {
+   "id": "P144",
+   "nama": "Michael Becker",
+   "nomor": "628218761987",
+   "email": "michael.becker144@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P145",
+   "nama": "Felix Halim",
+   "nomor": "628222477314",
+   "email": "felix.halim145@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan"
+  },
+  {
+   "id": "P146",
+   "nama": "Siti Saputra",
+   "nomor": "628572580554",
+   "email": "siti.saputra146@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P147",
+   "nama": "Siti Kusuma",
+   "nomor": "628789966133",
+   "email": "siti.kusuma147@gmail.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P148",
+   "nama": "Putri Maulana",
+   "nomor": "628219173744",
+   "email": "putri.maulana148@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Medan"
+  },
+  {
+   "id": "P149",
+   "nama": "Agus Hoffmann",
+   "nomor": "628217929767",
+   "email": "agus.hoffmann149@gmx.de",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P150",
+   "nama": "Putri Pratama",
+   "nomor": "628574906870",
+   "email": "putri.pratama150@gmx.de",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P151",
+   "nama": "Nadia Nugroho",
+   "nomor": "628229273275",
+   "email": "nadia.nugroho151@outlook.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P152",
+   "nama": "Julia Saputra",
+   "nomor": "628229201276",
+   "email": "julia.saputra152@yahoo.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P153",
+   "nama": "Dewi Hoffmann",
+   "nomor": "628780790751",
+   "email": "dewi.hoffmann153@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "München"
+  },
+  {
+   "id": "P154",
+   "nama": "Siti Wijaya",
+   "nomor": "628123031686",
+   "email": "siti.wijaya154@gmx.de",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "München"
+  },
+  {
+   "id": "P155",
+   "nama": "Julia Kusuma",
+   "nomor": "628130068537",
+   "email": "julia.kusuma155@outlook.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Medan"
+  },
+  {
+   "id": "P156",
+   "nama": "Hendra Müller",
+   "nomor": "628130705170",
+   "email": "hendra.muller156@yahoo.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P157",
+   "nama": "Agus Becker",
+   "nomor": "628227490861",
+   "email": "agus.becker157@gmail.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P158",
+   "nama": "Nadia Kusuma",
+   "nomor": "628127924669",
+   "email": "nadia.kusuma158@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P159",
+   "nama": "Clara Pratama",
+   "nomor": "628134373508",
+   "email": "clara.pratama159@gmx.de",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya"
+  },
+  {
+   "id": "P160",
+   "nama": "Agus Weber",
+   "nomor": "628137384325",
+   "email": "agus.weber160@outlook.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P161",
+   "nama": "Ayu Schmidt",
+   "nomor": "628572384267",
+   "email": "ayu.schmidt161@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Medan"
+  },
+  {
+   "id": "P162",
+   "nama": "Julia Fischer",
+   "nomor": "628227260910",
+   "email": "julia.fischer162@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Berlin"
+  },
+  {
+   "id": "P163",
+   "nama": "Budi Pratama",
+   "nomor": "628135696966",
+   "email": "budi.pratama163@gmx.de",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Jakarta"
+  },
+  {
+   "id": "P164",
+   "nama": "Nadia Santoso",
+   "nomor": "628137889576",
+   "email": "nadia.santoso164@yahoo.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Medan"
+  },
+  {
+   "id": "P165",
+   "nama": "Julia Kusuma",
+   "nomor": "628222792065",
+   "email": "julia.kusuma165@gmail.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan"
+  },
+  {
+   "id": "P166",
+   "nama": "Eko Saputra",
+   "nomor": "628129197129",
+   "email": "eko.saputra166@yahoo.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Bandung"
+  },
+  {
+   "id": "P167",
+   "nama": "Dewi Nugroho",
+   "nomor": "628128935644",
+   "email": "dewi.nugroho167@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Yogyakarta"
+  },
+  {
+   "id": "P168",
+   "nama": "Thomas Müller",
+   "nomor": "628213769454",
+   "email": "thomas.muller168@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "München"
+  },
+  {
+   "id": "P169",
+   "nama": "Hendra Kusuma",
+   "nomor": "628136884700",
+   "email": "hendra.kusuma169@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "München"
+  }
+ ],
+ "lead": [
+  {
+   "event_id": "ev-0197",
+   "kanal": "form_website",
+   "nama": "sabine schmidt",
+   "nomor": "(0813) 3283237",
+   "email": "sabine.schmidt52@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Medan",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P052"
+  },
+  {
+   "event_id": "ev-0137",
+   "kanal": "form_website",
+   "nama": "siti pratama",
+   "nomor": "08226027608",
+   "email": "siti.pratama137@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P137"
+  },
+  {
+   "event_id": "ev-0113",
+   "kanal": "form_website",
+   "nama": "fajar wijaya",
+   "nomor": "+628577682189",
+   "email": "fajarwijaya113@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P113"
+  },
+  {
+   "event_id": "ev-0132",
+   "kanal": "whatsapp",
+   "nama": "rizky maulana",
+   "nomor": "(0821) 4510294",
+   "email": "",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P132"
+  },
+  {
+   "event_id": "ev-0061",
+   "kanal": "google_meta_ads",
+   "nama": "Ibu Dewi",
+   "nomor": "+62 812 0516 776",
+   "email": "dewihalim61@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P061"
+  },
+  {
+   "event_id": "ev-0046",
+   "kanal": "email",
+   "nama": "Ibu Siti",
+   "nomor": "0857-8703-586",
+   "email": "siti.kusuma46@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P046"
+  },
+  {
+   "event_id": "ev-0086",
+   "kanal": "email",
+   "nama": "lukas santoso",
+   "nomor": "+62 813 0518 485",
+   "email": "lukas.santoso86@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P086"
+  },
+  {
+   "event_id": "ev-0094",
+   "kanal": "whatsapp",
+   "nama": "hendra müller",
+   "nomor": "(0812) 5127395",
+   "email": "",
+   "perusahaan": "Toko Berkah",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P094"
+  },
+  {
+   "event_id": "ev-0124",
+   "kanal": "email",
+   "nama": "LESTARI BECKER",
+   "nomor": "0878-2640-180",
+   "email": "lestari.becker124@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P124"
+  },
+  {
+   "event_id": "ev-0047",
+   "kanal": "whatsapp",
+   "nama": "Julia Becker",
+   "nomor": "+628780587422",
+   "email": "",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P047"
+  },
+  {
+   "event_id": "ev-0127",
+   "kanal": "whatsapp",
+   "nama": "EKO FISCHER",
+   "nomor": "628570229231",
+   "email": "",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P127"
+  },
+  {
+   "event_id": "ev-0150",
+   "kanal": "whatsapp",
+   "nama": "putri pratama",
+   "nomor": "+62 857 4906 870",
+   "email": "",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P150"
+  },
+  {
+   "event_id": "ev-0023",
+   "kanal": "form_website",
+   "nama": "Fajar Fischer",
+   "nomor": "0821-5635-134",
+   "email": "fajar.fischer23@gmail.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P023"
+  },
+  {
+   "event_id": "ev-0069",
+   "kanal": "linkedin",
+   "nama": "Fajar P.",
+   "nomor": "",
+   "email": "fajar.pratama69+ads@outlook.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P069"
+  },
+  {
+   "event_id": "ev-0096",
+   "kanal": "whatsapp",
+   "nama": "Nadia",
+   "nomor": "+62 821 1441 400",
+   "email": "",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P096"
+  },
+  {
+   "event_id": "ev-0009",
+   "kanal": "linkedin",
+   "nama": "Pak Anna",
+   "nomor": "",
+   "email": "ANNA.KUSUMA9@OUTLOOK.COM",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P009"
+  },
+  {
+   "event_id": "ev-0108",
+   "kanal": "email",
+   "nama": "rizky weber",
+   "nomor": "+628783025160",
+   "email": "rizkyweber108@gmail.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P108"
+  },
+  {
+   "event_id": "ev-0131",
+   "kanal": "form_website",
+   "nama": "Lukas H.",
+   "nomor": "+62 812 6713 328",
+   "email": "lukashidayat131@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P131"
+  },
+  {
+   "event_id": "ev-0148",
+   "kanal": "google_meta_ads",
+   "nama": "putri maulana",
+   "nomor": "0821-9173-744",
+   "email": "PUTRI.MAULANA148@YAHOO.COM",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P148"
+  },
+  {
+   "event_id": "ev-0095",
+   "kanal": "whatsapp",
+   "nama": "ayu müller",
+   "nomor": "0821-4082-343",
+   "email": "",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P095"
+  },
+  {
+   "event_id": "ev-0152",
+   "kanal": "linkedin",
+   "nama": "julia saputra",
+   "nomor": "",
+   "email": "julia.saputra152@yahoo.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P152"
+  },
+  {
+   "event_id": "ev-0085",
+   "kanal": "email",
+   "nama": "Ibu Clara",
+   "nomor": "+62 821 3513 837",
+   "email": "claraweber85@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P085"
+  },
+  {
+   "event_id": "ev-0126",
+   "kanal": "linkedin",
+   "nama": "AYU HALIM",
+   "nomor": "",
+   "email": "ayu.halim126@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P126"
+  },
+  {
+   "event_id": "ev-0118",
+   "kanal": "form_website",
+   "nama": "budi hoffmann",
+   "nomor": "0812-0142-670",
+   "email": "budi.hoffmann118@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P118"
+  },
+  {
+   "event_id": "ev-0107",
+   "kanal": "form_website",
+   "nama": "Ibu Ayu",
+   "nomor": "628120967086",
+   "email": "ayu.kusuma107+wa@gmx.de",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P107"
+  },
+  {
+   "event_id": "ev-0090",
+   "kanal": "form_website",
+   "nama": "Agus W.",
+   "nomor": "08213056278",
+   "email": "agus.weber90+li@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P090"
+  },
+  {
+   "event_id": "ev-0157",
+   "kanal": "whatsapp",
+   "nama": "Agus",
+   "nomor": "+62 822 7490 861",
+   "email": "",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P157"
+  },
+  {
+   "event_id": "ev-0087",
+   "kanal": "email",
+   "nama": "hendra fischer",
+   "nomor": "0857-4806-338",
+   "email": "hendra.fischer87@outlook.com",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P087"
+  },
+  {
+   "event_id": "ev-0106",
+   "kanal": "google_meta_ads",
+   "nama": "putri weber",
+   "nomor": "+62 822 1344 909",
+   "email": "putri.weber106@gmail.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P106"
+  },
+  {
+   "event_id": "ev-0115",
+   "kanal": "whatsapp",
+   "nama": "Ibu Anna",
+   "nomor": "08127848892",
+   "email": "",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P115"
+  },
+  {
+   "event_id": "ev-0171",
+   "kanal": "google_meta_ads",
+   "nama": "Dewi P.",
+   "nomor": "+62 812 9486 459",
+   "email": "dewi.pratama129@gmail.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Medan",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P129"
+  },
+  {
+   "event_id": "ev-0136",
+   "kanal": "form_website",
+   "nama": "Michael",
+   "nomor": "(0813) 4012278",
+   "email": "michaelwijaya136@gmail.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P136"
+  },
+  {
+   "event_id": "ev-0022",
+   "kanal": "email",
+   "nama": "fajar hoffmann",
+   "nomor": "(0822) 5590458",
+   "email": "fajarhoffmann22@gmx.de",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P022"
+  },
+  {
+   "event_id": "ev-0029",
+   "kanal": "google_meta_ads",
+   "nama": "felix santoso",
+   "nomor": "(0813) 9141972",
+   "email": "felixsantoso29@gmx.de",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P029"
+  },
+  {
+   "event_id": "ev-0183",
+   "kanal": "google_meta_ads",
+   "nama": "ANNA FISCHER",
+   "nomor": "628127848892",
+   "email": "anna.fischer115+li@yahoo.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P115"
+  },
+  {
+   "event_id": "ev-0048",
+   "kanal": "whatsapp",
+   "nama": "Michael",
+   "nomor": "08789649129",
+   "email": "",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P048"
+  },
+  {
+   "event_id": "ev-0189",
+   "kanal": "whatsapp",
+   "nama": "Ibu Yusuf",
+   "nomor": "(0821) 3261622",
+   "email": "",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P000"
+  },
+  {
+   "event_id": "ev-0042",
+   "kanal": "linkedin",
+   "nama": "PUTRI SAPUTRA",
+   "nomor": "",
+   "email": "putrisaputra42@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P042"
+  },
+  {
+   "event_id": "ev-0075",
+   "kanal": "form_website",
+   "nama": "Ibu Anna",
+   "nomor": "0812-6116-363",
+   "email": "anna.wijaya75+web@gmail.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P075"
+  },
+  {
+   "event_id": "ev-0188",
+   "kanal": "linkedin",
+   "nama": "Rizky Wijaya",
+   "nomor": "",
+   "email": "rizkywijaya71@outlook.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Bandung",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P071"
+  },
+  {
+   "event_id": "ev-0101",
+   "kanal": "linkedin",
+   "nama": "Ibu Maya",
+   "nomor": "",
+   "email": "maya.halim101+wa@gmx.de",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P101"
+  },
+  {
+   "event_id": "ev-0178",
+   "kanal": "google_meta_ads",
+   "nama": "bayu saputra",
+   "nomor": "+628576309134",
+   "email": "bayusaputra72@gmx.de",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Berlin",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P072"
+  },
+  {
+   "event_id": "ev-0128",
+   "kanal": "form_website",
+   "nama": "indah pratama",
+   "nomor": "+62 878 4165 842",
+   "email": "indah.pratama128+web@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P128"
+  },
+  {
+   "event_id": "ev-0181",
+   "kanal": "google_meta_ads",
+   "nama": "Ibu Siti",
+   "nomor": "+628126899975",
+   "email": "siti.saputra17+web@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Yogyakarta",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P017"
+  },
+  {
+   "event_id": "ev-0141",
+   "kanal": "whatsapp",
+   "nama": "nadia pratama",
+   "nomor": "+62 821 2816 843",
+   "email": "",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P141"
+  },
+  {
+   "event_id": "ev-0065",
+   "kanal": "form_website",
+   "nama": "agus maulana",
+   "nomor": "(0822) 2179890",
+   "email": "agus.maulana65@outlook.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P065"
+  },
+  {
+   "event_id": "ev-0093",
+   "kanal": "whatsapp",
+   "nama": "Ibu Putri",
+   "nomor": "(0821) 7723807",
+   "email": "",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P093"
+  },
+  {
+   "event_id": "ev-0153",
+   "kanal": "form_website",
+   "nama": "Pak Dewi",
+   "nomor": "(0878) 0790751",
+   "email": "dewi.hoffmann153+li@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P153"
+  },
+  {
+   "event_id": "ev-0056",
+   "kanal": "form_website",
+   "nama": "julia wijaya",
+   "nomor": "(0821) 8505494",
+   "email": "julia.wijaya56@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P056"
+  },
+  {
+   "event_id": "ev-0121",
+   "kanal": "google_meta_ads",
+   "nama": "Hendra Santoso",
+   "nomor": "+62 821 5115 399",
+   "email": "hendra.santoso121+li@yahoo.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P121"
+  },
+  {
+   "event_id": "ev-0174",
+   "kanal": "google_meta_ads",
+   "nama": "siti maulana",
+   "nomor": "+62 822 6314 500",
+   "email": "siti.maulana63@yahoo.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Surabaya",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P063"
+  },
+  {
+   "event_id": "ev-0074",
+   "kanal": "google_meta_ads",
+   "nama": "Rizky F.",
+   "nomor": "08213577838",
+   "email": "rizky.fischer74@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P074"
+  },
+  {
+   "event_id": "ev-0142",
+   "kanal": "form_website",
+   "nama": "RIZKY SCHMIDT",
+   "nomor": "0857-1487-203",
+   "email": "rizkyschmidt142@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P142"
+  },
+  {
+   "event_id": "ev-0070",
+   "kanal": "whatsapp",
+   "nama": "Pak Rizky",
+   "nomor": "+628130101894",
+   "email": "",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P070"
+  },
+  {
+   "event_id": "ev-0120",
+   "kanal": "email",
+   "nama": "clara siregar",
+   "nomor": "0813-4022-748",
+   "email": "clara.siregar120@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P120"
+  },
+  {
+   "event_id": "ev-0032",
+   "kanal": "linkedin",
+   "nama": "Fajar",
+   "nomor": "",
+   "email": "fajar.wijaya32@yahoo.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P032"
+  },
+  {
+   "event_id": "ev-0003",
+   "kanal": "whatsapp",
+   "nama": "AYU WIJAYA",
+   "nomor": "628786509885",
+   "email": "",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P003"
+  },
+  {
+   "event_id": "ev-0102",
+   "kanal": "whatsapp",
+   "nama": "Yusuf",
+   "nomor": "(0813) 2939137",
+   "email": "",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P102"
+  },
+  {
+   "event_id": "ev-0190",
+   "kanal": "linkedin",
+   "nama": "Ibu Hendra",
+   "nomor": "",
+   "email": "hendra.santoso121@yahoo.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Bandung",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P121"
+  },
+  {
+   "event_id": "ev-0130",
+   "kanal": "linkedin",
+   "nama": "Lukas Halim",
+   "nomor": "",
+   "email": "lukashalim130@gmail.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P130"
+  },
+  {
+   "event_id": "ev-0038",
+   "kanal": "linkedin",
+   "nama": "EKO SAPUTRA",
+   "nomor": "",
+   "email": "ekosaputra38@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P038"
+  },
+  {
+   "event_id": "ev-0005",
+   "kanal": "form_website",
+   "nama": "PUTRI PRATAMA",
+   "nomor": "+62 813 5456 200",
+   "email": "PUTRI.PRATAMA5@GMX.DE",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P005"
+  },
+  {
+   "event_id": "ev-0054",
+   "kanal": "email",
+   "nama": "Felix Hidayat",
+   "nomor": "+62 812 5446 956",
+   "email": "felix.hidayat54@gmail.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P054"
+  },
+  {
+   "event_id": "ev-0187",
+   "kanal": "email",
+   "nama": "Ibu Dewi",
+   "nomor": "+628212909934",
+   "email": "dewi.pratama58+wa@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P058"
+  },
+  {
+   "event_id": "ev-0164",
+   "kanal": "whatsapp",
+   "nama": "Nadia S.",
+   "nomor": "+628137889576",
+   "email": "",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P164"
+  },
+  {
+   "event_id": "ev-0055",
+   "kanal": "google_meta_ads",
+   "nama": "Ibu Yusuf",
+   "nomor": "628134087768",
+   "email": "YUSUF.HIDAYAT55@YAHOO.COM",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P055"
+  },
+  {
+   "event_id": "ev-0177",
+   "kanal": "linkedin",
+   "nama": "Pak Fajar",
+   "nomor": "",
+   "email": "fajar.pratama6@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Surabaya",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P006"
+  },
+  {
+   "event_id": "ev-0185",
+   "kanal": "whatsapp",
+   "nama": "Yusuf Hidayat",
+   "nomor": "+62 813 4087 768",
+   "email": "",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P055"
+  },
+  {
+   "event_id": "ev-0116",
+   "kanal": "form_website",
+   "nama": "Pak Bayu",
+   "nomor": "628210697321",
+   "email": "BAYU.WIJAYA116@GMAIL.COM",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P116"
+  },
+  {
+   "event_id": "ev-0162",
+   "kanal": "email",
+   "nama": "Julia Fischer",
+   "nomor": "+628227260910",
+   "email": "julia.fischer162@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P162"
+  },
+  {
+   "event_id": "ev-0114",
+   "kanal": "linkedin",
+   "nama": "Maya Müller",
+   "nomor": "",
+   "email": "maya.muller114+ads@gmx.de",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P114"
+  },
+  {
+   "event_id": "ev-0112",
+   "kanal": "email",
+   "nama": "felix hoffmann",
+   "nomor": "08218285382",
+   "email": "felix.hoffmann112+wa@gmx.de",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P112"
+  },
+  {
+   "event_id": "ev-0163",
+   "kanal": "google_meta_ads",
+   "nama": "Budi P.",
+   "nomor": "0813-5696-966",
+   "email": "BUDI.PRATAMA163@GMX.DE",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P163"
+  },
+  {
+   "event_id": "ev-0149",
+   "kanal": "whatsapp",
+   "nama": "Agus",
+   "nomor": "(0821) 7929767",
+   "email": "",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P149"
+  },
+  {
+   "event_id": "ev-0077",
+   "kanal": "form_website",
+   "nama": "Pak Maya",
+   "nomor": "628222729005",
+   "email": "maya.maulana77@outlook.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P077"
+  },
+  {
+   "event_id": "ev-0151",
+   "kanal": "linkedin",
+   "nama": "nadia nugroho",
+   "nomor": "",
+   "email": "NADIA.NUGROHO151@OUTLOOK.COM",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P151"
+  },
+  {
+   "event_id": "ev-0123",
+   "kanal": "whatsapp",
+   "nama": "Lukas W.",
+   "nomor": "628786562058",
+   "email": "",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P123"
+  },
+  {
+   "event_id": "ev-0050",
+   "kanal": "email",
+   "nama": "Sabine",
+   "nomor": "+628783597840",
+   "email": "sabineschmidt50@gmx.de",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P050"
+  },
+  {
+   "event_id": "ev-0091",
+   "kanal": "google_meta_ads",
+   "nama": "nadia pratama",
+   "nomor": "+628229474975",
+   "email": "nadiapratama91@gmx.de",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P091"
+  },
+  {
+   "event_id": "ev-0052",
+   "kanal": "google_meta_ads",
+   "nama": "sabine schmidt",
+   "nomor": "+62 813 3283 237",
+   "email": "sabine.schmidt52+li@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P052"
+  },
+  {
+   "event_id": "ev-0180",
+   "kanal": "whatsapp",
+   "nama": "Clara Weber",
+   "nomor": "(0821) 6185044",
+   "email": "",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Medan",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P140"
+  },
+  {
+   "event_id": "ev-0156",
+   "kanal": "whatsapp",
+   "nama": "Hendra",
+   "nomor": "+62 813 0705 170",
+   "email": "",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P156"
+  },
+  {
+   "event_id": "ev-0076",
+   "kanal": "form_website",
+   "nama": "Pak Indah",
+   "nomor": "+628210123710",
+   "email": "indah.hoffmann76@gmail.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P076"
+  },
+  {
+   "event_id": "ev-0170",
+   "kanal": "email",
+   "nama": "Lukas",
+   "nomor": "628126713328",
+   "email": "LUKAS.HIDAYAT131@GMX.DE",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Jakarta",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P131"
+  },
+  {
+   "event_id": "ev-0109",
+   "kanal": "email",
+   "nama": "michael wijaya",
+   "nomor": "08224409731",
+   "email": "MICHAEL.WIJAYA109@YAHOO.COM",
+   "perusahaan": "PT Karya Logam",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P109"
+  },
+  {
+   "event_id": "ev-0040",
+   "kanal": "form_website",
+   "nama": "maya müller",
+   "nomor": "0822-4221-495",
+   "email": "maya.muller40@gmx.de",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P040"
+  },
+  {
+   "event_id": "ev-0135",
+   "kanal": "form_website",
+   "nama": "eko wijaya",
+   "nomor": "(0857) 8907784",
+   "email": "ekowijaya135@gmail.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P135"
+  },
+  {
+   "event_id": "ev-0194",
+   "kanal": "form_website",
+   "nama": "MAYA MÜLLER",
+   "nomor": "+62 822 4221 495",
+   "email": "maya.muller40@gmx.de",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Bandung",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P040"
+  },
+  {
+   "event_id": "ev-0025",
+   "kanal": "form_website",
+   "nama": "Indah W.",
+   "nomor": "(0821) 5253864",
+   "email": "INDAH.WEBER25@OUTLOOK.COM",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P025"
+  },
+  {
+   "event_id": "ev-0084",
+   "kanal": "linkedin",
+   "nama": "clara wijaya",
+   "nomor": "",
+   "email": "clara.wijaya84+ads@gmail.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P084"
+  },
+  {
+   "event_id": "ev-0030",
+   "kanal": "whatsapp",
+   "nama": "Putri",
+   "nomor": "(0813) 0303832",
+   "email": "",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P030"
+  },
+  {
+   "event_id": "ev-0140",
+   "kanal": "google_meta_ads",
+   "nama": "Ibu Clara",
+   "nomor": "+62 821 6185 044",
+   "email": "clara.weber140+li@yahoo.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P140"
+  },
+  {
+   "event_id": "ev-0144",
+   "kanal": "form_website",
+   "nama": "Michael",
+   "nomor": "+62 821 8761 987",
+   "email": "michael.becker144+li@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P144"
+  },
+  {
+   "event_id": "ev-0045",
+   "kanal": "linkedin",
+   "nama": "agus saputra",
+   "nomor": "",
+   "email": "agus.saputra45@gmail.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P045"
+  },
+  {
+   "event_id": "ev-0071",
+   "kanal": "email",
+   "nama": "Rizky Wijaya",
+   "nomor": "(0821) 4976170",
+   "email": "rizky.wijaya71+wa@outlook.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P071"
+  },
+  {
+   "event_id": "ev-0117",
+   "kanal": "email",
+   "nama": "FAJAR HALIM",
+   "nomor": "+62 822 8112 888",
+   "email": "fajarhalim117@gmx.de",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P117"
+  },
+  {
+   "event_id": "ev-0027",
+   "kanal": "whatsapp",
+   "nama": "Pak Eko",
+   "nomor": "628226209362",
+   "email": "",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P027"
+  },
+  {
+   "event_id": "ev-0017",
+   "kanal": "google_meta_ads",
+   "nama": "Pak Siti",
+   "nomor": "08126899975",
+   "email": "siti.saputra17@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P017"
+  },
+  {
+   "event_id": "ev-0072",
+   "kanal": "linkedin",
+   "nama": "bayu saputra",
+   "nomor": "",
+   "email": "bayu.saputra72@gmx.de",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P072"
+  },
+  {
+   "event_id": "ev-0035",
+   "kanal": "linkedin",
+   "nama": "Pak Julia",
+   "nomor": "",
+   "email": "julia.muller35+wa@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P035"
+  },
+  {
+   "event_id": "ev-0082",
+   "kanal": "google_meta_ads",
+   "nama": "Michael",
+   "nomor": "+628782184700",
+   "email": "michael.hoffmann82@gmx.de",
+   "perusahaan": "Toko Berkah",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P082"
+  },
+  {
+   "event_id": "ev-0129",
+   "kanal": "whatsapp",
+   "nama": "Dewi Pratama",
+   "nomor": "628129486459",
+   "email": "",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P129"
+  },
+  {
+   "event_id": "ev-0198",
+   "kanal": "google_meta_ads",
+   "nama": "rizky maulana",
+   "nomor": "628214510294",
+   "email": "rizky.maulana132+wa@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P132"
+  },
+  {
+   "event_id": "ev-0057",
+   "kanal": "linkedin",
+   "nama": "Ibu Dewi",
+   "nomor": "",
+   "email": "DEWI.WIJAYA57@GMAIL.COM",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P057"
+  },
+  {
+   "event_id": "ev-0182",
+   "kanal": "whatsapp",
+   "nama": "indah hoffmann",
+   "nomor": "+62 821 0123 710",
+   "email": "",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Bandung",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P076"
+  },
+  {
+   "event_id": "ev-0063",
+   "kanal": "linkedin",
+   "nama": "Ibu Siti",
+   "nomor": "",
+   "email": "siti.maulana63+wa@yahoo.com",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P063"
+  },
+  {
+   "event_id": "ev-0037",
+   "kanal": "google_meta_ads",
+   "nama": "indah hidayat",
+   "nomor": "628216005743",
+   "email": "INDAH.HIDAYAT37@GMAIL.COM",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P037"
+  },
+  {
+   "event_id": "ev-0165",
+   "kanal": "whatsapp",
+   "nama": "Julia K.",
+   "nomor": "628222792065",
+   "email": "",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P165"
+  },
+  {
+   "event_id": "ev-0167",
+   "kanal": "form_website",
+   "nama": "Ibu Dewi",
+   "nomor": "0812-8935-644",
+   "email": "dewi.nugroho167@gmail.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P167"
+  },
+  {
+   "event_id": "ev-0011",
+   "kanal": "form_website",
+   "nama": "Julia Fischer",
+   "nomor": "08133408520",
+   "email": "JULIA.FISCHER11@GMAIL.COM",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P011"
+  },
+  {
+   "event_id": "ev-0089",
+   "kanal": "whatsapp",
+   "nama": "Clara",
+   "nomor": "(0812) 3615221",
+   "email": "",
+   "perusahaan": "Toko Berkah",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P089"
+  },
+  {
+   "event_id": "ev-0100",
+   "kanal": "google_meta_ads",
+   "nama": "maya becker",
+   "nomor": "628570227650",
+   "email": "maya.becker100+web@gmx.de",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P100"
+  },
+  {
+   "event_id": "ev-0191",
+   "kanal": "google_meta_ads",
+   "nama": "Fajar",
+   "nomor": "+628570028701",
+   "email": "fajar.muller92@gmx.de",
+   "perusahaan": "Toko Berkah",
+   "kota": "Bandung",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P092"
+  },
+  {
+   "event_id": "ev-0044",
+   "kanal": "email",
+   "nama": "siti schmidt",
+   "nomor": "+62 822 7808 271",
+   "email": "siti.schmidt44@yahoo.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P044"
+  },
+  {
+   "event_id": "ev-0184",
+   "kanal": "email",
+   "nama": "Pak Julia",
+   "nomor": "+62 822 2792 065",
+   "email": "julia.kusuma165+ads@gmail.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P165"
+  },
+  {
+   "event_id": "ev-0143",
+   "kanal": "linkedin",
+   "nama": "budi müller",
+   "nomor": "",
+   "email": "budi.muller143@outlook.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P143"
+  },
+  {
+   "event_id": "ev-0161",
+   "kanal": "google_meta_ads",
+   "nama": "Ibu Ayu",
+   "nomor": "(0857) 2384267",
+   "email": "ayu.schmidt161+web@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P161"
+  },
+  {
+   "event_id": "ev-0145",
+   "kanal": "whatsapp",
+   "nama": "Felix H.",
+   "nomor": "(0822) 2477314",
+   "email": "",
+   "perusahaan": "Toko Berkah",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P145"
+  },
+  {
+   "event_id": "ev-0006",
+   "kanal": "form_website",
+   "nama": "FAJAR PRATAMA",
+   "nomor": "+628130104639",
+   "email": "fajar.pratama6@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P006"
+  },
+  {
+   "event_id": "ev-0064",
+   "kanal": "form_website",
+   "nama": "Ayu",
+   "nomor": "(0878) 9677429",
+   "email": "ayu.muller64@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P064"
+  },
+  {
+   "event_id": "ev-0036",
+   "kanal": "whatsapp",
+   "nama": "putri halim",
+   "nomor": "+628131143019",
+   "email": "",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P036"
+  },
+  {
+   "event_id": "ev-0001",
+   "kanal": "email",
+   "nama": "Nadia Müller",
+   "nomor": "08139841401",
+   "email": "NADIA.MULLER1@OUTLOOK.COM",
+   "perusahaan": "Hotel Cendana",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P001"
+  },
+  {
+   "event_id": "ev-0079",
+   "kanal": "whatsapp",
+   "nama": "ANNA WIJAYA",
+   "nomor": "0878-1560-064",
+   "email": "",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P079"
+  },
+  {
+   "event_id": "ev-0133",
+   "kanal": "form_website",
+   "nama": "Hendra N.",
+   "nomor": "08223939323",
+   "email": "hendra.nugroho133@yahoo.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P133"
+  },
+  {
+   "event_id": "ev-0062",
+   "kanal": "email",
+   "nama": "Pak Hendra",
+   "nomor": "+62 813 6620 429",
+   "email": "hendrabecker62@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P062"
+  },
+  {
+   "event_id": "ev-0033",
+   "kanal": "email",
+   "nama": "Indah",
+   "nomor": "+62 857 3509 257",
+   "email": "indah.hoffmann33+ads@yahoo.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P033"
+  },
+  {
+   "event_id": "ev-0031",
+   "kanal": "google_meta_ads",
+   "nama": "Siti Nugroho",
+   "nomor": "0813-1088-117",
+   "email": "siti.nugroho31@yahoo.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P031"
+  },
+  {
+   "event_id": "ev-0004",
+   "kanal": "whatsapp",
+   "nama": "EKO SIREGAR",
+   "nomor": "+62 822 5097 084",
+   "email": "",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P004"
+  },
+  {
+   "event_id": "ev-0122",
+   "kanal": "google_meta_ads",
+   "nama": "Hendra H.",
+   "nomor": "+628126450958",
+   "email": "hendra.hoffmann122@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P122"
+  },
+  {
+   "event_id": "ev-0010",
+   "kanal": "form_website",
+   "nama": "lestari maulana",
+   "nomor": "628788547086",
+   "email": "lestari.maulana10+ads@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P010"
+  },
+  {
+   "event_id": "ev-0068",
+   "kanal": "google_meta_ads",
+   "nama": "Ibu Budi",
+   "nomor": "+628219490581",
+   "email": "budi.weber68+web@gmail.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P068"
+  },
+  {
+   "event_id": "ev-0158",
+   "kanal": "form_website",
+   "nama": "Ibu Nadia",
+   "nomor": "+62 812 7924 669",
+   "email": "nadia.kusuma158@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P158"
+  },
+  {
+   "event_id": "ev-0073",
+   "kanal": "whatsapp",
+   "nama": "Pak Hendra",
+   "nomor": "628787985435",
+   "email": "",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P073"
+  },
+  {
+   "event_id": "ev-0002",
+   "kanal": "linkedin",
+   "nama": "Eko",
+   "nomor": "",
+   "email": "eko.schmidt2@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P002"
+  },
+  {
+   "event_id": "ev-0195",
+   "kanal": "whatsapp",
+   "nama": "EKO FISCHER",
+   "nomor": "+62 857 0229 231",
+   "email": "",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Berlin",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P127"
+  },
+  {
+   "event_id": "ev-0088",
+   "kanal": "form_website",
+   "nama": "Pak Clara",
+   "nomor": "+62 812 8574 247",
+   "email": "CLARA.HOFFMANN88@YAHOO.COM",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P088"
+  },
+  {
+   "event_id": "ev-0014",
+   "kanal": "email",
+   "nama": "Fajar Maulana",
+   "nomor": "+628787263995",
+   "email": "fajarmaulana14@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P014"
+  },
+  {
+   "event_id": "ev-0104",
+   "kanal": "form_website",
+   "nama": "Eko Weber",
+   "nomor": "+62 812 0186 246",
+   "email": "eko.weber104+web@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P104"
+  },
+  {
+   "event_id": "ev-0134",
+   "kanal": "google_meta_ads",
+   "nama": "Maya",
+   "nomor": "628780789107",
+   "email": "MAYA.SCHMIDT134@GMX.DE",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P134"
+  },
+  {
+   "event_id": "ev-0199",
+   "kanal": "google_meta_ads",
+   "nama": "Thomas Müller",
+   "nomor": "628213769454",
+   "email": "thomas.muller168@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "München",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P168"
+  },
+  {
+   "event_id": "ev-0021",
+   "kanal": "email",
+   "nama": "Pak Ayu",
+   "nomor": "628784041767",
+   "email": "AYU.PRATAMA21@GMAIL.COM",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P021"
+  },
+  {
+   "event_id": "ev-0049",
+   "kanal": "form_website",
+   "nama": "Bayu",
+   "nomor": "628784858748",
+   "email": "bayu.fischer49@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P049"
+  },
+  {
+   "event_id": "ev-0098",
+   "kanal": "form_website",
+   "nama": "Sabine",
+   "nomor": "628781220708",
+   "email": "SABINE.SAPUTRA98@GMX.DE",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P098"
+  },
+  {
+   "event_id": "ev-0103",
+   "kanal": "email",
+   "nama": "Indah Hidayat",
+   "nomor": "0857-8432-521",
+   "email": "indah.hidayat103@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P103"
+  },
+  {
+   "event_id": "ev-0012",
+   "kanal": "linkedin",
+   "nama": "hendra halim",
+   "nomor": "",
+   "email": "hendrahalim12@yahoo.com",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P012"
+  },
+  {
+   "event_id": "ev-0192",
+   "kanal": "email",
+   "nama": "Ibu Hendra",
+   "nomor": "628125127395",
+   "email": "hendra.muller94@outlook.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Berlin",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P094"
+  },
+  {
+   "event_id": "ev-0097",
+   "kanal": "whatsapp",
+   "nama": "indah fischer",
+   "nomor": "628228904081",
+   "email": "",
+   "perusahaan": "Toko Berkah",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P097"
+  },
+  {
+   "event_id": "ev-0159",
+   "kanal": "whatsapp",
+   "nama": "Ibu Clara",
+   "nomor": "(0813) 4373508",
+   "email": "",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P159"
+  },
+  {
+   "event_id": "ev-0019",
+   "kanal": "linkedin",
+   "nama": "Thomas",
+   "nomor": "",
+   "email": "THOMAS.HOFFMANN19@YAHOO.COM",
+   "perusahaan": "Toko Berkah",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P019"
+  },
+  {
+   "event_id": "ev-0043",
+   "kanal": "form_website",
+   "nama": "Pak Felix",
+   "nomor": "628124643640",
+   "email": "felixsiregar43@outlook.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P043"
+  },
+  {
+   "event_id": "ev-0083",
+   "kanal": "email",
+   "nama": "Budi Nugroho",
+   "nomor": "628120943074",
+   "email": "budi.nugroho83@yahoo.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P083"
+  },
+  {
+   "event_id": "ev-0060",
+   "kanal": "whatsapp",
+   "nama": "Ibu Anna",
+   "nomor": "+628220175244",
+   "email": "",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P060"
+  },
+  {
+   "event_id": "ev-0175",
+   "kanal": "form_website",
+   "nama": "hendra müller",
+   "nomor": "08130705170",
+   "email": "hendramuller156@yahoo.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Surabaya",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P156"
+  },
+  {
+   "event_id": "ev-0041",
+   "kanal": "linkedin",
+   "nama": "Agus Wijaya",
+   "nomor": "",
+   "email": "agus.wijaya41@outlook.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P041"
+  },
+  {
+   "event_id": "ev-0024",
+   "kanal": "email",
+   "nama": "Lestari M.",
+   "nomor": "08225466156",
+   "email": "lestari.muller24+li@yahoo.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P024"
+  },
+  {
+   "event_id": "ev-0166",
+   "kanal": "email",
+   "nama": "eko saputra",
+   "nomor": "0812-9197-129",
+   "email": "ekosaputra166@yahoo.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P166"
+  },
+  {
+   "event_id": "ev-0051",
+   "kanal": "google_meta_ads",
+   "nama": "Ibu Eko",
+   "nomor": "0822-8770-635",
+   "email": "EKO.KUSUMA51@YAHOO.COM",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P051"
+  },
+  {
+   "event_id": "ev-0008",
+   "kanal": "whatsapp",
+   "nama": "Eko Maulana",
+   "nomor": "+62 857 8685 597",
+   "email": "",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P008"
+  },
+  {
+   "event_id": "ev-0147",
+   "kanal": "google_meta_ads",
+   "nama": "Pak Siti",
+   "nomor": "628789966133",
+   "email": "siti.kusuma147+wa@gmail.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P147"
+  },
+  {
+   "event_id": "ev-0066",
+   "kanal": "linkedin",
+   "nama": "Ayu H.",
+   "nomor": "",
+   "email": "ayu.halim66+web@yahoo.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P066"
+  },
+  {
+   "event_id": "ev-0058",
+   "kanal": "email",
+   "nama": "Dewi Pratama",
+   "nomor": "+628212909934",
+   "email": "dewi.pratama58+ads@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P058"
+  },
+  {
+   "event_id": "ev-0169",
+   "kanal": "linkedin",
+   "nama": "HENDRA KUSUMA",
+   "nomor": "",
+   "email": "hendrakusuma169@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P169"
+  },
+  {
+   "event_id": "ev-0168",
+   "kanal": "email",
+   "nama": "Thomas Müller",
+   "nomor": "+62 821 3769 454",
+   "email": "thomasmuller168@outlook.com",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P168"
+  },
+  {
+   "event_id": "ev-0013",
+   "kanal": "whatsapp",
+   "nama": "Eko",
+   "nomor": "0812-8571-491",
+   "email": "",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P013"
+  },
+  {
+   "event_id": "ev-0007",
+   "kanal": "form_website",
+   "nama": "Anna W.",
+   "nomor": "0813-1050-328",
+   "email": "anna.wijaya7@gmail.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P007"
+  },
+  {
+   "event_id": "ev-0179",
+   "kanal": "email",
+   "nama": "Nadia",
+   "nomor": "628212816843",
+   "email": "nadiapratama141@yahoo.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Medan",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P141"
+  },
+  {
+   "event_id": "ev-0028",
+   "kanal": "email",
+   "nama": "MICHAEL WEBER",
+   "nomor": "(0812) 0913435",
+   "email": "MICHAEL.WEBER28@OUTLOOK.COM",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P028"
+  },
+  {
+   "event_id": "ev-0196",
+   "kanal": "whatsapp",
+   "nama": "budi hoffmann",
+   "nomor": "628120142670",
+   "email": "",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Medan",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P118"
+  },
+  {
+   "event_id": "ev-0172",
+   "kanal": "linkedin",
+   "nama": "Lestari",
+   "nomor": "",
+   "email": "lestaribecker124@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Yogyakarta",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P124"
+  },
+  {
+   "event_id": "ev-0119",
+   "kanal": "linkedin",
+   "nama": "Anna Weber",
+   "nomor": "",
+   "email": "anna.weber119@gmx.de",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P119"
+  },
+  {
+   "event_id": "ev-0138",
+   "kanal": "whatsapp",
+   "nama": "Thomas Weber",
+   "nomor": "08577879941",
+   "email": "",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P138"
+  },
+  {
+   "event_id": "ev-0146",
+   "kanal": "whatsapp",
+   "nama": "SITI SAPUTRA",
+   "nomor": "+62 857 2580 554",
+   "email": "",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P146"
+  },
+  {
+   "event_id": "ev-0016",
+   "kanal": "whatsapp",
+   "nama": "Pak Siti",
+   "nomor": "+628789756717",
+   "email": "",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P016"
+  },
+  {
+   "event_id": "ev-0067",
+   "kanal": "form_website",
+   "nama": "sabine kusuma",
+   "nomor": "0822-5082-032",
+   "email": "SABINE.KUSUMA67@GMX.DE",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P067"
+  },
+  {
+   "event_id": "ev-0020",
+   "kanal": "whatsapp",
+   "nama": "julia hidayat",
+   "nomor": "(0857) 2089677",
+   "email": "",
+   "perusahaan": "CV Rasa Nusantara",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P020"
+  },
+  {
+   "event_id": "ev-0039",
+   "kanal": "whatsapp",
+   "nama": "Ibu Fajar",
+   "nomor": "628215526271",
+   "email": "",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P039"
+  },
+  {
+   "event_id": "ev-0080",
+   "kanal": "form_website",
+   "nama": "hendra hoffmann",
+   "nomor": "0821-1339-987",
+   "email": "hendrahoffmann80@yahoo.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P080"
+  },
+  {
+   "event_id": "ev-0173",
+   "kanal": "linkedin",
+   "nama": "Indah H.",
+   "nomor": "",
+   "email": "indah.hoffmann33@yahoo.com",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Yogyakarta",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P033"
+  },
+  {
+   "event_id": "ev-0081",
+   "kanal": "linkedin",
+   "nama": "Thomas Nugroho",
+   "nomor": "",
+   "email": "thomas.nugroho81+web@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P081"
+  },
+  {
+   "event_id": "ev-0078",
+   "kanal": "form_website",
+   "nama": "budi weber",
+   "nomor": "628786947528",
+   "email": "budi.weber78@yahoo.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P078"
+  },
+  {
+   "event_id": "ev-0059",
+   "kanal": "whatsapp",
+   "nama": "Pak Julia",
+   "nomor": "+62 812 0602 028",
+   "email": "",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P059"
+  },
+  {
+   "event_id": "ev-0193",
+   "kanal": "email",
+   "nama": "Michael B.",
+   "nomor": "628218761987",
+   "email": "michael.becker144@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Yogyakarta",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P144"
+  },
+  {
+   "event_id": "ev-0092",
+   "kanal": "email",
+   "nama": "fajar müller",
+   "nomor": "08570028701",
+   "email": "fajar.muller92+ads@gmx.de",
+   "perusahaan": "Toko Berkah",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P092"
+  },
+  {
+   "event_id": "ev-0160",
+   "kanal": "form_website",
+   "nama": "Agus W.",
+   "nomor": "628137384325",
+   "email": "agusweber160@outlook.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P160"
+  },
+  {
+   "event_id": "ev-0018",
+   "kanal": "email",
+   "nama": "Pak Yusuf",
+   "nomor": "0821-3215-380",
+   "email": "yusuf.becker18+wa@gmail.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P018"
+  },
+  {
+   "event_id": "ev-0105",
+   "kanal": "google_meta_ads",
+   "nama": "Yusuf Schmidt",
+   "nomor": "(0878) 9037594",
+   "email": "yusuf.schmidt105+wa@outlook.com",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P105"
+  },
+  {
+   "event_id": "ev-0125",
+   "kanal": "linkedin",
+   "nama": "JULIA SAPUTRA",
+   "nomor": "",
+   "email": "julia.saputra125@gmx.de",
+   "perusahaan": "PT Karya Logam",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P125"
+  },
+  {
+   "event_id": "ev-0053",
+   "kanal": "email",
+   "nama": "Lestari H.",
+   "nomor": "628219700801",
+   "email": "LESTARI.HOFFMANN53@OUTLOOK.COM",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Jakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P053"
+  },
+  {
+   "event_id": "ev-0110",
+   "kanal": "linkedin",
+   "nama": "MICHAEL SIREGAR",
+   "nomor": "",
+   "email": "michael.siregar110@gmx.de",
+   "perusahaan": "Toko Berkah",
+   "kota": "Bandung",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P110"
+  },
+  {
+   "event_id": "ev-0099",
+   "kanal": "email",
+   "nama": "Bayu S.",
+   "nomor": "(0822) 7463017",
+   "email": "bayusantoso99@yahoo.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P099"
+  },
+  {
+   "event_id": "ev-0015",
+   "kanal": "form_website",
+   "nama": "Thomas H.",
+   "nomor": "0857-2212-391",
+   "email": "THOMAS.HIDAYAT15@GMX.DE",
+   "perusahaan": "CV Mitra Abadi",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P015"
+  },
+  {
+   "event_id": "ev-0139",
+   "kanal": "email",
+   "nama": "Bayu",
+   "nomor": "0813-0976-359",
+   "email": "BAYU.BECKER139@GMAIL.COM",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Surabaya",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P139"
+  },
+  {
+   "event_id": "ev-0000",
+   "kanal": "form_website",
+   "nama": "YUSUF WEBER",
+   "nomor": "0821-3261-622",
+   "email": "yusufweber0@outlook.com",
+   "perusahaan": "Klinik Sehat",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P000"
+  },
+  {
+   "event_id": "ev-0026",
+   "kanal": "whatsapp",
+   "nama": "MAYA HALIM",
+   "nomor": "0813-1917-744",
+   "email": "",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "Yogyakarta",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P026"
+  },
+  {
+   "event_id": "ev-0154",
+   "kanal": "form_website",
+   "nama": "Siti W.",
+   "nomor": "0812-3031-686",
+   "email": "siti.wijaya154@gmx.de",
+   "perusahaan": "PT Sinar Jaya",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P154"
+  },
+  {
+   "event_id": "ev-0155",
+   "kanal": "whatsapp",
+   "nama": "Pak Julia",
+   "nomor": "0813-0068-537",
+   "email": "",
+   "perusahaan": "Nordwind GmbH",
+   "kota": "Medan",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P155"
+  },
+  {
+   "event_id": "ev-0111",
+   "kanal": "google_meta_ads",
+   "nama": "BAYU MÜLLER",
+   "nomor": "08573515665",
+   "email": "bayumuller111@yahoo.com",
+   "perusahaan": "Studio Foto Lensa",
+   "kota": "Berlin",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P111"
+  },
+  {
+   "event_id": "ev-0034",
+   "kanal": "email",
+   "nama": "Putri S.",
+   "nomor": "+62 813 4602 352",
+   "email": "putri.saputra34@outlook.com",
+   "perusahaan": "Bäckerei Vogel",
+   "kota": "München",
+   "pesan": "Tanya harga dan ketersediaan.",
+   "_orang": "P034"
+  },
+  {
+   "event_id": "ev-0186",
+   "kanal": "form_website",
+   "nama": "Nadia M.",
+   "nomor": "+62 813 9841 401",
+   "email": "nadiamuller1@outlook.com",
+   "perusahaan": "Hotel Cendana",
+   "kota": "München",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P001"
+  },
+  {
+   "event_id": "ev-0176",
+   "kanal": "google_meta_ads",
+   "nama": "EKO WIJAYA",
+   "nomor": "+62 857 8907 784",
+   "email": "eko.wijaya135@gmail.com",
+   "perusahaan": "Toko Berkah",
+   "kota": "Yogyakarta",
+   "pesan": "Follow up dari kanal lain.",
+   "_orang": "P135"
+  }
+ ]
+}

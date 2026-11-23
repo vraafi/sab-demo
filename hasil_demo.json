@@ -1,0 +1,314 @@
+{
+ "poin_1": {
+  "lead_mentah": 200,
+  "identitas": 173,
+  "digabung_otomatis": 27,
+  "pasangan_antrean": 8,
+  "salah_gabung": 0,
+  "orang_terpecah": 3,
+  "orang_unik_sebenarnya": 170,
+  "duplikat_ditanam": 30,
+  "antrean_orang_sama": 3,
+  "antrean_orang_beda": 5,
+  "identitas_setelah_antrean": 170,
+  "perbandingan": 264,
+  "perbandingan_tanpa_blocking": 19900
+ },
+ "poin_5": {
+  "dikirim": 1000,
+  "tersimpan": 200,
+  "ditolak_sebagai_duplikat": 800,
+  "event_unik": 200
+ },
+ "poin_6": {
+  "seharusnya_dibalas": 173,
+  "benar_benar_dibalas": 167,
+  "selisih": 6,
+  "pengecualian": [
+   "ID000",
+   "ID028",
+   "ID056",
+   "ID084",
+   "ID112",
+   "ID140"
+  ]
+ },
+ "uji_kasus": {
+  "total": 22,
+  "lulus": 22,
+  "kasus": [
+   {
+    "ket": "sapaan bergender berlawanan = dua orang berbeda",
+    "nama_a": "Pak Dewi",
+    "nama_b": "Ibu Dewi",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.0,
+    "lulus": true
+   },
+   {
+    "ket": "nama sama tapi Pak vs Ibu: dua orang",
+    "nama_a": "Pak Budi Santoso",
+    "nama_b": "Ibu Budi Santoso",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.0,
+    "lulus": true
+   },
+   {
+    "ket": "Mas vs Mbak (Jawa): dua orang",
+    "nama_a": "Mas Agus",
+    "nama_b": "Mbak Agus",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.0,
+    "lulus": true
+   },
+   {
+    "ket": "nama depan sama, marga beda total",
+    "nama_a": "Hendra Halim",
+    "nama_b": "Hendra Fischer",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.803,
+    "lulus": true
+   },
+   {
+    "ket": "nama lengkap sama: antrean, TIDAK digabung otomatis",
+    "nama_a": "Rizky Wijaya",
+    "nama_b": "Rizky Wijaya",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "lulus": true
+   },
+   {
+    "ket": "nomor sama ditulis beda format",
+    "nama_a": "Budi Santoso",
+    "nama_b": "Budi Santoso",
+    "dapat": "gabung",
+    "harap": "gabung",
+    "skor": 1.0,
+    "lulus": true
+   },
+   {
+    "ket": "nomor sama, kurung dan spasi",
+    "nama_a": "Budi Santoso",
+    "nama_b": "Budi Santoso",
+    "dapat": "gabung",
+    "harap": "gabung",
+    "skor": 1.0,
+    "lulus": true
+   },
+   {
+    "ket": "email +tag iklan",
+    "nama_a": "Budi Santoso",
+    "nama_b": "Budi Santoso",
+    "dapat": "gabung",
+    "harap": "gabung",
+    "skor": 0.95,
+    "lulus": true
+   },
+   {
+    "ket": "gmail mengabaikan titik",
+    "nama_a": "Budi Santoso",
+    "nama_b": "Budi Santoso",
+    "dapat": "gabung",
+    "harap": "gabung",
+    "skor": 0.95,
+    "lulus": true
+   },
+   {
+    "ket": "huruf besar/kecil",
+    "nama_a": "Budi Santoso",
+    "nama_b": "budi santoso",
+    "dapat": "gabung",
+    "harap": "gabung",
+    "skor": 1.0,
+    "lulus": true
+   },
+   {
+    "ket": "marga disingkat: antrean, bukan gabung",
+    "nama_a": "Budi Santoso",
+    "nama_b": "Budi S.",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.964,
+    "lulus": true
+   },
+   {
+    "ket": "salah ketik satu huruf di marga",
+    "nama_a": "Budi Santoso",
+    "nama_b": "Budi Santosa",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.98,
+    "lulus": true
+   },
+   {
+    "ket": "urutan nama terbalik",
+    "nama_a": "Budi Santoso",
+    "nama_b": "Santoso Budi",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "lulus": true
+   },
+   {
+    "ket": "gelar netral (Dr.) dibuang",
+    "nama_a": "Dr. Budi Santoso",
+    "nama_b": "Budi Santoso",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "lulus": true
+   },
+   {
+    "ket": "umlaut Jerman dinormalkan",
+    "nama_a": "Thomas Müller",
+    "nama_b": "Thomas Muller",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "lulus": true
+   },
+   {
+    "ket": "nama depan sama, marga beda",
+    "nama_a": "Budi Santoso",
+    "nama_b": "Budi Hartono",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.898,
+    "lulus": true
+   },
+   {
+    "ket": "nama Jerman, marga beda",
+    "nama_a": "Thomas Weber",
+    "nama_b": "Thomas Becker",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.906,
+    "lulus": true
+   },
+   {
+    "ket": "nama satu kata, beda perusahaan dan kota",
+    "nama_a": "Yusuf",
+    "nama_b": "Yusuf",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.468,
+    "lulus": true
+   },
+   {
+    "ket": "nama lengkap sama, beda kota/perusahaan: tetap antrean",
+    "nama_a": "Budi Santoso",
+    "nama_b": "Budi Santoso",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.75,
+    "lulus": true
+   },
+   {
+    "ket": "perempuan Jerman, marga beda",
+    "nama_a": "Anna Schmidt",
+    "nama_b": "Anna Weber",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.642,
+    "lulus": true
+   },
+   {
+    "ket": "WhatsApp (nomor saja) vs email (email saja), nama sama",
+    "nama_a": "Sabine Schmidt",
+    "nama_b": "Sabine Schmidt",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "lulus": true
+   },
+   {
+    "ket": "nama dipendekkan jadi satu kata",
+    "nama_a": "Lestari",
+    "nama_b": "Lestari Becker",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.918,
+    "lulus": true
+   }
+  ]
+ },
+ "antrean_contoh": [
+  {
+   "lead": "ev-0005",
+   "kanal": "form_website",
+   "nama_lead": "PUTRI PRATAMA",
+   "calon": "ID011",
+   "nama_calon": "putri pratama",
+   "skor": 0.75,
+   "alasan": "nama nyaris identik, perlu dilihat manusia"
+  },
+  {
+   "lead": "ev-0091",
+   "kanal": "google_meta_ads",
+   "nama_lead": "nadia pratama",
+   "calon": "ID043",
+   "nama_calon": "nadia pratama",
+   "skor": 1.0,
+   "alasan": "nama lengkap sama, perusahaan dan kota sama"
+  },
+  {
+   "lead": "ev-0071",
+   "kanal": "email",
+   "nama_lead": "Rizky Wijaya",
+   "calon": "ID038",
+   "nama_calon": "Rizky Wijaya",
+   "skor": 1.0,
+   "alasan": "nama lengkap sama, perusahaan dan kota sama"
+  },
+  {
+   "lead": "ev-0072",
+   "kanal": "linkedin",
+   "nama_lead": "bayu saputra",
+   "calon": "ID040",
+   "nama_calon": "bayu saputra",
+   "skor": 1.0,
+   "alasan": "nama lengkap sama, perusahaan dan kota sama"
+  },
+  {
+   "lead": "ev-0024",
+   "kanal": "email",
+   "nama_lead": "Lestari M.",
+   "calon": "ID115",
+   "nama_calon": "lestari maulana",
+   "skor": 0.75,
+   "alasan": "nama nyaris identik, perlu dilihat manusia"
+  },
+  {
+   "lead": "ev-0172",
+   "kanal": "linkedin",
+   "nama_lead": "Lestari",
+   "calon": "ID008",
+   "nama_calon": "LESTARI BECKER",
+   "skor": 0.918,
+   "alasan": "nama mirip, marga cocok, perusahaan dan kota sama"
+  },
+  {
+   "lead": "ev-0160",
+   "kanal": "form_website",
+   "nama_lead": "Agus W.",
+   "calon": "ID025",
+   "nama_calon": "Agus W.",
+   "skor": 0.75,
+   "alasan": "nama nyaris identik, perlu dilihat manusia"
+  },
+  {
+   "lead": "ev-0018",
+   "kanal": "email",
+   "nama_lead": "Pak Yusuf",
+   "calon": "ID056",
+   "nama_calon": "Yusuf",
+   "skor": 0.918,
+   "alasan": "nama mirip, marga cocok, perusahaan dan kota sama"
+  }
+ ]
+}
