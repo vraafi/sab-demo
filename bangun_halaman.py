@@ -122,6 +122,33 @@ def tabel_kasus(kasus: list[dict]) -> str:
     )
 
 
+def tabel_kasus_nyata(kasus: list[dict]) -> str:
+    """Tabel kasus nyata, dengan sumbernya. Yang gagal ditandai."""
+    if not kasus:
+        return '<p class="note">Uji kasus nyata belum dijalankan.</p>'
+    isi = []
+    for k in kasus:
+        kelas = "s-ok" if k.get("lulus") else "s-bad"
+        tanda = "lulus" if k.get("lulus") else "GAGAL"
+        skor = f"{k.get('skor', 0):.2f}".replace(".", ",")
+        isi.append(
+            "<tr>"
+            f'<td>{html.escape(str(k.get("ket", "")))}</td>'
+            f'<td><code>{html.escape(str(k.get("nama_a", "")))}</code><br>'
+            f'<code>{html.escape(str(k.get("nama_b", "")))}</code></td>'
+            f'<td>{html.escape(str(k.get("dapat", "")))}</td>'
+            f'<td>{skor}</td>'
+            f'<td class="cap">{html.escape(str(k.get("sumber", "")))}</td>'
+            f'<td class="{kelas}">{tanda}</td>'
+            "</tr>"
+        )
+    return (
+        "<table><thead><tr><th>Kasus</th><th>Nama</th><th>Hasil</th>"
+        "<th>Skor</th><th>Sumber</th><th></th></tr></thead><tbody>"
+        + "".join(isi) + "</tbody></table>"
+    )
+
+
 def halaman(d: dict) -> str:
     p1 = d.get("poin_1", {})
     p5 = d.get("poin_5", {})
@@ -154,6 +181,10 @@ def halaman(d: dict) -> str:
     kasus_total = uk.get("total", 0)
     kasus_lulus = uk.get("lulus", 0)
     kasus_gagal = [k for k in uk.get("kasus", []) if not k.get("lulus")]
+
+    un = d.get("uji_kasus_nyata", {})
+    nyata_total = un.get("total", 0)
+    nyata_lulus = un.get("lulus", 0)
 
     return f"""<!DOCTYPE html>
 <html lang="id">
@@ -313,6 +344,33 @@ di lapangan Indonesia dan Jerman — termasuk keempat kasus di atas, varian nomo
 <p><strong>{kasus_lulus} dari {kasus_total} lulus.</strong> Yang gagal akan
 ditampilkan di tabel ini juga, tidak disembunyikan.</p>
 {tabel_kasus(uk.get("kasus", []))}
+
+<h3>Uji kasus nyata dari internet</h3>
+<p>Kasus di atas saya susun sendiri, jadi bisa saja hanya menguji apa yang sudah
+saya pikirkan. Karena itu ada {nyata_total} kasus tambahan yang diambil dari nama
+orang sungguhan dan konvensi yang didokumentasikan: kategori nama Indonesia
+(mononim, marga Batak, patronimik), gelar daerah (Teuku/Cut di Aceh, Raden Ajeng
+di Jawa), partikel bangsawan Jerman (<em>von der</em>), dan transliterasi umlaut.</p>
+<p><strong>{nyata_lulus} dari {nyata_total} lulus.</strong> Tiga di antaranya
+sempat gagal dan memaksa kode diperbaiki, bukan dijelaskan:</p>
+<ul>
+<li><strong>Gelar daerah bergender.</strong> "Teuku Ahmad" dan "Cut Ahmad" dinilai
+mirip, padahal Teuku menandakan laki-laki dan Cut perempuan di Aceh. Daftar gelar
+diperluas dengan gelar daerah yang bergender.</li>
+<li><strong>Nama panjang dipendekkan.</strong> "Sri Mulyani Indrawati" dan "Sri
+Mulyani" terpisah karena marga yang dibandingkan berbeda. Ditambahkan aturan
+awalan: nama yang lebih pendek boleh menjadi awalan nama yang lebih panjang,
+dengan syarat minimal dua kata.</li>
+<li><strong>Marga sama, orang berbeda.</strong> "Budi Siregar" dan "Ani Siregar"
+masuk antrean hanya karena marganya sama — padahal satu marga Batak dipakai
+banyak orang, bahkan seisi keluarga. Nama depan kini ikut disyaratkan mirip.</li>
+</ul>
+{tabel_kasus_nyata(un.get("kasus", []))}
+<p class="note">Dua kasus sengaja disertakan sebagai batas yang diakui, bukan
+kegagalan: "Gus Dur" dan "Abdurrahman Wahid" adalah orang yang sama, begitu juga
+"Jokowi" dan "Joko Widodo" — tapi tidak ada cara mencocokkannya tanpa tabel alias.
+Sistem memilih memisahkan, dan itu keputusan yang benar: lebih baik tidak
+menggabung daripada menggabung salah.</p>
 
 <div class="rule"></div>
 

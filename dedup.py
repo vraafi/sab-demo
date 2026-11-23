@@ -45,8 +45,18 @@ import unicodedata
 GELAR_NETRAL = {"dr", "drg", "ir", "prof", "drs", "dra", "st"}
 
 # Sapaan yang menandakan gender. TIDAK dibuang -- dibaca sebagai sinyal.
-SAPAAN_L = {"pak", "bapak", "mas", "mr", "h", "haji", "tuan"}
-SAPAAN_P = {"bu", "ibu", "mbak", "mrs", "ms", "hj", "hajah", "nyonya", "nona"}
+SAPAAN_L = {"pak", "bapak", "mas", "mr", "h", "haji", "tuan",
+            # Gelar daerah yang menandakan laki-laki. Diambil dari konvensi yang
+            # didokumentasikan (Aceh, Banten, Bali, Sasak, Melayu, Minang, Batak):
+            # Teuku/Teungku (Aceh), Tubagus (Banten), Cokorda (Bali),
+            # Lalu (Sasak), Datuk/Tengku (Melayu), Datuak/Sutan (Minang).
+            # Sengaja tidak memakai "bagus", "dewa", "gusti", "ratu": keempatnya
+            # lazim dipakai sebagai nama diri, bukan hanya gelar.
+            "teuku", "teungku", "tubagus", "cokorda", "lalu",
+            "datuk", "datuak", "sutan", "tengku"}
+SAPAAN_P = {"bu", "ibu", "mbak", "mrs", "ms", "hj", "hajah", "nyonya", "nona",
+            # Cut (Aceh), Baiq (Sasak), Ajeng/Rara (Jawa), Nyimas/Masayu (Palembang)
+            "cut", "baiq", "ajeng", "rara", "nyimas", "masayu"}
 
 # Gabungan, dipakai untuk membuang sapaan dari token nama supaya blocking tetap
 # bekerja pada nama intinya. Gendernya sudah dibaca lebih dulu oleh gender().
@@ -200,6 +210,20 @@ def mirip_nama(a: list[str], b: list[str]) -> float:
     if len(a) >= 2 and len(b) >= 2 and set(a) == set(b):
         return 1.0
 
+    # Nama yang lebih pendek adalah AWALAN nama yang lebih panjang.
+    # "Sri Mulyani" adalah awalan dari "Sri Mulyani Indrawati"; orang yang sama
+    # menuliskan namanya sampai marga atau tidak. Tanpa aturan ini, pasangan
+    # seperti itu justru terpisah karena marga yang dibandingkan berbeda
+    # (indrawati vs mulyani).
+    #
+    # Syarat minimal dua kata: nama depan saja ("Budi" vs "Budi Santoso") terlalu
+    # umum untuk dijadikan bukti awalan. Tanpa syarat ini, setiap orang bernama
+    # Budi di perusahaan mana pun akan masuk antrean bersama.
+    if len(a) != len(b) and min(len(a), len(b)) >= 2:
+        pendek, panjang = (a, b) if len(a) < len(b) else (b, a)
+        if panjang[:len(pendek)] == pendek:
+            return 0.90
+
     if len(a) >= 2 and len(b) >= 2:
         depan = _mirip_token(a[0], b[0])
         marga = _mirip_token(a[-1], b[-1])
@@ -336,15 +360,29 @@ def putuskan(lead: dict, kandidat: dict) -> tuple[str, float, str]:
     if s_nama >= 0.92:
         return "antrean", max(skor, 0.75), "nama nyaris identik, perlu dilihat manusia"
 
+    # Satu pihak menuliskan nama lebih lengkap ("Sri Mulyani" vs "Sri Mulyani
+    # Indrawati"). Marga tidak bisa dibandingkan karena yang satu belum
+    # menuliskannya, jadi syarat marga di bawah tidak boleh berlaku di sini.
+    if len(na) != len(nb) and min(len(na), len(nb)) >= 2:
+        pendek, panjang = (na, nb) if len(na) < len(nb) else (nb, na)
+        if panjang[:len(pendek)] == pendek and s_nama >= 0.85:
+            return ("antrean", max(skor, 0.75),
+                    "nama yang satu adalah awalan nama yang lain")
+
     # Syarat marga hanya berlaku kalau KEDUA nama punya marga. Kalau salah satu
     # nama cuma satu kata ("Lestari"), tidak ada marga untuk dibandingkan, dan
     # memaksakan syarat itu justru membuang kasus yang benar.
     marga_ok = True
+    depan_ok = True
     dua_marga = len(na) >= 2 and len(nb) >= 2
     if dua_marga:
         marga_ok = mirip_marga(na, nb) >= 0.85
+        # Marga yang sama saja tidak cukup. "Budi Siregar" dan "Ani Siregar"
+        # bermarga sama karena memang satu klan Batak, tapi itu dua orang --
+        # bahkan bisa bersaudara. Nama depan harus ikut mirip.
+        depan_ok = _mirip_token(na[0], nb[0]) >= 0.75
 
-    if s_nama >= 0.82 and marga_ok and s_prsh >= 0.80 and kota_sama:
+    if s_nama >= 0.82 and marga_ok and depan_ok and s_prsh >= 0.80 and kota_sama:
         # Kalimat alasan harus jujur: kalau salah satu nama hanya satu kata,
         # tidak ada marga yang dibandingkan, jadi jangan menulis "marga cocok".
         als = ("nama mirip, marga cocok, perusahaan dan kota sama" if dua_marga

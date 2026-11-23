@@ -237,6 +237,132 @@
    }
   ]
  },
+ "uji_kasus_nyata": {
+  "total": 12,
+  "lulus": 12,
+  "kasus": [
+   {
+    "ket": "dua mononim berbeda: nama satu kata bukan alasan menggabung",
+    "nama_a": "Sukarno",
+    "nama_b": "Suharto",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.846,
+    "sumber": "Wikipedia: single name, Sukarno / Suharto",
+    "lulus": true
+   },
+   {
+    "ket": "mononim sama di perusahaan sama: antrean, tidak digabung otomatis",
+    "nama_a": "Boediono",
+    "nama_b": "Boediono",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.918,
+    "sumber": "Wikipedia: mononim Boediono",
+    "lulus": true
+   },
+   {
+    "ket": "Teuku (L) vs Cut (P) di Aceh: dua orang berbeda",
+    "nama_a": "Teuku Ahmad",
+    "nama_b": "Cut Ahmad",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.0,
+    "sumber": "Wikipedia: Acehnese Teuku (male), Cut (female)",
+    "lulus": true
+   },
+   {
+    "ket": "gelar bangsawan Jawa disingkat: orang yang sama",
+    "nama_a": "Raden Ajeng Kartini",
+    "nama_b": "R.A. Kartini",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.981,
+    "sumber": "Wikipedia: Javanese Raden Ajeng (unmarried female)",
+    "lulus": true
+   },
+   {
+    "ket": "inisial dua nama depan, marga Batak ditulis penuh",
+    "nama_a": "Abdul Haris Nasution",
+    "nama_b": "A.H. Nasution",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.981,
+    "sumber": "Wikipedia: Abdul Haris Nasution, Batak marga",
+    "lulus": true
+   },
+   {
+    "ket": "nama Jerman dengan partikel 'von der', orang yang sama",
+    "nama_a": "Ursula von der Leyen",
+    "nama_b": "Ursula von der Leyen",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "sumber": "Partikel Jerman: von der + marga",
+    "lulus": true
+   },
+   {
+    "ket": "umlaut ditulis dua huruf (ü -> ue), lazim di Jerman",
+    "nama_a": "Thomas Müller",
+    "nama_b": "Thomas Mueller",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.97,
+    "sumber": "Transliterasi Jerman ü=ue",
+    "lulus": true
+   },
+   {
+    "ket": "nama tiga kata dipendekkan, marga terakhir hilang",
+    "nama_a": "Sri Mulyani Indrawati",
+    "nama_b": "Sri Mulyani",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 0.945,
+    "sumber": "Wikipedia: Sri Mulyani Indrawati",
+    "lulus": true
+   },
+   {
+    "ket": "marga Batak sama tapi orang berbeda: marga bukan pengenal tunggal",
+    "nama_a": "Budi Siregar",
+    "nama_b": "Ani Siregar",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.909,
+    "sumber": "Wikipedia: Batak marga Siregar",
+    "lulus": true
+   },
+   {
+    "ket": "nama Tionghoa dengan marga di depan, orang yang sama",
+    "nama_a": "Kwik Kian Gie",
+    "nama_b": "Kwik Kian Gie",
+    "dapat": "antrean",
+    "harap": "antrean",
+    "skor": 1.0,
+    "sumber": "Wikipedia: Chinese-Indonesian, surname first",
+    "lulus": true
+   },
+   {
+    "ket": "julukan vs nama resmi — TIDAK bisa dicocokkan tanpa tabel alias",
+    "nama_a": "Gus Dur",
+    "nama_b": "Abdurrahman Wahid",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.541,
+    "sumber": "Wikipedia: Gus Dur = Abdurrahman Wahid (julukan)",
+    "lulus": true
+   },
+   {
+    "ket": "julukan vs nama resmi — TIDAK bisa dicocokkan tanpa tabel alias",
+    "nama_a": "Joko Widodo",
+    "nama_b": "Jokowi",
+    "dapat": "pisah",
+    "harap": "pisah",
+    "skor": 0.886,
+    "sumber": "Wikipedia: Jokowi = Joko Widodo (julukan)",
+    "lulus": true
+   }
+  ]
+ },
  "antrean_contoh": [
   {
    "lead": "ev-0005",

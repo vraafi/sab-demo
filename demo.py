@@ -252,6 +252,23 @@ def main() -> None:
         if not h["lulus"]:
             print(f"  GAGAL {h['ket']}: dapat {h['dapat']}, harap {h['harap']}")
 
+    # ---- uji kasus nyata (nama tokoh publik, konvensi terdokumentasi)
+    import uji_kasus_nyata
+
+    hasil_nyata = []
+    for k in uji_kasus_nyata.KASUS:
+        keputusan, skor, _ = dedup.putuskan(k["a"], k["b"])
+        hasil_nyata.append({
+            "ket": k["ket"], "nama_a": k["a"]["nama"], "nama_b": k["b"]["nama"],
+            "dapat": keputusan, "harap": k["harap"], "skor": skor,
+            "sumber": k["sumber"], "lulus": keputusan == k["harap"],
+        })
+    lulus_nyata = sum(1 for h in hasil_nyata if h["lulus"])
+    print(f"\nUJI KASUS NYATA — {lulus_nyata}/{len(hasil_nyata)} lulus")
+    for h in hasil_nyata:
+        if not h["lulus"]:
+            print(f"  GAGAL {h['ket']}: dapat {h['dapat']}, harap {h['harap']}")
+
     laporan = {
         "poin_1": {
             "lead_mentah": mentah, "identitas": hasil,
@@ -270,6 +287,8 @@ def main() -> None:
         "poin_6": rek,
         "uji_kasus": {"total": len(hasil_kasus), "lulus": lulus_kasus,
                       "kasus": hasil_kasus},
+        "uji_kasus_nyata": {"total": len(hasil_nyata), "lulus": lulus_nyata,
+                            "kasus": hasil_nyata},
         # kunci internal _orang_* tidak ikut ditulis: halaman publik tidak perlu
         # membuka kunci jawaban, dan antrean_contoh hanya untuk dilihat.
         "antrean_contoh": [{k: v for k, v in a.items()

@@ -16,6 +16,7 @@ ujinya.
 | `dedup.py` | Logika pencocokan identitas: normalisasi nomor/email, kemiripan nama, keputusan gabung/antrean/pisah |
 | `demo.py` | Menjalankan uji poin 1, 5, 6 pada `data_uji.json`, menulis `hasil_demo.json` |
 | `uji_kasus.py` | 22 kasus lapangan (Indonesia + Jerman) dengan hasil yang diharapkan |
+| `uji_kasus_nyata.py` | 12 kasus dari nama orang sungguhan dan konvensi terdokumentasi (Wikipedia), lengkap dengan sumber tiap kasus |
 | `bandingkan.py` | Membandingkan `dedup.py` (baru) dengan `dedup_lama.py` (versi 21 Nov) pada data yang sama |
 | `generate.py` | Membangkitkan `data_uji.json` — 170 orang, 200 lead, 30 duplikat |
 | `bangun_halaman.py` | Membangun `index.html` dari `hasil_demo.json` |
@@ -30,6 +31,7 @@ ujinya.
 python generate.py        # opsional: bangkitkan ulang data uji
 python demo.py            # jalankan uji, tulis hasil_demo.json
 python uji_kasus.py       # 22 kasus lapangan
+python uji_kasus_nyata.py # 12 kasus nyata dari internet
 python bandingkan.py      # versi lama vs baru
 python bangun_halaman.py  # bangun index.html
 ```
@@ -44,7 +46,26 @@ Tidak ada dependensi luar. Python 3.10+.
 8 pasangan di antrean manusia (3 orang sama, 5 hanya mirip nama)
 0 salah gabung
 22/22 kasus lapangan lulus
+12/12 kasus nyata lulus
 ```
+
+## Uji kasus nyata
+
+`uji_kasus_nyata.py` memakai nama tokoh publik dan konvensi yang didokumentasikan
+di internet, bukan kasus karangan. Sumbernya dicantumkan per kasus:
+
+- Wikipedia, *Indonesian names* — kategori mononim (Sukarno, Suharto, Boediono),
+  marga Batak (Siregar, Nasution), patronimik, dan gelar daerah: Teuku/Cut (Aceh),
+  Raden Ajeng (Jawa), Tubagus (Banten), Lalu/Baiq (Sasak), Datuk/Tengku (Melayu).
+- Partikel bangsawan Jerman: *von*, *zu*, *von der*, *vom*, *zum* yang mendahului
+  marga — relevan karena SAB melayani klien Jerman.
+- Transliterasi Jerman ü → ue.
+
+Tiga kasus sempat gagal dan memaksa kode diperbaiki: gelar daerah bergender,
+nama panjang yang dipendekkan, dan marga Batak yang sama pada dua orang berbeda.
+Dua kasus disertakan sebagai batas yang diakui — julukan ("Gus Dur" ↔
+"Abdurrahman Wahid", "Jokowi" ↔ "Joko Widodo") tidak bisa dicocokkan tanpa tabel
+alias, dan sistem memilih memisahkan.
 
 ## Yang diperbaiki 23 November 2026
 

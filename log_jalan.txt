@@ -1,4 +1,4 @@
-=== LOG EKSEKUSI — 2026-11-23 11:43:15 SEAST ===
+=== LOG EKSEKUSI — 2026-11-23 11:53:36 SEAST ===
 
 --- python demo.py ---
 ==================================================================
@@ -39,6 +39,8 @@ POIN 6 — rekonsiliasi harian
   arti: alur bisa saja hijau 100% sementara angka ini tidak nol.
 
 UJI KASUS LAPANGAN — 22/22 lulus
+
+UJI KASUS NYATA — 12/12 lulus
 
 Laporan disimpan: hasil_demo.json
 
@@ -93,6 +95,75 @@ UJI KASUS LAPANGAN — 22 kasus
 
 HASIL: 22/22 lulus
 Semua kasus sesuai harapan.
+
+--- python uji_kasus_nyata.py ---
+============================================================================
+UJI 12 KASUS NYATA (nama tokoh publik, konvensi terdokumentasi)
+============================================================================
+
+ 1. [OK   ] dua mononim berbeda: nama satu kata bukan alasan menggabung
+    'Sukarno' vs 'Suharto'
+    dapat: pisah (0.846) | harusnya: pisah
+    sumber: Wikipedia: single name, Sukarno / Suharto
+
+ 2. [OK   ] mononim sama di perusahaan sama: antrean, tidak digabung otomatis
+    'Boediono' vs 'Boediono'
+    dapat: antrean (0.918) | harusnya: antrean
+    sumber: Wikipedia: mononim Boediono
+
+ 3. [OK   ] Teuku (L) vs Cut (P) di Aceh: dua orang berbeda
+    'Teuku Ahmad' vs 'Cut Ahmad'
+    dapat: pisah (0.000) | harusnya: pisah
+    sumber: Wikipedia: Acehnese Teuku (male), Cut (female)
+
+ 4. [OK   ] gelar bangsawan Jawa disingkat: orang yang sama
+    'Raden Ajeng Kartini' vs 'R.A. Kartini'
+    dapat: antrean (0.981) | harusnya: antrean
+    sumber: Wikipedia: Javanese Raden Ajeng (unmarried female)
+
+ 5. [OK   ] inisial dua nama depan, marga Batak ditulis penuh
+    'Abdul Haris Nasution' vs 'A.H. Nasution'
+    dapat: antrean (0.981) | harusnya: antrean
+    sumber: Wikipedia: Abdul Haris Nasution, Batak marga
+
+ 6. [OK   ] nama Jerman dengan partikel 'von der', orang yang sama
+    'Ursula von der Leyen' vs 'Ursula von der Leyen'
+    dapat: antrean (1.000) | harusnya: antrean
+    sumber: Partikel Jerman: von der + marga
+
+ 7. [OK   ] umlaut ditulis dua huruf (ü -> ue), lazim di Jerman
+    'Thomas Müller' vs 'Thomas Mueller'
+    dapat: antrean (0.970) | harusnya: antrean
+    sumber: Transliterasi Jerman ü=ue
+
+ 8. [OK   ] nama tiga kata dipendekkan, marga terakhir hilang
+    'Sri Mulyani Indrawati' vs 'Sri Mulyani'
+    dapat: antrean (0.945) | harusnya: antrean
+    sumber: Wikipedia: Sri Mulyani Indrawati
+
+ 9. [OK   ] marga Batak sama tapi orang berbeda: marga bukan pengenal tunggal
+    'Budi Siregar' vs 'Ani Siregar'
+    dapat: pisah (0.909) | harusnya: pisah
+    sumber: Wikipedia: Batak marga Siregar
+
+10. [OK   ] nama Tionghoa dengan marga di depan, orang yang sama
+    'Kwik Kian Gie' vs 'Kwik Kian Gie'
+    dapat: antrean (1.000) | harusnya: antrean
+    sumber: Wikipedia: Chinese-Indonesian, surname first
+
+11. [OK   ] julukan vs nama resmi — TIDAK bisa dicocokkan tanpa tabel alias
+    'Gus Dur' vs 'Abdurrahman Wahid'
+    dapat: pisah (0.541) | harusnya: pisah
+    sumber: Wikipedia: Gus Dur = Abdurrahman Wahid (julukan)
+
+12. [OK   ] julukan vs nama resmi — TIDAK bisa dicocokkan tanpa tabel alias
+    'Joko Widodo' vs 'Jokowi'
+    dapat: pisah (0.886) | harusnya: pisah
+    sumber: Wikipedia: Jokowi = Joko Widodo (julukan)
+
+============================================================================
+HASIL: 12/12 lulus
+Semua kasus nyata tertangani.
 
 --- python bandingkan.py ---
 ======================================================================
