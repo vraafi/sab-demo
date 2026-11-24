@@ -1,0 +1,35 @@
+{
+  "_keterangan": [
+    "Salinan contoh. Ganti nama menjadi config.json lalu isi nilainya.",
+    "Berkas config.json yang sebenarnya tidak masuk repo, karena memuat nomor",
+    "penerima uji dan alamat mesin yang hanya berlaku di komputer pengembang."
+  ],
+
+  "server": {
+    "port": 8899,
+    "host": "127.0.0.1"
+  },
+
+  "kirim": {
+    "maks_per_sesi": 5,
+    "jeda_detik": 600,
+    "_catatan": "Batas ini melindungi nomor tujuan dari penonton yang menekan tombol berkali-kali."
+  },
+
+  "nomor": {
+    "uji": "6280000000000",
+    "_catatan": "Nomor penerima uji. Nomor lain akan ditolak Meta dengan #131030 selama belum ditambahkan ke daftar penerima di konsol Meta."
+  },
+
+  "balasan": {
+    "balas_otomatis_hanya_jika_terkualifikasi": true,
+    "syarat_kualifikasi": ["menyebut anggaran", "menyebut tenggat"],
+    "_catatan": "Ini yang membuat mesin demo membalas 3 dari 50 lead, sedangkan mesin ujian 50 lead membalas 33. Bukan kerusakan: dua definisi."
+  },
+
+  "n8n": {
+    "dasar": "http://127.0.0.1:5678",
+    "crm": "http://127.0.0.1:8787",
+    "_catatan": "Saat mesin dipindah ke akun n8n milik SAB, dua alamat ini yang diganti."
+  }
+}

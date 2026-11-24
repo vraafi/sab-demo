@@ -1,0 +1,16 @@
+# Dependensi demo SAB — sengaja sesedikit mungkin.
+#
+# Versi dikunci. Alasannya bukan kerapian: demo dijalankan beberapa menit
+# sebelum panggilan, dan `pip install` yang menarik versi terbaru bisa
+# memasang sesuatu yang belum pernah diuji. Versi di bawah ini yang sudah
+# dipakai saat sepuluh kasus uji lulus.
+fastapi==0.165.0
+uvicorn==0.54.0
+pydantic>=2.9,<3
+#
+# Yang TIDAK dipakai, dan alasannya:
+#   - React/Vite: empat halaman satu-layar. Bundler menambah satu langkah build
+#     yang bisa gagal, tanpa satu pun keuntungan yang terlihat pengunjung.
+#   - SQLAlchemy/Alembic: data demo hidup di n8n dan CRM, bukan di sini.
+#   - pytest: ujian di repo ini berjalan sebagai skrip yang mencetak lulus/gagal
+#     dan keluar dengan kode 1 — bisa dijalankan siapa pun tanpa memasang apa pun.

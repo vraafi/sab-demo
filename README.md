@@ -337,3 +337,63 @@ catatan yang dibantah — semua benar untuk versi yang diperiksa.
   lead tidak berubah setelah kedua perbaikan di atas. Kalau data uji dibangkitkan
   ulang dengan variasi ejaan, angkanya akan berubah — dan itu perlu diuji ulang,
   bukan diasumsikan.
+
+---
+
+# Mesin demo — enam tombol, 24 November 2026
+
+Bagian ini ditambahkan sesudah catatan 23 November. Isinya kode yang menjalankan
+halaman demo: bukan halaman statis, melainkan satu proses yang benar-benar
+memanggil n8n dan CRM lalu menampilkan hasilnya.
+
+## Menjalankan
+
+```bash
+pip install -r requirements.txt
+copy config.contoh.json config.json     # Windows
+cp config.contoh.json config.json       # Linux/macOS
+python app.py                           # http://127.0.0.1:8899
+```
+
+`config.json` sengaja **tidak** ada di repo: ia memuat nomor penerima uji dan
+alamat mesin yang hanya berlaku di komputer pengembang. Yang ada di repo hanya
+`config.contoh.json`.
+
+Tanpa n8n dan CRM yang hidup, halaman tetap terbuka dan `/docs` tetap jalan,
+tetapi tombol yang memanggil mesin akan menjawab `502`. Itu bukan cacat
+tersembunyi — memang begitu keadaannya, dan halamannya mengatakan itu.
+
+## Berkas
+
+| Berkas | Untuk apa |
+|---|---|
+| `app.py` | Lapisan HTTP (FastAPI). Seluruh rute, `/docs`, kode status 422/401/502 |
+| `demo_server.py` | Logikanya: kirim, putuskan, periksa kunci, rekam gagal, jatah kirim |
+| `siaran.py` | Halaman `/siaran` — enam tombol besar, tiap tombol menuliskan sendiri apa yang baru dibuktikan |
+| `coba.py` | Halaman `/coba` — pengunjung mengetik pesannya sendiri |
+| `masuk.py` | Halaman `/masuk` — kunci diperiksa ke CRM, penolakan datang dari CRM |
+| `publik.py` | Gerbang untuk alamat publik: satu tautan bertoken, tiga rute ditutup, batas per IP |
+| `lihat_aturan.py` | Membaca ambang, bobot, pola spam, dan sinyal dari kode yang berjalan → `aturan.json` |
+| `ubah_aturan.py` | Mengubah syarat balas otomatis lewat preset, dengan `--dry-run` yang menunjukkan akibatnya sebelum menulis |
+| `pra_siaran.py` | Pemeriksaan lima menit sebelum demo: n8n, CRM, jalur kirim, jatah |
+| `aturan.json` | Nilai yang benar-benar berlaku, dihasilkan dari kode — bukan diketik di dokumen |
+| `config.contoh.json` | Contoh konfigurasi. Salin menjadi `config.json` lalu isi |
+
+## Kenapa lapisan HTTP-nya Python, bukan n8n
+
+n8n adalah mesinnya: dedup, kualifikasi, balasan, opt-out, DLQ, rekonsiliasi —
+semuanya node n8n, dan log eksekusinya ada di `ujian/log_n8n.json`. Lapisan
+Python di atas hanya transport: menerima permintaan HTTP, memanggil webhook n8n,
+dan menampilkan hasilnya. Ia tidak menyimpan data dan tidak punya aturan sendiri.
+
+Konsekuensinya bisa dimatikan: kalau `app.py` berhenti, alur n8n tetap jalan.
+Itu juga alasan `app.py` tidak berisi logika keputusan — supaya tidak ada dua
+tempat yang bisa berbeda pendapat soal siapa yang harus dibalas.
+
+## Yang belum
+
+- Tombol "putar ulang" dari DLQ. Isi DLQ bisa dibaca; memutar ulang belum ada
+  tombolnya.
+- Lingkungan staging terpisah dari produksi.
+- Semuanya masih berjalan di akun n8n dan CRM rujukan, belum di akun SAB.
+

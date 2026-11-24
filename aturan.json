@@ -1,0 +1,122 @@
+{
+  "dedup": {
+    "ambang_gabung_otomatis": 0.8,
+    "ambang_antrean_manusia": 0.55,
+    "bobot": {
+      "nama_depan": 0.35,
+      "nama_marga": 0.65
+    },
+    "aturan_sapaan": "Sapaan bergender yang bertentangan (Pak vs Ibu, Mas vs Mbak, Herr vs Frau) berarti dua orang berbeda, bukan nama mirip. Sapaan netral (H., Dr., Kak) dibuang sebelum membandingkan.",
+    "sumber": "dedup.py"
+  },
+  "kualifikasi": {
+    "spam": [
+      "\\bjual followers\\b",
+      "\\bfollowers (murah|cepat)\\b",
+      "\\blikes murah\\b",
+      "\\b10rb followers\\b",
+      "\\bjasa followers\\b",
+      "\\bpromo followers\\b",
+      "\\b(menang|pemenang|lotre|lotre|undian|hadiah)\\b.*\\b(klik|link|klaim)\\b",
+      "\\bklik (link|tautan|sekarang|di sini|disini)\\b",
+      "\\binvestasi (bodong|cepat)\\b",
+      "\\b(bit\\.ly|tinyurl|t\\.me)\\/\\S+",
+      "\\bcrypto (giveaway|airdrop)\\b",
+      "\\b(slot|gacor|togel|kasino|judi|jackpot)\\b",
+      "\\bbonus (new )?member\\b",
+      "\\bdeposit \\d+\\s*(rb|ribu|jt|juta)\\b"
+    ],
+    "spam_tambahan": [
+      "\\b(menang|pemenang|lotre|lotre|undian|hadiah)\\b.*\\b(klik|link|klaim)\\b",
+      "\\bklik (link|tautan|sekarang|di sini|disini)\\b",
+      "\\binvestasi (bodong|cepat)\\b",
+      "\\b(bit\\.ly|tinyurl|t\\.me)\\/\\S+",
+      "\\bcrypto (giveaway|airdrop)\\b",
+      "\\b(slot|gacor|togel|kasino|judi|jackpot)\\b",
+      "\\bbonus (new )?member\\b",
+      "\\bdeposit \\d+\\s*(rb|ribu|jt|juta)\\b"
+    ],
+    "sinyal": {
+      "anggaran": {
+        "ID": [
+          "\\b(anggaran|budget|dana|maksimal|sampai)\\b"
+        ],
+        "EN": [
+          "\\b(budget|afford|up to|maximum)\\b"
+        ],
+        "DE": [
+          "\\b(budget|etat|bis zu|maximal)\\b"
+        ]
+      },
+      "tenggat": {
+        "ID": [
+          "\\b(bulan depan|minggu depan|segera|secepatnya|deadline|tenggat)\\b"
+        ],
+        "EN": [
+          "\\b(next month|next week|asap|urgent|deadline)\\b"
+        ],
+        "DE": [
+          "\\b(nächsten monat|nächste woche|dringend|frist)\\b"
+        ]
+      },
+      "harga": {
+        "ID": [
+          "\\b(harga|biaya|tarif|berapa)\\b"
+        ],
+        "EN": [
+          "\\b(price|cost|pricing|rate|how much)\\b"
+        ],
+        "DE": [
+          "\\b(preis|kosten|preise|wie viel)\\b"
+        ]
+      },
+      "minta_bahan": {
+        "ID": [
+          "\\b(katalog|brosur|daftar harga|contoh|demo)\\b"
+        ],
+        "EN": [
+          "\\b(catalogue|catalog|brochure|sample|demo)\\b"
+        ],
+        "DE": [
+          "\\b(katalog|broschüre|beispiel|demo)\\b"
+        ]
+      },
+      "keluhan": {
+        "ID": [
+          "\\b(kecewa|komplain|belum sampai|rusak|marah|salah)\\b",
+          "\\b(sudah|telah|belum) (bayar|membayar|transfer)\\b",
+          "\\b(dp|uang muka|refund|pengembalian dana|uang kembali)\\b",
+          "\\b(tidak|belum) dikonfirmasi\\b",
+          "\\b(batal(kan)?|telat|lambat|menunggu)\\b"
+        ],
+        "EN": [
+          "\\b(disappointed|complaint|not arrived|broken|wrong|angry)\\b",
+          "\\b(already|have|did) (paid|pay|transfer)\\b",
+          "\\b(refund|deposit|down payment)\\b",
+          "\\b(not|no) confirm(ed|ation)\\b",
+          "\\b(cancel|delayed|late|waiting)\\b"
+        ],
+        "DE": [
+          "\\b(enttäuscht|beschwerde|nicht angekommen|kaputt|falsch)\\b",
+          "\\b(bereits|schon) (bezahlt|gezahlt|überwiesen)\\b",
+          "\\b(rückerstattung|anzahlung)\\b",
+          "\\b(nicht bestätigt|keine bestätigung)\\b",
+          "\\b(storniert|verspätet|warte)\\b"
+        ]
+      },
+      "sapaan_saja": {
+        "ID": [],
+        "EN": [],
+        "DE": []
+      }
+    },
+    "urutan_pemeriksaan": [
+      "1. spam → karantina",
+      "2. keluhan → antrean manusia (didahulukan atas anggaran)",
+      "3. opt-out → berhenti di semua kanal",
+      "4. anggaran DAN tenggat → balas otomatis",
+      "5. selain itu → antrean manusia"
+    ],
+    "sumber": "workflow n8n sabbalas01, node 'Putuskan Balasan'"
+  }
+}
