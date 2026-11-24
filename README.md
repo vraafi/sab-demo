@@ -397,3 +397,27 @@ tempat yang bisa berbeda pendapat soal siapa yang harus dibalas.
 - Lingkungan staging terpisah dari produksi.
 - Semuanya masih berjalan di akun n8n dan CRM rujukan, belum di akun SAB.
 
+## Menjalankan `ujian/workflow_ujian.json` di n8n
+
+Diuji pada 24 November 2026 di instance n8n kosong (basis data baru, nol
+workflow). Catatan lengkapnya ada di `ujian/UJI_N8N_BERSIH.md`.
+
+Empat langkah, dan langkah ketiga yang mudah terlewat:
+
+1. Impor `ujian/workflow_ujian.json`.
+2. Ubah path di node **Baca CSV** ke tempat `SAB_test_leads_50.csv` diletakkan.
+3. Setel `N8N_RESTRICT_FILE_ACCESS_TO` ke folder yang memuat kedua berkas itu.
+   Tanpa ini, workflow berhenti di node pertama dengan
+   `Access to the file is not allowed.` — pesan yang tidak menyebut penyebabnya.
+   Jangan pakai `N8N_BLOCK_FILE_ACCESS_TO_N8N_FILES=false`; itu mematikan
+   pembatasnya sama sekali, bukan membuka satu folder.
+4. Execute Workflow.
+
+Kalau ada instance n8n lain di mesin yang sama, setel juga
+`N8N_RUNNERS_BROKER_PORT` — port bawaannya 5679 dan instance kedua akan gagal
+start.
+
+Hasilnya sama dengan run di instance kerja: 22 angka dibandingkan, satu perbedaan
+hanya cap waktu.
+
+
