@@ -337,6 +337,39 @@ catatan yang dibantah — semua benar untuk versi yang diperiksa.
   lead tidak berubah setelah kedua perbaikan di atas. Kalau data uji dibangkitkan
   ulang dengan variasi ejaan, angkanya akan berubah — dan itu perlu diuji ulang,
   bukan diasumsikan.
+- **LinkedIn tidak punya API pesan untuk akun biasa.** Yang tersedia hanya
+  untuk partner Marketing Developer Platform. Lead dari LinkedIn Lead Gen Forms
+  bisa diterima kalau aksesnya disetujui, tetapi membalas pesan LinkedIn tidak
+  bisa diotomatiskan tanpa melanggar ketentuan LinkedIn — dan akun yang
+  berisiko dibatasi adalah akun SAB, bukan akun pengembang.
+- **Google Ads tidak punya konektor API langsung di sini.** Lead form-nya masuk
+  lewat pipa `/webhook/kanal` yang sama dengan form website, bukan lewat
+  integrasi resmi Google.
+- **Nol template WhatsApp milik SAB yang disetujui Meta.** Diperiksa ke Graph
+  API 25 November 2026: 11 template di akun, 4 masih `PENDING`, 2 `REJECTED`
+  karena `INVALID_FORMAT`, sisanya contoh milik akun lain. Tanpa satu pun
+  disetujui, follow-up di luar jendela 24 jam tidak akan keluar sekalipun
+  kodenya benar.
+- **WABA belum milik SAB.** Yang dipakai nomor uji `+1 555-172-2929`, hanya
+  boleh mengirim ke maksimal lima nomor di API Setup. Verifikasi bisnis Meta,
+  nomor sendiri, dan langganan aplikasi ke WABA SAB semuanya belum.
+- **Bukan 24/7.** Mesin keputusan tidak punya gerbang jam kerja dan menjawab di
+  bawah 5 menit, tetapi pengirim berjalan di komputer pengembang. Kalau mesin
+  itu mati, tidak ada yang mengirim. Untuk benar-benar 24/7, pengirim harus
+  berjalan di server SAB — itu bagian tahap 1.
+- **Tidak ada model bahasa di sistem ini.** Deteksi bahasa ID/EN/DE, skor
+  pencocokan, opt-out, DLQ, dan rekonsiliasi semuanya aturan yang bisa dibaca
+  baris per baris di Code node. Diperiksa di JSON workflow maupun di basis data
+  n8n: nol node AI. Ini disengaja, dan biayanya berbeda kalau SAB ingin balasan
+  yang disusun model.
+- **Aplikasi demo FastAPI bukan bagian serah terima.** `app.py` adalah layar
+  presentasi; yang menjadi milik SAB adalah workflow n8n. Aplikasi demo tidak
+  perlu dipasang di server SAB kecuali SAB ingin memakainya untuk presentasi.
+- **Poin 4 butuh dua hal dari CRM SAB yang belum dipastikan ada:** `updated_at`
+  per catatan dan nomor versi/ETag. Tanpa keduanya, resolusi konflik tidak bisa
+  dikerjakan sesuai kalimatnya sendiri — bukan karena kode, tetapi karena tidak
+  ada cara tahu sisi mana yang lebih baru.
+
 
 ---
 
