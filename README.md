@@ -357,11 +357,20 @@ catatan yang dibantah — semua benar untuk versi yang diperiksa.
   bawah 5 menit, tetapi pengirim berjalan di komputer pengembang. Kalau mesin
   itu mati, tidak ada yang mengirim. Untuk benar-benar 24/7, pengirim harus
   berjalan di server SAB — itu bagian tahap 1.
-- **Tidak ada model bahasa di sistem ini.** Deteksi bahasa ID/EN/DE, skor
-  pencocokan, opt-out, DLQ, dan rekonsiliasi semuanya aturan yang bisa dibaca
-  baris per baris di Code node. Diperiksa di JSON workflow maupun di basis data
-  n8n: nol node AI. Ini disengaja, dan biayanya berbeda kalau SAB ingin balasan
-  yang disusun model.
+- **Model bahasa belum tersambung.** Poin 5 surat Tico menyebut "handoff ke
+  manusia kalau AI tidak yakin", dan surat lingkup 20 November menyebut penyedia
+  model di poin 2 maupun di daftar biaya pihak ketiga. Jadi ini bukan hal yang
+  selalu di luar lingkup, dan tidak ditulis seolah-olah begitu.
+  Yang berjalan sekarang: bahasa ditentukan dari isi pesan, balasan diambil dari
+  template per bahasa, dan kasus yang tidak yakin masuk antrean manusia. Perilaku
+  keenam poin terpenuhi tanpa model — poin 5 hanya menuntut handoff-nya. Yang
+  belum ada adalah model yang menyusun kalimat balasannya.
+  Penyambungannya tidak menambah harga, tetapi pilihan akunnya milik SAB: pada
+  kuota gratis ketentuan Google memakai isi prompt untuk memperbaiki produk dan
+  menyatakan peninjau manusia dapat membaca input dan output, disertai peringatan
+  agar tidak mengirim informasi pribadi — sementara isi percakapan lead adalah
+  data pribadi. Tiga jalurnya: tanpa model, akun berpenagihan (ketentuan paid
+  tier), atau model yang dijalankan di server SAB sendiri.
 - **Aplikasi demo FastAPI bukan bagian serah terima.** `app.py` adalah layar
   presentasi; yang menjadi milik SAB adalah workflow n8n. Aplikasi demo tidak
   perlu dipasang di server SAB kecuali SAB ingin memakainya untuk presentasi.
